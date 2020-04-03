@@ -23,9 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_redux: any
   kuzzle:
     path: ../kuzzle_dart
   json_annotation: any
+  redux: any
+  redux_thunk: any
   shared_preferences: any
 
 

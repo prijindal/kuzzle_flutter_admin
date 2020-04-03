@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kuzzle/kuzzle.dart';
+import 'helpers/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,6 +53,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  @override
+  void initState() {
+    _testPreferences();
+    super.initState();
+  }
+
+  void _testPreferences() async {
+    FlutterSharedPreferences _flutterSharedPreferences =
+        FlutterSharedPreferences.getInstance();
+    await _flutterSharedPreferences.setJson("environments", {});
+    print(await _flutterSharedPreferences.getJson("environments"));
+  }
 
   void _incrementCounter() {
     setState(() {

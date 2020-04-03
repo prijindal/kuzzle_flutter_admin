@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  kuzzle:
+    path: ../kuzzle_dart
+  json_annotation: any
+  shared_preferences: any
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,6 +36,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: any
+  json_serializable: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

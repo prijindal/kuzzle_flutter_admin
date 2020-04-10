@@ -1,3 +1,5 @@
+import 'state.dart';
+
 abstract class KuzzleIndexAction {}
 
 class ResetKuzzleIndexAction extends KuzzleIndexAction {}
@@ -54,7 +56,7 @@ class GetKuzzleCollectionsAction extends KuzzleIndexAction {
 
 class GetSuccessKuzzleCollectionsAction extends KuzzleIndexAction {
   final String index;
-  final List<String> collections;
+  final List<KuzzleCollection> collections;
   GetSuccessKuzzleCollectionsAction(this.index, this.collections);
 }
 
@@ -66,19 +68,19 @@ class GetErroredKuzzleCollectionsAction extends KuzzleIndexAction {
 
 class AddKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
+  final KuzzleCollection collection;
   AddKuzzleCollectionAction(this.index, this.collection);
 }
 
 class AddSuccessKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
+  final KuzzleCollection collection;
   AddSuccessKuzzleCollectionAction(this.index, this.collection);
 }
 
 class AddErroredKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
+  final KuzzleCollection collection;
   final String errorMessage;
   AddErroredKuzzleCollectionAction(
     this.index,
@@ -89,23 +91,23 @@ class AddErroredKuzzleCollectionAction extends KuzzleIndexAction {
 
 class DeleteKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
-  DeleteKuzzleCollectionAction(this.index, this.collection);
+  final String collectionName;
+  DeleteKuzzleCollectionAction(this.index, this.collectionName);
 }
 
 class DeleteSuccessKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
-  DeleteSuccessKuzzleCollectionAction(this.index, this.collection);
+  final String collectionName;
+  DeleteSuccessKuzzleCollectionAction(this.index, this.collectionName);
 }
 
 class DeleteErroredKuzzleCollectionAction extends KuzzleIndexAction {
   final String index;
-  final String collection;
+  final String collectionName;
   final String errorMessage;
   DeleteErroredKuzzleCollectionAction(
     this.index,
-    this.collection,
+    this.collectionName,
     this.errorMessage,
   );
 }

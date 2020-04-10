@@ -1,5 +1,6 @@
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzle/kuzzle.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'events.dart';
@@ -108,7 +109,19 @@ ThunkAction<dynamic> getKuzzleCollections(String index) {
     if (initKuzzleIndex()) {
       try {
         var collectionMap = await FlutterKuzzle.instance.collection.list(index);
-        print(collectionMap);
+        List<KuzzleCollection> collections =
+            (collectionMap["collections"] as List<dynamic>)
+                .map(
+                  (e) => KuzzleCollection(
+                    name: e["name"],
+                    type: e["type"],
+                  ),
+                )
+                .toList();
+        store.dispatch(GetSuccessKuzzleCollectionsAction(
+          index,
+          collections,
+        ));
       } catch (e) {
         store.dispatch(
           GetErroredKuzzleCollectionsAction(

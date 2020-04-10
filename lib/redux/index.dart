@@ -3,18 +3,23 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'environments/index.dart';
+import 'kuzzleindex/index.dart';
 
 @immutable
 class AppState {
   final Environments environments;
+  final KuzzleIndexes kuzzleindexes;
   AppState({
     Environments environments,
-  }) : this.environments = environments ?? Environments();
+    KuzzleIndexes kuzzleindexes,
+  })  : this.environments = environments ?? Environments(),
+        this.kuzzleindexes = kuzzleindexes ?? KuzzleIndexes();
 }
 
 AppState appReducer(AppState state, action) {
   return AppState(
     environments: environmentsReducer(state.environments, action),
+    kuzzleindexes: kuzzleReducer(state.kuzzleindexes, action),
   );
 }
 

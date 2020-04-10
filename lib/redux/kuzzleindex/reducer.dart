@@ -9,20 +9,23 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
     return KuzzleIndexes();
   } else if (action is GetKuzzleIndexesAction) {
     return state.copyWith(
+      loadingError: null,
       loadingState: KuzzleState.LOADING,
     );
   } else if (action is GetSuccessKuzzleIndexesAction) {
-    Map<String, KuzzleIndex> indexMap;
+    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
     for (var index in action.indexes) {
       indexMap[index] = KuzzleIndex();
     }
     return state.copyWith(
+      loadingError: null,
       loadingState: KuzzleState.LOADED,
       indexMap: indexMap,
     );
   } else if (action is GetErroredKuzzleIndexesAction) {
     return state.copyWith(
       loadingState: KuzzleState.ERRORED,
+      loadingError: action.errorMessage,
     );
   } else if (action is AddKuzzleIndexAction) {
     return state.copyWith(
@@ -62,6 +65,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
           key != action.index
               ? value
               : value.copyWith(
+                  loadingError: null,
                   loadingState: KuzzleState.LOADING,
                 ),
         ),
@@ -76,6 +80,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
               ? value
               : value.copyWith(
                   loadingState: KuzzleState.LOADED,
+                  loadingError: null,
                   collections: action.collections,
                 ),
         ),
@@ -89,6 +94,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
           key != action.index
               ? value
               : value.copyWith(
+                  loadingError: action.errorMessage,
                   loadingState: KuzzleState.ERRORED,
                 ),
         ),
@@ -121,7 +127,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
         ),
       ),
     );
-  } else if (action is AddErroredKuzzleIndexAction) {
+  } else if (action is AddErroredKuzzleCollectionAction) {
     return state.copyWith(
       indexMap: state.indexMap.map(
         (key, value) => MapEntry<String, KuzzleIndex>(
@@ -156,7 +162,8 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
               ? value
               : value.copyWith(
                   deletingState: KuzzleState.LOADED,
-                  collections: value.collections..remove(action.collection),
+                  collections: value.collections.where(
+                      (element) => element.name != action.collectionName),
                 ),
         ),
       ),

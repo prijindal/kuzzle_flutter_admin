@@ -39,7 +39,7 @@ void getKuzzleIndexes(Store<dynamic> store) async {
   }
 }
 
-ThunkAction<dynamic> addKuzzleIndexes(String index) {
+ThunkAction<dynamic> addKuzzleIndex(String index) {
   return (Store<dynamic> store) async {
     store.dispatch(AddKuzzleIndexAction(index));
     if (initKuzzleIndex()) {
@@ -71,7 +71,7 @@ ThunkAction<dynamic> addKuzzleIndexes(String index) {
   };
 }
 
-ThunkAction<dynamic> deleteKuzzleIndexes(String index) {
+ThunkAction<dynamic> deleteKuzzleIndex(String index) {
   return (Store<dynamic> store) async {
     store.dispatch(DeleteKuzzleIndexAction(index));
     if (initKuzzleIndex()) {
@@ -109,6 +109,7 @@ ThunkAction<dynamic> getKuzzleCollections(String index) {
     if (initKuzzleIndex()) {
       try {
         var collectionMap = await FlutterKuzzle.instance.collection.list(index);
+        print(collectionMap);
         List<KuzzleCollection> collections =
             (collectionMap["collections"] as List<dynamic>)
                 .map(
@@ -126,6 +127,65 @@ ThunkAction<dynamic> getKuzzleCollections(String index) {
         store.dispatch(
           GetErroredKuzzleCollectionsAction(
             index,
+            e.toString(),
+          ),
+        );
+      }
+    }
+  };
+}
+
+ThunkAction<dynamic> addKuzzleCollection(
+    String index, KuzzleCollection collection) {
+  return (Store<dynamic> store) async {
+    store.dispatch(AddKuzzleCollectionAction(index, collection));
+    if (initKuzzleIndex()) {
+      try {
+        var collectionMap = await FlutterKuzzle.instance.collection
+            .create(index, collection.name);
+        if (collectionMap["acknowledged"] == false) {
+          throw new Error();
+        }
+        store.dispatch(AddSuccessKuzzleCollectionAction(
+          index,
+          collection,
+        ));
+      } catch (e) {
+        store.dispatch(
+          AddErroredKuzzleCollectionAction(
+            index,
+            collection,
+            e.toString(),
+          ),
+        );
+      }
+    }
+  };
+}
+
+ThunkAction<dynamic> deleteKuzzleCollection(
+    String index, String collectionName) {
+  return (Store<dynamic> store) async {
+    store.dispatch(DeleteKuzzleCollectionAction(index, collectionName));
+    if (initKuzzleIndex()) {
+      try {
+        var success = await FlutterKuzzle.instance.collection
+            .delete(index, collectionName);
+        if (success == false) {
+          throw new Error();
+        }
+        store.dispatch(
+          DeleteSuccessKuzzleCollectionAction(
+            index,
+            collectionName,
+          ),
+        );
+      } catch (e) {
+        print(e);
+        store.dispatch(
+          DeleteErroredKuzzleCollectionAction(
+            index,
+            collectionName,
             e.toString(),
           ),
         );

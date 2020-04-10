@@ -40,6 +40,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
     );
   } else if (action is AddErroredKuzzleIndexAction) {
     return state.copyWith(
+      addingError: action.errorMessage,
       addingState: KuzzleState.ERRORED,
     );
   } else if (action is DeleteKuzzleIndexAction) {
@@ -55,6 +56,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
     );
   } else if (action is DeleteErroredKuzzleIndexAction) {
     return state.copyWith(
+      deletingError: action.errorMessage,
       deletingState: KuzzleState.ERRORED,
     );
   } else if (action is GetKuzzleCollectionsAction) {
@@ -135,6 +137,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
           key != action.index
               ? value
               : value.copyWith(
+                  addingError: action.errorMessage,
                   addingState: KuzzleState.ERRORED,
                 ),
         ),
@@ -162,8 +165,9 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
               ? value
               : value.copyWith(
                   deletingState: KuzzleState.LOADED,
-                  collections: value.collections.where(
-                      (element) => element.name != action.collectionName),
+                  collections: value.collections
+                      .where((element) => element.name != action.collectionName)
+                      .toList(),
                 ),
         ),
       ),
@@ -176,6 +180,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
           key != action.index
               ? value
               : value.copyWith(
+                  deletingError: action.errorMessage,
                   deletingState: KuzzleState.ERRORED,
                 ),
         ),

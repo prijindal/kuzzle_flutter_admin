@@ -30,39 +30,49 @@ class KuzzleCollection {
 @immutable
 class KuzzleIndex {
   final KuzzleState loadingState;
-  final String loadingError;
   final KuzzleState addingState;
   final KuzzleState deletingState;
   final List<KuzzleCollection> collections;
+  final String loadingError;
+  final String addingError;
+  final String deletingError;
 
   KuzzleIndex({
     this.loadingState = KuzzleState.INIT,
-    this.loadingError,
     this.collections = const <KuzzleCollection>[],
     this.addingState = KuzzleState.INIT,
     this.deletingState = KuzzleState.INIT,
+    this.loadingError,
+    this.addingError,
+    this.deletingError,
   });
   KuzzleIndex copyWith({
     List<KuzzleCollection> collections,
-    String loadingError,
     KuzzleState loadingState,
     KuzzleState addingState,
     KuzzleState deletingState,
+    String loadingError,
+    String addingError,
+    String deletingError,
   }) {
     return KuzzleIndex(
       collections: collections ?? this.collections,
       loadingState: loadingState ?? this.loadingState,
-      loadingError: loadingError ?? this.loadingError,
       addingState: addingState ?? this.addingState,
       deletingState: deletingState ?? this.deletingState,
+      loadingError: loadingError ?? this.loadingError,
+      addingError: addingError ?? this.addingError,
+      deletingError: deletingError ?? this.deletingError,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'loadingState': loadingState.toString(),
-        'loadingError': loadingError,
         'addingState': addingState.toString(),
         'deletingState': deletingState.toString(),
+        'loadingError': loadingError.toString(),
+        'addingError': addingError.toString(),
+        'deletingError': deletingError.toString(),
         'collections': collections.map((e) => e.toJson()).toList(),
       };
 }
@@ -70,33 +80,41 @@ class KuzzleIndex {
 @immutable
 class KuzzleIndexes {
   final KuzzleState loadingState;
-  final String loadingError;
   final KuzzleState addingState;
   final KuzzleState deletingState;
+  final String loadingError;
+  final String addingError;
+  final String deletingError;
   // Map of index to collections
   final Map<String, KuzzleIndex> indexMap;
 
   KuzzleIndexes({
     this.indexMap = const {},
     this.loadingState = KuzzleState.INIT,
-    this.loadingError,
     this.addingState = KuzzleState.INIT,
     this.deletingState = KuzzleState.INIT,
+    this.loadingError,
+    this.addingError,
+    this.deletingError,
   });
 
   KuzzleIndexes copyWith({
     Map<String, KuzzleIndex> indexMap,
     KuzzleState loadingState,
-    String loadingError,
     KuzzleState addingState,
     KuzzleState deletingState,
+    String loadingError,
+    String addingError,
+    String deletingError,
   }) {
     return KuzzleIndexes(
       indexMap: indexMap ?? this.indexMap,
       loadingState: loadingState ?? this.loadingState,
-      loadingError: loadingError ?? this.loadingError,
       addingState: addingState ?? this.addingState,
       deletingState: deletingState ?? this.deletingState,
+      loadingError: loadingError ?? this.loadingError,
+      addingError: addingError ?? this.addingError,
+      deletingError: deletingError ?? this.deletingError,
     );
   }
 
@@ -107,9 +125,11 @@ class KuzzleIndexes {
 
   Map<String, dynamic> toJson() => {
         'loadingState': loadingState.toString(),
-        'loadingError': loadingError,
         'addingState': addingState.toString(),
         'deletingState': deletingState.toString(),
+        'loadingError': loadingError.toString(),
+        'addingError': addingError.toString(),
+        'deletingError': deletingError.toString(),
         'indexMap': indexMap.map(
           (key, value) => MapEntry<String, dynamic>(
             key,

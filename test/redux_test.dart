@@ -33,11 +33,52 @@ void main() async {
   await FlutterKuzzle.instance.connect();
   store.dispatch(getKuzzleIndexes);
   Timer.periodic(Duration(milliseconds: 10), (timer) {
-    if (store.state.loadingState == KuzzleState.LOADED &&
-        store.state.getIndexes().length > 0) {
-      var index = store.state.getIndexes()[0];
-      store.dispatch(getKuzzleCollections(index));
+    if (store.state.loadingState == KuzzleState.LOADED) {
+      var index = "testindexname";
+      var collectionName = "comments";
+      store.dispatch(addKuzzleIndex(index));
       timer.cancel();
+      Timer.periodic(Duration(milliseconds: 10), (timer) {
+        if (store.state.addingState == KuzzleState.LOADED) {
+          // var index = store.state.getIndexes()[0];
+          store.dispatch(getKuzzleCollections(index));
+          timer.cancel();
+          Timer.periodic(Duration(milliseconds: 10), (timer) {
+            if (store.state.indexMap[index].loadingState ==
+                KuzzleState.LOADED) {
+              store.dispatch(
+                addKuzzleCollection(
+                  index,
+                  KuzzleCollection(name: collectionName, type: "stored"),
+                ),
+              );
+              timer.cancel();
+              Timer.periodic(Duration(milliseconds: 10), (timer) {
+                if (store.state.indexMap[index].addingState ==
+                    KuzzleState.LOADED) {
+                  store.dispatch(
+                    deleteKuzzleCollection(index, collectionName),
+                  );
+                  timer.cancel();
+                  Timer.periodic(Duration(milliseconds: 10), (timer) {
+                    if (store.state.indexMap[index].deletingState ==
+                        KuzzleState.LOADED) {
+                      store.dispatch(deleteKuzzleIndex(index));
+                      timer.cancel();
+                      Timer.periodic(Duration(milliseconds: 10), (timer) {
+                        if (store.state.deletingState == KuzzleState.LOADED) {
+                          FlutterKuzzle.instance.disconnect();
+                          timer.cancel();
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
     }
   });
 }

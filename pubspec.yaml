@@ -28,6 +28,7 @@ dependencies:
     path: ../kuzzle_dart
   json_annotation: any
   redux: any
+  redux_logging: any
   redux_thunk: any
   shared_preferences: any
 

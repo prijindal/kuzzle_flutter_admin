@@ -1,5 +1,5 @@
 import 'package:kuzzleflutteradmin/helpers/shared_preferences.dart';
-import 'package:kuzzleflutteradmin/kuzzle/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'events.dart';
@@ -8,6 +8,7 @@ const ENVIRONMENTS_KEY = "environments";
 const DEFAULT_ENVIRONMENT_KEY = "default_environment";
 
 void initEnvironments(Store<dynamic> store) async {
+  store.dispatch(InitializeEnvironmentAction());
   var environmentsJson =
       await FlutterSharedPreferences.getInstance().getJson(ENVIRONMENTS_KEY);
   var defaultEnvironment = await FlutterSharedPreferences.getInstance()
@@ -18,7 +19,6 @@ void initEnvironments(Store<dynamic> store) async {
       environments[key] = Environment.fromJson(environmentJson);
     });
   }
-  print('Loading environment variables');
   store.dispatch(
     InitializeSuccessEnvironmentAction(
       environments,
@@ -30,13 +30,17 @@ void initEnvironments(Store<dynamic> store) async {
 ThunkAction<dynamic> syncEnvironments(
     Map<String, dynamic> environments, String defaultEnvironment) {
   return (Store<dynamic> store) async {
-    Map<String, dynamic> environmentsJson = {};
-    environments.forEach((key, value) {
-      environmentsJson[key] = value.toJson();
-    });
-    await FlutterSharedPreferences.getInstance()
-        .setJson(ENVIRONMENTS_KEY, environmentsJson);
-    await FlutterSharedPreferences.getInstance()
-        .setString(DEFAULT_ENVIRONMENT_KEY, defaultEnvironment);
+    if (environments != null && environments.length > 0) {
+      Map<String, dynamic> environmentsJson = {};
+      environments.forEach((key, value) {
+        environmentsJson[key] = value.toJson();
+      });
+      await FlutterSharedPreferences.getInstance()
+          .setJson(ENVIRONMENTS_KEY, environmentsJson);
+    }
+    if (defaultEnvironment != null && defaultEnvironment.length > 0) {
+      await FlutterSharedPreferences.getInstance()
+          .setString(DEFAULT_ENVIRONMENT_KEY, defaultEnvironment);
+    }
   };
 }

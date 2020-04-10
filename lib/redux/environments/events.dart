@@ -1,4 +1,4 @@
-import 'package:kuzzleflutteradmin/kuzzle/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environment.dart';
 
 abstract class EnvironmentAction {}
 

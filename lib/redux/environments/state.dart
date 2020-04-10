@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:kuzzleflutteradmin/kuzzle/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environment.dart';
 
 @immutable
 class Environments {

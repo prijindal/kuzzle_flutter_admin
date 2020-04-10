@@ -6,6 +6,7 @@ import 'package:kuzzleflutteradmin/redux/store.dart';
 import 'helpers/navigation.dart';
 import 'pages/loading.dart';
 import 'pages/environments.dart';
+import 'pages/environmenthome.dart';
 import 'pages/addenvironment.dart';
 
 void main() {
@@ -35,7 +36,11 @@ class MyApp extends StatelessWidget {
                     ? LoadingPage()
                     : (environments.environments.length == 0
                         ? AddEnvironmentPage()
-                        : MyHomePage()),
+                        : (environments.getDefaultEnvironment != null
+                            ? EnvironmentHomePage(
+                                environments.getDefaultEnvironment,
+                              )
+                            : EnvironmentsPage())),
               ),
           'addenvironment': (context) => AddEnvironmentPage(),
         },

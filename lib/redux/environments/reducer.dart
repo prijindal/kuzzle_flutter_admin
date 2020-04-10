@@ -1,3 +1,5 @@
+import 'package:kuzzleflutteradmin/models/environment.dart';
+
 import 'state.dart';
 import 'events.dart';
 
@@ -14,15 +16,18 @@ Environments environmentsReducer(Environments state, action) {
   } else if (action is InitializeSuccessEnvironmentAction) {
     return state.copyWith(
       isInitialized: true,
+      environments: action.environments,
     );
   } else if (action is AddEnvironmentAction) {
-    var environments = state.environments;
+    Map<String, Environment> environments = <String, Environment>{};
+    environments.addAll(state.environments);
     environments[action.environment.name] = action.environment;
     return state.copyWith(
       environments: environments,
     );
   } else if (action is RemoveEnvironmentAction) {
-    var environments = state.environments;
+    Map<String, Environment> environments = <String, Environment>{};
+    environments.addAll(state.environments);
     environments.remove(action.environmentName);
     return state.copyWith(
       environments: environments,
@@ -32,7 +37,8 @@ Environments environmentsReducer(Environments state, action) {
       defaultEnvironment: action.environmentName,
     );
   } else if (action is SetFirstEnvironmentAction) {
-    var environments = state.environments;
+    Map<String, Environment> environments = <String, Environment>{};
+    environments.addAll(state.environments);
     environments[action.environment.name] = action.environment;
     return state.copyWith(
       environments: environments,

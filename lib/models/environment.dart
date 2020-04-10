@@ -7,6 +7,11 @@ part 'environment.g.dart';
 class Environment {
   Environment({
     @required this.name,
+    this.color,
+    this.host,
+    this.port,
+    this.ssl,
+    this.token,
   });
   String name;
   String color;

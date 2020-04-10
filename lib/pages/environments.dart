@@ -4,14 +4,14 @@ import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class EnvironmentsPage extends StatefulWidget {
+  EnvironmentsPage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _EnvironmentsPageState createState() => _EnvironmentsPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _EnvironmentsPageState extends State<EnvironmentsPage> {
   @override
   void initState() {
     super.initState();
@@ -44,7 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
     if (confirm) {
-      StoreProvider.of(context).dispatch(RemoveEnvironmentAction(name));
+      StoreProvider.of<AppState>(context)
+          .dispatch(RemoveEnvironmentAction(name));
     }
   }
 

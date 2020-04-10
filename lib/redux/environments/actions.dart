@@ -15,9 +15,10 @@ void initEnvironments(Store<dynamic> store) async {
       .getString(DEFAULT_ENVIRONMENT_KEY);
   var environments = <String, Environment>{};
   if (environmentsJson != null) {
-    environmentsJson.forEach((key, environmentJson) {
+    for (var key in environmentsJson.keys) {
+      var environmentJson = environmentsJson[key];
       environments[key] = Environment.fromJson(environmentJson);
-    });
+    }
   }
   store.dispatch(
     InitializeSuccessEnvironmentAction(

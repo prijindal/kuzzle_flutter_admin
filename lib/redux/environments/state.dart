@@ -30,15 +30,28 @@ class Environments {
 
   // Get default environment name
   Environment get getDefaultEnvironment {
+    if (defaultEnvironment == null) {
+      return null;
+    }
     return getEnvironment(defaultEnvironment);
   }
 
   // Get single environment
   Environment getEnvironment(String name) {
-    if (environments.containsKey(name)) {
+    if (name != null && environments.containsKey(name)) {
       return environments[name];
     } else {
       return null;
     }
   }
+
+  Map<String, dynamic> toJson() => {
+        'environments': environments.map(
+          (key, value) => MapEntry<String, dynamic>(
+            key,
+            value.toJson(),
+          ),
+        ),
+        'defaultEnvironment': defaultEnvironment,
+      };
 }

@@ -70,8 +70,8 @@ class FlutterSharedPreferences {
     await this._init();
     if (_isMobile) {
       try {
-        String jsonStr = _sharedPreferences.getString(key);
-        return jsonStr;
+        String str = _sharedPreferences.getString(key);
+        return str;
       } catch (e) {
         return null;
       }

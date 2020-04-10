@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 import 'environments/index.dart';
 import 'kuzzleindex/index.dart';
@@ -11,4 +13,12 @@ class AppState {
     KuzzleIndexes kuzzleindexes,
   })  : this.environments = environments ?? Environments(),
         this.kuzzleindexes = kuzzleindexes ?? KuzzleIndexes();
+
+  Map<String, dynamic> toJson() => {
+        'environments': environments.toJson(),
+        'kuzzleindexes': kuzzleindexes.toJson(),
+      };
+
+  @override
+  String toString() => jsonEncode(toJson());
 }

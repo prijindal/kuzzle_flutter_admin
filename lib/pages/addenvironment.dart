@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/redux/state.dart';
+import '../redux/environments/events.dart';
 
 class AddEnvironmentPage extends StatefulWidget {
   _AddEnvironmentPageState createState() => _AddEnvironmentPageState();
@@ -6,14 +10,36 @@ class AddEnvironmentPage extends StatefulWidget {
 
 class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _hostController = TextEditingController();
+  final TextEditingController _nameController =
+      TextEditingController(text: 'localhost');
+  final TextEditingController _hostController =
+      TextEditingController(text: '192.168.146.136');
   final TextEditingController _portController =
       TextEditingController(text: "7512");
   bool _sslValue = false;
 
   void _addNewEnvironment() {
-    print(_formKey.currentState.validate());
+    if (_formKey.currentState.validate()) {
+      var environment = Environment(
+        name: _nameController.text,
+        host: _hostController.text,
+        port: int.tryParse(_portController.text),
+        ssl: _sslValue,
+      );
+      if (StoreProvider.of<AppState>(context)
+              .state
+              .environments
+              .getDefaultEnvironment ==
+          null) {
+        StoreProvider.of<AppState>(context).dispatch(
+          SetFirstEnvironmentAction(environment),
+        );
+      } else {
+        StoreProvider.of<AppState>(context).dispatch(
+          AddEnvironmentAction(environment),
+        );
+      }
+    }
   }
 
   @override
@@ -53,7 +79,10 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   if (value.isEmpty) {
                     return 'Please enter a port';
                   }
-                  var parsed = int.parse(value);
+                  var parsed = int.tryParse(value);
+                  if (parsed == null) {
+                    return 'Port should be an int';
+                  }
                   if (parsed < 0 || parsed > 65535) {
                     return 'Port can only be between 0 and 65535';
                   }

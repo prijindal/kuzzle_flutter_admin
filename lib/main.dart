@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:kuzzleflutteradmin/redux/index.dart';
 import 'package:kuzzleflutteradmin/redux/environments/index.dart';
+import 'package:kuzzleflutteradmin/redux/state.dart';
+import 'package:kuzzleflutteradmin/redux/store.dart';
+import 'helpers/navigation.dart';
+import 'pages/loading.dart';
+import 'pages/environments.dart';
+import 'pages/addenvironment.dart';
 
 void main() {
   runApp(
@@ -10,48 +15,30 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final store = initStore();
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'Kuzzle Admin',
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    store.dispatch(initEnvironments);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Kuzzle admin'),
-      ),
-      body: StoreConnector<AppState, bool>(
-        converter: (store) => store.state.environments.isInitialized,
-        builder: (context, isInitialized) => Center(
-          child: Text(isInitialized ? 'Initialized' : 'Loading...'),
-        ),
+        routes: {
+          '/': (context) => StoreConnector<AppState, Environments>(
+                converter: (store) => store.state.environments,
+                builder: (context, environments) => !environments.isInitialized
+                    ? LoadingPage()
+                    : (environments.environments.length == 0
+                        ? AddEnvironmentPage()
+                        : MyHomePage()),
+              ),
+          'addenvironment': (context) => AddEnvironmentPage(),
+        },
       ),
     );
   }

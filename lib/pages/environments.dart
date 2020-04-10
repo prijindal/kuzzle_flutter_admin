@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/redux/environments/events.dart';
+import 'package:kuzzleflutteradmin/redux/state.dart';
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _goToAddEnvironmentPage() {
+    Navigator.of(context).pushReplacementNamed("addenvironment");
+  }
+
+  void _deleteEnvironmentConfirm(String name) async {
+    var confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Delete $name"),
+        content: Text("Are you sure you want to delete this environment"),
+        actions: [
+          RaisedButton(
+            child: Text("No"),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+          RaisedButton(
+            child: Text("Yes"),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      ),
+    );
+    if (confirm) {
+      StoreProvider.of(context).dispatch(RemoveEnvironmentAction(name));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Environments'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: _goToAddEnvironmentPage,
+      ),
+      body: Scaffold(
+        body: StoreConnector<AppState, Map<String, Environment>>(
+          converter: (store) => store.state.environments.environments,
+          builder: (context, environments) => ListView(
+            children: environments.keys
+                .map(
+                  (environmentName) => ListTile(
+                    title: Text(environmentName),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () =>
+                          _deleteEnvironmentConfirm(environmentName),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ),
+    );
+  }
+}

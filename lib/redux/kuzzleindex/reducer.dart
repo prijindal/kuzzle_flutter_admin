@@ -1,7 +1,7 @@
 import 'state.dart';
 import 'events.dart';
 
-KuzzleIndexes kuzzleReducer(KuzzleIndexes state, KuzzleIndexAction action) {
+KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
   if (state == null) {
     state = KuzzleIndexes();
   }

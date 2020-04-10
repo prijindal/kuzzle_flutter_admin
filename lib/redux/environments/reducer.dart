@@ -1,7 +1,7 @@
 import 'state.dart';
 import 'events.dart';
 
-Environments environmentsReducer(Environments state, EnvironmentAction action) {
+Environments environmentsReducer(Environments state, action) {
   if (state == null) {
     state = Environments(
       isInitialized: false,

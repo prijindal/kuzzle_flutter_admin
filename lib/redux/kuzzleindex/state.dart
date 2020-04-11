@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:meta/meta.dart';
-
-enum KuzzleState { INIT, LOADING, LOADED, ERRORED }
 
 @immutable
 class KuzzleCollection {

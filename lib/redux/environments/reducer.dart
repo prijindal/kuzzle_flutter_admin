@@ -17,6 +17,7 @@ Environments environmentsReducer(Environments state, action) {
     return state.copyWith(
       isInitialized: true,
       environments: action.environments,
+      defaultEnvironment: action.defaultEnvironments,
     );
   } else if (action is AddEnvironmentAction) {
     Map<String, Environment> environments = <String, Environment>{};

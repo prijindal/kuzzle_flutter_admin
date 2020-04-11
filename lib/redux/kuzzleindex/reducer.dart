@@ -1,3 +1,5 @@
+import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
+
 import 'state.dart';
 import 'events.dart';
 

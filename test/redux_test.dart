@@ -8,6 +8,7 @@
 import 'dart:async';
 
 import 'package:kuzzle/kuzzle.dart';
+import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';

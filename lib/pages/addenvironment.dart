@@ -38,6 +38,10 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
         StoreProvider.of<AppState>(context).dispatch(
           AddEnvironmentAction(environment),
         );
+        StoreProvider.of<AppState>(context).dispatch(
+          SetDefaultEnvironmentAction(environment.name),
+        );
+        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
       }
     }
   }

@@ -6,6 +6,7 @@ import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
+import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/state.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -34,6 +35,11 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
   void didChangeDependencies() {
     if (StoreProvider.of<AppState>(context).state.kuzzleping.loadingState ==
         KuzzleState.INIT) {
+      StoreProvider.of<AppState>(context).dispatch(
+        SetDefaultEnvironmentAction(
+          widget.environment.name,
+        ),
+      );
       StoreProvider.of<AppState>(context).dispatch(initKuzzlePing);
     }
     super.didChangeDependencies();
@@ -58,15 +64,11 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
         builder: (context, kuzzleping) =>
             kuzzleping.loadingState != KuzzleState.LOADED
                 ? Scaffold(
-                    appBar: KuzzleAppBar(
-                      environment: widget.environment,
-                    ),
+                    appBar: KuzzleAppBar(),
                     body: Center(
                       child: Text(_getMessage(kuzzleping)),
                     ),
                   )
-                : IndexesPage(
-                    environment: widget.environment,
-                  ),
+                : IndexesPage(),
       );
 }

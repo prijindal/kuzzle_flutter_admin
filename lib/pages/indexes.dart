@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
+import 'package:kuzzleflutteradmin/components/drawer.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
@@ -51,6 +52,7 @@ class _IndexesPageState extends State<IndexesPage> {
         appBar: KuzzleAppBar(
           subtitle: "Indexes",
         ),
+        drawer: KuzzleDrawer(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _goToAddIndexPage,

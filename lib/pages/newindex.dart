@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
+import 'package:kuzzleflutteradmin/components/drawer.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -55,6 +56,7 @@ class _NewIndexPageState extends State<NewIndexPage> {
         appBar: KuzzleAppBar(
           subtitle: "Add new Index",
         ),
+        drawer: KuzzleDrawer(),
         body: Form(
           child: Column(
             children: [

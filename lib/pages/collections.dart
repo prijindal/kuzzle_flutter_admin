@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
+import 'package:kuzzleflutteradmin/components/drawer.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/newcollection.dart';
@@ -79,6 +80,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
         appBar: KuzzleAppBar(
           subtitle: '${widget.index}/collections',
         ),
+        drawer: KuzzleDrawer(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _goToAddCollectionPage,

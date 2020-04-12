@@ -34,7 +34,8 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       addingState: KuzzleState.LOADING,
     );
   } else if (action is AddSuccessKuzzleIndexAction) {
-    var indexMap = state.indexMap;
+    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
+    indexMap.addAll(state.indexMap);
     indexMap[action.index] = KuzzleIndex();
     return state.copyWith(
       addingState: KuzzleState.LOADED,
@@ -50,7 +51,8 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       deletingState: KuzzleState.LOADING,
     );
   } else if (action is DeleteSuccessKuzzleIndexAction) {
-    var indexMap = state.indexMap;
+    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
+    indexMap.addAll(state.indexMap);
     indexMap.remove(action.index);
     return state.copyWith(
       deletingState: KuzzleState.LOADED,
@@ -118,6 +120,9 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       ),
     );
   } else if (action is AddSuccessKuzzleCollectionAction) {
+    List<KuzzleCollection> collections = <KuzzleCollection>[];
+    collections.addAll(state.indexMap[action.index].collections);
+    collections.add(action.collection);
     return state.copyWith(
       indexMap: state.indexMap.map(
         (key, value) => MapEntry<String, KuzzleIndex>(
@@ -126,7 +131,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
               ? value
               : value.copyWith(
                   addingState: KuzzleState.LOADED,
-                  collections: value.collections..add(action.collection),
+                  collections: collections,
                 ),
         ),
       ),

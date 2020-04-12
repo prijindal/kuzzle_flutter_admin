@@ -10,7 +10,7 @@ class KuzzleCollection {
 
   KuzzleCollection({
     @required this.name,
-    @required this.type,
+    this.type = "stored",
   });
 
   KuzzleCollection copyWith({String name, String type}) {

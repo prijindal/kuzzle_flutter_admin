@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -22,27 +23,8 @@ class _EnvironmentsPageState extends State<EnvironmentsPage> {
   }
 
   void _deleteEnvironmentConfirm(String name) async {
-    var confirm = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Delete $name"),
-        content: Text("Are you sure you want to delete this environment"),
-        actions: [
-          RaisedButton(
-            child: Text("No"),
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-          ),
-          RaisedButton(
-            child: Text("Yes"),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-      ),
-    );
+    var confirm = await confirmDialog(context, "Delete $name",
+        "Are you sure you want to delete this environment");
     if (confirm) {
       StoreProvider.of<AppState>(context)
           .dispatch(RemoveEnvironmentAction(name));

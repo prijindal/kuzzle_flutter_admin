@@ -6,12 +6,16 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
+import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/reducer.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/reducer.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/useraction.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -25,6 +29,31 @@ void main() async {
       '192.168.146.136',
     ),
   );
+  FlutterKuzzle.instance.on("disconnect", () {
+    exit(0);
+  });
+  testSecurity();
+}
+
+void testSecurity() async {
+  final store = new Store<KuzzleSecurity>(
+    (state, action) => kuzzleSecurityReducer(state, action),
+    middleware: [
+      thunkMiddleware,
+      new LoggingMiddleware.printer(),
+    ],
+    initialState: KuzzleSecurity(),
+  );
+  await FlutterKuzzle.instance.connect();
+  store.dispatch(getKuzzleUsers);
+  Timer.periodic(Duration(milliseconds: 10), (timer) {
+    if (store.state.users.loadingState == KuzzleState.LOADED) {
+      timer.cancel();
+    }
+  });
+}
+
+void testIndexes() async {
   final store = new Store<KuzzleIndexes>(
     (state, action) => kuzzleReducer(state, action),
     middleware: [

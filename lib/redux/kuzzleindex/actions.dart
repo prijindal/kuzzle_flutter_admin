@@ -1,23 +1,8 @@
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
-import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'events.dart';
-
-bool initKuzzleIndex() {
-  if (FlutterKuzzle.instance != null) {
-    if (FlutterKuzzle.instance.index == null) {
-      FlutterKuzzle.instance.index = IndexController(FlutterKuzzle.instance);
-    }
-    if (FlutterKuzzle.instance.collection == null) {
-      FlutterKuzzle.instance.collection =
-          CollectionController(FlutterKuzzle.instance);
-    }
-    return true;
-  }
-  return false;
-}
 
 void getKuzzleIndexes(Store<dynamic> store) async {
   store.dispatch(GetKuzzleIndexesAction());

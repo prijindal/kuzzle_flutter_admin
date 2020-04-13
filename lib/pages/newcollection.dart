@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/components/drawer.dart';
+import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
@@ -88,11 +89,8 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: KuzzleAppBar(
-          subtitle: '${widget.index}/Create a new collection',
-        ),
-        drawer: KuzzleDrawer(),
+  Widget build(BuildContext context) => ResponsiveScaffold(
+        subtitle: '${widget.index}/Create a new collection',
         body: Form(
           child: Column(
             children: [

@@ -1,19 +1,22 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-enum AppBarActions { ADDENVIRONMENT }
+enum AppBarActions { ADDENVIRONMENT, EXIT }
 
 class KuzzleAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String subtitle;
 
   KuzzleAppBar({
     this.subtitle,
+    this.preferredSize = const Size.fromHeight(kToolbarHeight),
   });
 
   @override
-  final Size preferredSize = Size.fromHeight(kToolbarHeight);
+  final Size preferredSize;
 
   _KuzzleAppBarState createState() => _KuzzleAppBarState();
 }
@@ -22,6 +25,9 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
   void _actionSelected(AppBarActions action) {
     if (action == AppBarActions.ADDENVIRONMENT) {
       Navigator.of(context).pushNamed("addenvironment");
+    } else if (action == AppBarActions.EXIT) {
+      FlutterKuzzle.instance.disconnect();
+      exit(0);
     }
   }
 
@@ -34,6 +40,10 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
           const PopupMenuItem<AppBarActions>(
             value: AppBarActions.ADDENVIRONMENT,
             child: Text("Add New Environment"),
+          ),
+          const PopupMenuItem<AppBarActions>(
+            value: AppBarActions.EXIT,
+            child: Text("Exit"),
           ),
         ],
       ),

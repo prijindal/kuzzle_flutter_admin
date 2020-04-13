@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/components/drawer.dart';
+import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -52,11 +53,8 @@ class _NewIndexPageState extends State<NewIndexPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: KuzzleAppBar(
-          subtitle: "Add new Index",
-        ),
-        drawer: KuzzleDrawer(),
+  Widget build(BuildContext context) => ResponsiveScaffold(
+        subtitle: "Add new Index",
         body: Form(
           child: Column(
             children: [

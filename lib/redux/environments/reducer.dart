@@ -1,6 +1,6 @@
 import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environments.dart';
 
-import 'state.dart';
 import 'events.dart';
 
 Environments environmentsReducer(Environments state, action) {

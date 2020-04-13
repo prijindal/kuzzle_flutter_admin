@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/expansiontile.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environments.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/addenvironment.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
@@ -9,8 +11,7 @@ import 'package:kuzzleflutteradmin/pages/environments.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
 import 'package:kuzzleflutteradmin/pages/newcollection.dart';
 import 'package:kuzzleflutteradmin/pages/newindex.dart';
-import 'package:kuzzleflutteradmin/redux/environments/index.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class KuzzleDrawer extends StatefulWidget {
@@ -19,6 +20,18 @@ class KuzzleDrawer extends StatefulWidget {
 
 class _KuzzleDrawerState extends State<KuzzleDrawer> {
   void _chooseEnvironmentConfirm(Environment environment) {}
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getData());
+    super.initState();
+  }
+
+  void _getData() {
+    if (StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
+        KuzzleState.INIT) {
+      StoreProvider.of<AppState>(context).dispatch(getKuzzleIndexes);
+    }
+  }
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -58,6 +71,27 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
             ListTile(
               dense: true,
               title: Text("Security"),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("Users"),
+              onTap: () {
+                Navigator.of(context).pushNamed("users");
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.people),
+              title: Text("Profiles"),
+              onTap: () {
+                Navigator.of(context).pushNamed("profiles");
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lock_open),
+              title: Text("Roles"),
+              onTap: () {
+                Navigator.of(context).pushNamed("roles");
+              },
             ),
             ListTile(
               dense: true,

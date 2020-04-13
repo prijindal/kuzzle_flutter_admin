@@ -1,4 +1,4 @@
-import 'state.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 
 abstract class KuzzleIndexAction {}
 

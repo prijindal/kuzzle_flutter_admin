@@ -1,6 +1,10 @@
-import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 
+part 'kuzzleping.g.dart';
+
+@JsonSerializable()
 @immutable
 class KuzzlePing {
   final String errorMessage;
@@ -21,8 +25,8 @@ class KuzzlePing {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'errorMessage': errorMessage,
-        'loadingState': loadingState.toString(),
-      };
+  factory KuzzlePing.fromJson(Map<String, dynamic> json) =>
+      _$KuzzlePingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$KuzzlePingToJson(this);
 }

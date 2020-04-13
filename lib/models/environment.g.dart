@@ -9,12 +9,12 @@ part of 'environment.dart';
 Environment _$EnvironmentFromJson(Map<String, dynamic> json) {
   return Environment(
     name: json['name'] as String,
-  )
-    ..color = json['color'] as String
-    ..host = json['host'] as String
-    ..port = json['port'] as int
-    ..ssl = json['ssl'] as bool
-    ..token = json['token'] as String;
+    color: json['color'] as String,
+    host: json['host'] as String,
+    port: json['port'] as int,
+    ssl: json['ssl'] as bool,
+    token: json['token'] as String,
+  );
 }
 
 Map<String, dynamic> _$EnvironmentToJson(Environment instance) =>

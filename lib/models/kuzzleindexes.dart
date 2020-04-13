@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:meta/meta.dart';
 
+part 'kuzzleindexes.g.dart';
+
+@JsonSerializable()
 @immutable
 class KuzzleCollection {
   final String name;
@@ -20,12 +24,13 @@ class KuzzleCollection {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'type': type,
-      };
+  factory KuzzleCollection.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleCollectionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$KuzzleCollectionToJson(this);
 }
 
+@JsonSerializable()
 @immutable
 class KuzzleIndex {
   final KuzzleState loadingState;
@@ -65,17 +70,13 @@ class KuzzleIndex {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'loadingState': loadingState.toString(),
-        'addingState': addingState.toString(),
-        'deletingState': deletingState.toString(),
-        'loadingError': loadingError.toString(),
-        'addingError': addingError.toString(),
-        'deletingError': deletingError.toString(),
-        'collections': collections.map((e) => e.toJson()).toList(),
-      };
+  factory KuzzleIndex.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleIndexFromJson(json);
+
+  Map<String, dynamic> toJson() => _$KuzzleIndexToJson(this);
 }
 
+@JsonSerializable()
 @immutable
 class KuzzleIndexes {
   final KuzzleState loadingState;
@@ -122,20 +123,11 @@ class KuzzleIndexes {
   List<String> getCollections(String index) =>
       indexMap[index].collections.map((e) => e.name).toList();
 
-  Map<String, dynamic> toJson() => {
-        'loadingState': loadingState.toString(),
-        'addingState': addingState.toString(),
-        'deletingState': deletingState.toString(),
-        'loadingError': loadingError.toString(),
-        'addingError': addingError.toString(),
-        'deletingError': deletingError.toString(),
-        'indexMap': indexMap.map(
-          (key, value) => MapEntry<String, dynamic>(
-            key,
-            value.toJson(),
-          ),
-        ),
-      };
+  factory KuzzleIndexes.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleIndexesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$KuzzleIndexesToJson(this);
+
   @override
   String toString() {
     JsonEncoder encoder = new JsonEncoder.withIndent('  ');

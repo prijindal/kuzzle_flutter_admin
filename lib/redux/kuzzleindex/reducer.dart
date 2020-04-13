@@ -1,6 +1,6 @@
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 
-import 'state.dart';
 import 'events.dart';
 
 KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {

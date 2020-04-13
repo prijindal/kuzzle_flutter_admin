@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/models/environments.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
 import 'package:kuzzleflutteradmin/pages/newindex.dart';
-import 'package:kuzzleflutteradmin/redux/environments/index.dart';
+import 'package:kuzzleflutteradmin/pages/users.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 import 'package:kuzzleflutteradmin/redux/store.dart';
 import 'helpers/navigation.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
           'indexes': (context) => IndexesPage(),
           'newindex': (context) => NewIndexPage(),
           'collections': (context) => CollectionsPageRoute(),
+          'users': (context) => UsersPage(),
         },
       ),
     );

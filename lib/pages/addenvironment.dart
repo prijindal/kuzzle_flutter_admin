@@ -10,10 +10,8 @@ class AddEnvironmentPage extends StatefulWidget {
 
 class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController =
-      TextEditingController(text: 'localhost');
-  final TextEditingController _hostController =
-      TextEditingController(text: '192.168.146.136');
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _hostController = TextEditingController();
   final TextEditingController _portController =
       TextEditingController(text: "7512");
   bool _sslValue = false;

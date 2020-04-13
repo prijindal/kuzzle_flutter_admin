@@ -1,6 +1,6 @@
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzle/kuzzle.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'events.dart';

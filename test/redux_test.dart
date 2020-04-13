@@ -8,14 +8,16 @@
 import 'dart:async';
 
 import 'package:kuzzle/kuzzle.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleindex/reducer.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 // import 'package:kuzzleflutteradmin/redux/index.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
 
 void main() async {
   FlutterKuzzle.instance = FlutterKuzzle(

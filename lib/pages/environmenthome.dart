@@ -4,11 +4,11 @@ import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleping/state.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class EnvironmentHomePage extends StatefulWidget {
@@ -29,12 +29,14 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
       ),
     );
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
   }
 
-  @override
-  void didChangeDependencies() {
+  void _refreshData() {
     if (StoreProvider.of<AppState>(context).state.kuzzleping.loadingState ==
-        KuzzleState.INIT) {
+            KuzzleState.INIT ||
+        StoreProvider.of<AppState>(context).state.kuzzleping.loadingState ==
+            KuzzleState.LOADED) {
       StoreProvider.of<AppState>(context).dispatch(
         SetDefaultEnvironmentAction(
           widget.environment.name,
@@ -42,7 +44,6 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
       );
       StoreProvider.of<AppState>(context).dispatch(initKuzzlePing);
     }
-    super.didChangeDependencies();
   }
 
   String _getMessage(KuzzlePing kuzzleping) {

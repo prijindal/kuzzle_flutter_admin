@@ -1,7 +1,7 @@
+import 'package:kuzzleflutteradmin/redux/environments/actions.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'environments/index.dart';
 import 'state.dart';
 import 'reducer.dart';
 

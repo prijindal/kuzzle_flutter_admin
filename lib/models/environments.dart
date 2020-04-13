@@ -1,6 +1,10 @@
 import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 
+part 'environments.g.dart';
+
+@JsonSerializable()
 @immutable
 class Environments {
   // Get environments
@@ -45,13 +49,8 @@ class Environments {
     }
   }
 
-  Map<String, dynamic> toJson() => {
-        'environments': environments.map(
-          (key, value) => MapEntry<String, dynamic>(
-            key,
-            value.toJson(),
-          ),
-        ),
-        'defaultEnvironment': defaultEnvironment,
-      };
+  factory Environments.fromJson(Map<String, dynamic> json) =>
+      _$EnvironmentsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EnvironmentsToJson(this);
 }

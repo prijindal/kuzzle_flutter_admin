@@ -1,6 +1,6 @@
+import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 
-import 'state.dart';
 import 'events.dart';
 
 KuzzlePing kuzzlePingReducer(KuzzlePing state, action) {

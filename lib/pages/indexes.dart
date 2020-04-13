@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/pages/newcollection.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleindex/index.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 enum IndexListItemActions { DELETE, EDIT, BROWSECOLLECTIONS, CREATECOLLECTION }
@@ -19,15 +19,16 @@ class _IndexesPageState extends State<IndexesPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
   }
 
-  @override
-  void didChangeDependencies() {
+  void _refreshData() {
     if (StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
-        KuzzleState.INIT) {
+            KuzzleState.INIT ||
+        StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
+            KuzzleState.LOADED) {
       StoreProvider.of<AppState>(context).dispatch(getKuzzleIndexes);
     }
-    super.didChangeDependencies();
   }
 
   void _goToAddIndexPage() {

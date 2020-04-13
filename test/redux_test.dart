@@ -49,6 +49,57 @@ void testSecurity() async {
   Timer.periodic(Duration(milliseconds: 10), (timer) {
     if (store.state.users.loadingState == KuzzleState.LOADED) {
       timer.cancel();
+      if (store.state.users.users.length > 0) {
+        store.dispatch(getKuzzleUser(store.state.users.users[0].uid));
+        Timer.periodic(Duration(milliseconds: 10), (timer) {
+          if (store.state.users.users[0].loadingState == KuzzleState.LOADED) {
+            timer.cancel();
+            Map<String, dynamic> credentials = {
+              "local": {
+                "username": "test",
+                "password": "test",
+              },
+            };
+            store.dispatch(
+              addKuzzleUser(
+                KuzzleSecurityUser(
+                  uid: null,
+                  content: <String, dynamic>{
+                    "profileIds": ["admin"],
+                    "name": "test",
+                  },
+                ),
+                credentials,
+              ),
+            );
+            Timer.periodic(Duration(milliseconds: 10), (timer) {
+              if (store.state.users.addingState == KuzzleState.LOADED) {
+                timer.cancel();
+                var user = store.state.users.users.last.copyWith(
+                  content: {
+                    "name": "Edited name",
+                  },
+                );
+                store.dispatch(editKuzzleUser(user));
+                Timer.periodic(Duration(milliseconds: 10), (timer) {
+                  if (store.state.users.users.last.savingState ==
+                      KuzzleState.LOADED) {
+                    timer.cancel();
+                    store.dispatch(
+                        deleteKuzzleUser(store.state.users.users.last.uid));
+                    Timer.periodic(Duration(milliseconds: 10), (timer) {
+                      if (store.state.users.deletingState ==
+                          KuzzleState.LOADED) {
+                        timer.cancel();
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
     }
   });
 }

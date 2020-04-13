@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
@@ -11,22 +13,48 @@ class KuzzleSecurityUser {
   final String uid;
   final Map<String, dynamic> content;
   final Map<String, dynamic> meta;
+  final KuzzleState loadingState;
+  final KuzzleState savingState;
+  final String loadingError;
+  final String savingError;
+
+  // List<String> get profileIds => content["profileIds"];
+  // set profileIds(List<String> profileIds) {
+  //   content["profileIds"] = profileIds;
+  // }
+
+  // String get name => content["name"];
+  // set name(String name) {
+  //   content["name"] = name;
+  // }
 
   KuzzleSecurityUser({
     @required this.uid,
     this.content = const <String, dynamic>{},
     this.meta = const <String, dynamic>{},
+    this.loadingState = KuzzleState.INIT,
+    this.savingState = KuzzleState.INIT,
+    this.loadingError,
+    this.savingError,
   }) : assert(uid != null);
 
-  KuzzleSecurityUser copyWith(
+  KuzzleSecurityUser copyWith({
     String uid,
     Map<String, dynamic> content,
     Map<String, dynamic> meta,
-  ) {
+    KuzzleState loadingState,
+    KuzzleState savingState,
+    String loadingError,
+    String savingError,
+  }) {
     return KuzzleSecurityUser(
       uid: uid ?? this.uid,
       content: content ?? this.content,
       meta: meta ?? this.meta,
+      loadingState: loadingState ?? this.loadingState,
+      savingState: savingState ?? this.savingState,
+      loadingError: loadingError ?? this.loadingError,
+      savingError: savingError ?? this.savingError,
     );
   }
 
@@ -36,8 +64,8 @@ class KuzzleSecurityUser {
   Map<String, dynamic> toJson() => _$KuzzleSecurityUserToJson(this);
 }
 
-@immutable
 @JsonSerializable()
+@immutable
 class KuzzleSecurityUsers {
   final List<KuzzleSecurityUser> users;
   final KuzzleState loadingState;
@@ -94,10 +122,10 @@ class KuzzleSecurityProfile {
     this.policies = const <dynamic>[],
   }) : assert(uid != null);
 
-  KuzzleSecurityProfile copyWith(
+  KuzzleSecurityProfile copyWith({
     String uid,
     List<dynamic> policies,
-  ) {
+  }) {
     return KuzzleSecurityProfile(
       uid: uid ?? this.uid,
       policies: policies ?? this.policies,
@@ -168,10 +196,10 @@ class KuzzleSecurityRole {
     this.controllers = const <String, dynamic>{},
   }) : assert(uid != null);
 
-  KuzzleSecurityRole copyWith(
+  KuzzleSecurityRole copyWith({
     String uid,
     Map<String, dynamic> controllers,
-  ) {
+  }) {
     return KuzzleSecurityRole(
       uid: uid ?? this.uid,
       controllers: controllers ?? this.controllers,
@@ -262,4 +290,7 @@ class KuzzleSecurity {
       _$KuzzleSecurityFromJson(json);
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityToJson(this);
+
+  @override
+  String toString() => jsonEncode(toJson());
 }

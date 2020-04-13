@@ -11,6 +11,12 @@ KuzzleSecurityUser _$KuzzleSecurityUserFromJson(Map<String, dynamic> json) {
     uid: json['uid'] as String,
     content: json['content'] as Map<String, dynamic>,
     meta: json['meta'] as Map<String, dynamic>,
+    loadingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['loadingState']),
+    savingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['savingState']),
+    loadingError: json['loadingError'] as String,
+    savingError: json['savingError'] as String,
   );
 }
 
@@ -19,37 +25,10 @@ Map<String, dynamic> _$KuzzleSecurityUserToJson(KuzzleSecurityUser instance) =>
       'uid': instance.uid,
       'content': instance.content,
       'meta': instance.meta,
-    };
-
-KuzzleSecurityUsers _$KuzzleSecurityUsersFromJson(Map<String, dynamic> json) {
-  return KuzzleSecurityUsers(
-    users: (json['users'] as List)
-        ?.map((e) => e == null
-            ? null
-            : KuzzleSecurityUser.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    loadingState:
-        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['loadingState']),
-    addingState:
-        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['addingState']),
-    deletingState:
-        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['deletingState']),
-    loadingError: json['loadingError'] as String,
-    addingError: json['addingError'] as String,
-    deletingError: json['deletingError'] as String,
-  );
-}
-
-Map<String, dynamic> _$KuzzleSecurityUsersToJson(
-        KuzzleSecurityUsers instance) =>
-    <String, dynamic>{
-      'users': instance.users,
       'loadingState': _$KuzzleStateEnumMap[instance.loadingState],
-      'addingState': _$KuzzleStateEnumMap[instance.addingState],
-      'deletingState': _$KuzzleStateEnumMap[instance.deletingState],
+      'savingState': _$KuzzleStateEnumMap[instance.savingState],
       'loadingError': instance.loadingError,
-      'addingError': instance.addingError,
-      'deletingError': instance.deletingError,
+      'savingError': instance.savingError,
     };
 
 T _$enumDecode<T>(
@@ -90,6 +69,37 @@ const _$KuzzleStateEnumMap = {
   KuzzleState.LOADED: 'LOADED',
   KuzzleState.ERRORED: 'ERRORED',
 };
+
+KuzzleSecurityUsers _$KuzzleSecurityUsersFromJson(Map<String, dynamic> json) {
+  return KuzzleSecurityUsers(
+    users: (json['users'] as List)
+        ?.map((e) => e == null
+            ? null
+            : KuzzleSecurityUser.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    loadingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['loadingState']),
+    addingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['addingState']),
+    deletingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['deletingState']),
+    loadingError: json['loadingError'] as String,
+    addingError: json['addingError'] as String,
+    deletingError: json['deletingError'] as String,
+  );
+}
+
+Map<String, dynamic> _$KuzzleSecurityUsersToJson(
+        KuzzleSecurityUsers instance) =>
+    <String, dynamic>{
+      'users': instance.users,
+      'loadingState': _$KuzzleStateEnumMap[instance.loadingState],
+      'addingState': _$KuzzleStateEnumMap[instance.addingState],
+      'deletingState': _$KuzzleStateEnumMap[instance.deletingState],
+      'loadingError': instance.loadingError,
+      'addingError': instance.addingError,
+      'deletingError': instance.deletingError,
+    };
 
 KuzzleSecurityProfile _$KuzzleSecurityProfileFromJson(
     Map<String, dynamic> json) {

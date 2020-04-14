@@ -36,7 +36,7 @@ class AppState {
 
   @override
   String toString() {
-    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+    JsonEncoder encoder = new JsonEncoder();
     return encoder.convert(toJson());
   }
 }

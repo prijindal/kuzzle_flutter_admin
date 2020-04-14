@@ -18,12 +18,13 @@ class KuzzleSecurityUser {
   final String loadingError;
   final String savingError;
 
-  // List<String> get profileIds => content["profileIds"];
+  List<String> get profileIds =>
+      (content["profileIds"] as List<dynamic>).map<String>((e) => e).toList();
   // set profileIds(List<String> profileIds) {
   //   content["profileIds"] = profileIds;
   // }
 
-  // String get name => content["name"];
+  String get name => content["name"];
   // set name(String name) {
   //   content["name"] = name;
   // }
@@ -116,19 +117,35 @@ class KuzzleSecurityUsers {
 class KuzzleSecurityProfile {
   final String uid;
   final List<dynamic> policies;
+  final KuzzleState loadingState;
+  final KuzzleState savingState;
+  final String loadingError;
+  final String savingError;
 
   KuzzleSecurityProfile({
     @required this.uid,
     this.policies = const <dynamic>[],
+    this.loadingState = KuzzleState.INIT,
+    this.savingState = KuzzleState.INIT,
+    this.loadingError,
+    this.savingError,
   }) : assert(uid != null);
 
   KuzzleSecurityProfile copyWith({
     String uid,
     List<dynamic> policies,
+    KuzzleState loadingState,
+    KuzzleState savingState,
+    String loadingError,
+    String savingError,
   }) {
     return KuzzleSecurityProfile(
       uid: uid ?? this.uid,
       policies: policies ?? this.policies,
+      loadingState: loadingState ?? this.loadingState,
+      savingState: savingState ?? this.savingState,
+      loadingError: loadingError ?? this.loadingError,
+      savingError: savingError ?? this.savingError,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/userevents.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/profileevents.dart';
 
 KuzzleSecurityUser kuzzleSecurityUserReducer(
     KuzzleSecurityUser partialState, action) {
@@ -37,6 +38,49 @@ KuzzleSecurityUser kuzzleSecurityUserReducer(
       meta: action.user.meta,
     );
   } else if (action is SaveErroredKuzzleUserAction &&
+      action.uid == partialState.uid) {
+    return partialState.copyWith(
+      savingState: KuzzleState.ERRORED,
+      savingError: action.errorMessage,
+    );
+  }
+  return partialState;
+}
+
+KuzzleSecurityProfile kuzzleSecurityProfileReducer(
+    KuzzleSecurityProfile partialState, action) {
+  if (partialState == null) {
+    partialState = KuzzleSecurityProfile(uid: null);
+  }
+  if (action is GetKuzzleProfileAction && action.uid == partialState.uid) {
+    return partialState.copyWith(
+      loadingState: KuzzleState.LOADING,
+    );
+  } else if (action is GetSuccessKuzzleProfileAction &&
+      action.uid == partialState.uid) {
+    return partialState.copyWith(
+      loadingState: KuzzleState.LOADED,
+      uid: action.profile.uid,
+      policies: action.profile.policies,
+    );
+  } else if (action is GetErroredKuzzleProfileAction &&
+      action.uid == partialState.uid) {
+    return partialState.copyWith(
+      loadingState: KuzzleState.ERRORED,
+      loadingError: action.errorMessage,
+    );
+  } else if (action is SaveKuzzleProfileAction &&
+      action.uid == partialState.uid) {
+    return partialState.copyWith(
+      savingState: KuzzleState.LOADING,
+    );
+  } else if (action is SaveSuccessKuzzleProfileAction &&
+      action.uid == partialState.uid) {
+    return partialState.copyWith(
+      savingState: KuzzleState.LOADED,
+      policies: action.profile.policies,
+    );
+  } else if (action is SaveErroredKuzzleProfileAction &&
       action.uid == partialState.uid) {
     return partialState.copyWith(
       savingState: KuzzleState.ERRORED,
@@ -125,6 +169,87 @@ KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
   } else if (action is DeleteErroredKuzzleUserAction) {
     return state.copyWith(
       users: state.users.copyWith(
+        deletingState: KuzzleState.ERRORED,
+        deletingError: action.errorMessage,
+      ),
+    );
+  } else if (action is GetKuzzleProfilesAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        loadingState: KuzzleState.LOADING,
+      ),
+    );
+  } else if (action is GetSuccessKuzzleProfilesAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        loadingState: KuzzleState.LOADED,
+        profiles: action.profiles,
+      ),
+    );
+  } else if (action is GetErroredKuzzleProfilesAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        loadingState: KuzzleState.ERRORED,
+        loadingError: action.errorMessage,
+      ),
+    );
+  } else if (action is GetKuzzleProfileAction ||
+      action is GetSuccessKuzzleProfileAction ||
+      action is GetErroredKuzzleProfileAction ||
+      action is SaveKuzzleProfileAction ||
+      action is SaveSuccessKuzzleProfileAction ||
+      action is SaveErroredKuzzleProfileAction) {
+    List<KuzzleSecurityProfile> profiles = <KuzzleSecurityProfile>[];
+    profiles.addAll(state.profiles.profiles);
+    profiles = profiles
+        .map((profile) => kuzzleSecurityProfileReducer(profile, action))
+        .toList();
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        profiles: profiles,
+      ),
+    );
+  } else if (action is AddKuzzleProfileAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        addingState: KuzzleState.LOADING,
+      ),
+    );
+  } else if (action is AddSuccessKuzzleProfileAction) {
+    List<KuzzleSecurityProfile> profiles = <KuzzleSecurityProfile>[];
+    profiles.addAll(state.profiles.profiles);
+    profiles.add(action.profile);
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        addingState: KuzzleState.LOADED,
+        profiles: profiles,
+      ),
+    );
+  } else if (action is AddErroredKuzzleProfileAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        addingState: KuzzleState.ERRORED,
+        addingError: action.errorMessage,
+      ),
+    );
+  } else if (action is DeleteKuzzleProfileAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        deletingState: KuzzleState.LOADING,
+      ),
+    );
+  } else if (action is DeleteSuccessKuzzleProfileAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
+        deletingState: KuzzleState.LOADED,
+        profiles: state.profiles.profiles
+            .where((profile) => profile.uid != action.uid)
+            .toList(),
+      ),
+    );
+  } else if (action is DeleteErroredKuzzleProfileAction) {
+    return state.copyWith(
+      profiles: state.profiles.copyWith(
         deletingState: KuzzleState.ERRORED,
         deletingError: action.errorMessage,
       ),

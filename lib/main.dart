@@ -4,6 +4,7 @@ import 'package:kuzzleflutteradmin/models/environments.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
 import 'package:kuzzleflutteradmin/pages/newindex.dart';
+import 'package:kuzzleflutteradmin/pages/newuser.dart';
 import 'package:kuzzleflutteradmin/pages/users.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 import 'package:kuzzleflutteradmin/redux/store.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
           'newindex': (context) => NewIndexPage(),
           'collections': (context) => CollectionsPageRoute(),
           'users': (context) => UsersPage(),
+          'newuser': (context) => NewUserPage(),
         },
       ),
     );

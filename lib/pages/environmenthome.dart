@@ -4,9 +4,11 @@ import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/kuzzleauth.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
+import 'package:kuzzleflutteradmin/pages/login.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -62,14 +64,18 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, KuzzlePing>(
         converter: (store) => store.state.kuzzleping,
-        builder: (context, kuzzleping) =>
-            kuzzleping.loadingState != KuzzleState.LOADED
-                ? Scaffold(
-                    appBar: KuzzleAppBar(),
-                    body: Center(
-                      child: Text(_getMessage(kuzzleping)),
-                    ),
-                  )
-                : IndexesPage(),
+        builder: (context, kuzzleping) => kuzzleping.loadingState !=
+                KuzzleState.LOADED
+            ? Scaffold(
+                appBar: KuzzleAppBar(),
+                body: Center(
+                  child: Text(_getMessage(kuzzleping)),
+                ),
+              )
+            : StoreConnector<AppState, KuzzleAuth>(
+                converter: (store) => store.state.kuzzleauth,
+                builder: (context, kuzzleauth) =>
+                    !kuzzleauth.isAuthenticated ? LoginPage() : IndexesPage(),
+              ),
       );
 }

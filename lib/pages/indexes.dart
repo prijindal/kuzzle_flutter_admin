@@ -36,14 +36,18 @@ class _IndexesPageState extends State<IndexesPage> {
   }
 
   Widget _indexListView(KuzzleIndexes kuzzleindexes) {
-    return ListView(
-      children: kuzzleindexes.indexMap.keys
-          .map(
-            (index) => _IndexListTile(
-              index: index,
-            ),
-          )
-          .toList(),
+    return RefreshIndicator(
+      onRefresh: () async => _refreshData(),
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: kuzzleindexes.indexMap.keys
+            .map(
+              (index) => _IndexListTile(
+                index: index,
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 
@@ -97,19 +101,24 @@ class _IndexListTileState extends State<_IndexListTile> {
     );
   }
 
+  void _goToCollectionsPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CollectionsPage(
+          index: widget.index,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => ListTile(
         title: Text(widget.index),
+        onTap: _goToCollectionsPage,
         trailing: PopupMenuButton<IndexListItemActions>(
           onSelected: (action) {
             if (action == IndexListItemActions.BROWSECOLLECTIONS) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CollectionsPage(
-                    index: widget.index,
-                  ),
-                ),
-              );
+              _goToCollectionsPage();
             } else if (action == IndexListItemActions.CREATECOLLECTION) {
               _goToAddCollectionPage();
             } else if (action == IndexListItemActions.EDIT) {

@@ -38,8 +38,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
 
   void _refreshData() {
     if (_kuzzleIndex != null &&
-        _kuzzleIndex.loadingState == KuzzleState.INIT &&
-        _kuzzleIndex.loadingState == KuzzleState.LOADED) {
+        (_kuzzleIndex.loadingState == KuzzleState.INIT ||
+            _kuzzleIndex.loadingState == KuzzleState.LOADED)) {
       StoreProvider.of<AppState>(context).dispatch(
         getKuzzleCollections(widget.index),
       );

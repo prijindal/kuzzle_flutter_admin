@@ -6,10 +6,12 @@ import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/profileaction.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class ProfileChooserDialog extends StatefulWidget {
-  final List<String> profileIds;
-  ProfileChooserDialog({
+  const ProfileChooserDialog({
     @required this.profileIds,
   });
+  final List<String> profileIds;
+
+  @override
   _ProfileChooserDialogState createState() => _ProfileChooserDialogState();
 }
 
@@ -44,16 +46,16 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        title: Text('Select Profiles'),
+        title: const Text('Select Profiles'),
         actions: [
           RaisedButton(
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
             onPressed: () {
               Navigator.of(context).pop(null);
             },
           ),
           RaisedButton(
-            child: Text('Save'),
+            child: const Text('Save'),
             onPressed: () {
               Navigator.of(context).pop(_profileIds);
             },
@@ -62,8 +64,8 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
         content: StoreConnector<AppState, List<KuzzleSecurityProfile>>(
           converter: (store) => store.state.kuzzlesecurity.profiles.profiles,
           builder: (context, profiles) => Container(
-            height: 300.0, // Change as per your requirement
-            width: 300.0, // Change as per your requirement
+            height: 300, // Change as per your requirement
+            width: 300, // Change as per your requirement
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: profiles

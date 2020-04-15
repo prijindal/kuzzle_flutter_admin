@@ -15,6 +15,7 @@ import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class KuzzleDrawer extends StatefulWidget {
+  @override
   _KuzzleDrawerState createState() => _KuzzleDrawerState();
 }
 
@@ -38,16 +39,16 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
         child: ListView(
           children: [
             Container(
-              height: 64.0,
+              height: 64,
               color: Theme.of(context).primaryColor,
               child: Center(
                 child: Image.asset(
                   'images/logo.png',
-                  height: 48.0,
+                  height: 48,
                 ),
               ),
             ),
-            ListTile(
+            const ListTile(
               dense: true,
               title: Text('Data'),
             ),
@@ -62,38 +63,38 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
                 ),
                 items: indexes,
                 title: 'Indexes',
-                icon: Icon(Icons.dns),
+                icon: const Icon(Icons.dns),
                 buildChild: (index) => _IndexExpansionTile(
                   index: index,
                 ),
               ),
             ),
-            ListTile(
+            const ListTile(
               dense: true,
               title: Text('Security'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Users'),
+              leading: const Icon(Icons.person),
+              title: const Text('Users'),
               onTap: () {
                 Navigator.of(context).pushNamed('users');
               },
             ),
             ListTile(
-              leading: Icon(Icons.people),
-              title: Text('Profiles'),
+              leading: const Icon(Icons.people),
+              title: const Text('Profiles'),
               onTap: () {
                 Navigator.of(context).pushNamed('profiles');
               },
             ),
             ListTile(
-              leading: Icon(Icons.lock_open),
-              title: Text('Roles'),
+              leading: const Icon(Icons.lock_open),
+              title: const Text('Roles'),
               onTap: () {
                 Navigator.of(context).pushNamed('roles');
               },
             ),
-            ListTile(
+            const ListTile(
               dense: true,
               title: Text('Settings'),
             ),
@@ -105,11 +106,11 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
                   builder: (context) => AddEnvironmentPage(),
                 ),
                 manageRoute: MaterialPageRoute(
-                  builder: (context) => EnvironmentsPage(),
+                  builder: (context) => const EnvironmentsPage(),
                 ),
                 items: environments.environments.values.toList(),
                 title: 'Environments',
-                icon: Icon(Icons.kitchen),
+                icon: const Icon(Icons.kitchen),
                 buildChild: (environment) => ListTile(
                   dense: true,
                   enabled: environment.name !=
@@ -117,7 +118,7 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
                           .state
                           .environments
                           .defaultEnvironment,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.list,
                   ),
                   title: Row(
@@ -140,10 +141,10 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
 }
 
 class _IndexExpansionTile extends StatefulWidget {
+  const _IndexExpansionTile({@required this.index});
   final String index;
 
-  _IndexExpansionTile({@required this.index});
-
+  @override
   _IndexExpansionTileState createState() => _IndexExpansionTileState();
 }
 
@@ -158,9 +159,7 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
     );
   }
 
-  KuzzleCollection get _selectedCollection {
-    return null;
-  }
+  KuzzleCollection get _selectedCollection => null;
 
   void _onValueChange(bool newvalue) {
     if (newvalue == true &&
@@ -181,7 +180,7 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
         converter: (store) =>
             store.state.kuzzleindexes.indexMap[widget.index].collections,
         builder: (context, collections) => BaseExpansionTile<KuzzleCollection>(
-          icon: Icon(Icons.dns),
+          icon: const Icon(Icons.dns),
           title: widget.index,
           onValueChange: _onValueChange,
           addRoute: MaterialPageRoute(
@@ -201,7 +200,7 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
                 _selectedCollection != collection,
             selected: _selectedCollection != null &&
                 _selectedCollection == collection,
-            leading: Icon(
+            leading: const Icon(
               Icons.list,
             ),
             title: Row(

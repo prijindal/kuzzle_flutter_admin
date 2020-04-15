@@ -68,7 +68,7 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
         builder: (context, kuzzleping) => kuzzleping.loadingState !=
                 KuzzleState.LOADED
             ? Scaffold(
-                appBar: KuzzleAppBar(),
+                appBar: const KuzzleAppBar(),
                 body: Center(
                   child: Text(_getMessage(kuzzleping)),
                 ),

@@ -4,7 +4,7 @@ import 'package:kuzzleflutteradmin/components/drawer.dart';
 import '../helpers/responsive.dart';
 
 class ResponsiveScaffold extends StatefulWidget {
-  ResponsiveScaffold({
+  const ResponsiveScaffold({
     this.subtitle,
     this.body,
     this.floatingActionButton,
@@ -13,10 +13,9 @@ class ResponsiveScaffold extends StatefulWidget {
   final Widget body;
   final Widget floatingActionButton;
 
+  @override
   _ResponsiveScaffoldState createState() => _ResponsiveScaffoldState();
 }
-
-// Size.fromHeight(getCurrentBreakpoint(context) == ResponsiveBreakpoints.landscape ? 64.0 : kToolbarHeight)
 
 class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   ResponsiveBreakpoints get _breakpoint => getCurrentBreakpoint(context);
@@ -38,9 +37,9 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         children: [
           Material(
             child: Card(
-              margin: EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
               borderOnForeground: false,
-              elevation: 2.0,
+              elevation: 2,
               child: KuzzleDrawer(),
             ),
           ),
@@ -48,7 +47,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
             child: Scaffold(
               appBar: KuzzleAppBar(
                 subtitle: widget.subtitle,
-                preferredSize: Size.fromHeight(64.0),
+                preferredSize: const Size.fromHeight(64),
               ),
               body: widget.body,
               floatingActionButton: widget.floatingActionButton,

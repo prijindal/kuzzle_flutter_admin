@@ -152,7 +152,7 @@ class _BaseExpansionTileState<T extends Object>
     final theme = Theme.of(context);
     _borderColorTween.end = theme.dividerColor;
     _headerColorTween
-      ..begin = theme.textTheme.subhead.color
+      ..begin = theme.textTheme.subtitle1.color
       ..end = theme.accentColor;
     _iconColorTween
       ..begin = theme.unselectedWidgetColor
@@ -169,7 +169,7 @@ class _BaseExpansionTileState<T extends Object>
       child: closed
           ? null
           : Container(
-              margin: EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
+              margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
               child: Column(
                 children: widget.items.map<Widget>(widget.buildChild).toList()
                   ..add(

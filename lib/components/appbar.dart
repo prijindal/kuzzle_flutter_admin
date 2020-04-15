@@ -8,16 +8,17 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 enum AppBarActions { ADDENVIRONMENT, EXIT }
 
 class KuzzleAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String subtitle;
-
-  KuzzleAppBar({
+  const KuzzleAppBar({
     this.subtitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
   });
 
+  final String subtitle;
+
   @override
   final Size preferredSize;
 
+  @override
   _KuzzleAppBarState createState() => _KuzzleAppBarState();
 }
 
@@ -31,24 +32,22 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
     }
   }
 
-  List<Widget> _getActions() {
-    return [
-      PopupMenuButton<AppBarActions>(
-        icon: Icon(Icons.more_vert),
-        onSelected: _actionSelected,
-        itemBuilder: (context) => <PopupMenuEntry<AppBarActions>>[
-          const PopupMenuItem<AppBarActions>(
-            value: AppBarActions.ADDENVIRONMENT,
-            child: Text('Add New Environment'),
-          ),
-          const PopupMenuItem<AppBarActions>(
-            value: AppBarActions.EXIT,
-            child: Text('Exit'),
-          ),
-        ],
-      ),
-    ];
-  }
+  List<Widget> _getActions() => [
+        PopupMenuButton<AppBarActions>(
+          icon: const Icon(Icons.more_vert),
+          onSelected: _actionSelected,
+          itemBuilder: (context) => <PopupMenuEntry<AppBarActions>>[
+            const PopupMenuItem<AppBarActions>(
+              value: AppBarActions.ADDENVIRONMENT,
+              child: Text('Add New Environment'),
+            ),
+            const PopupMenuItem<AppBarActions>(
+              value: AppBarActions.EXIT,
+              child: Text('Exit'),
+            ),
+          ],
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, Environment>(
@@ -66,8 +65,8 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
                   visible: true,
                   child: Text(
                     widget.subtitle,
-                    style: TextStyle(
-                      fontSize: 12.0,
+                    style: const TextStyle(
+                      fontSize: 12,
                     ),
                   ),
                 ),

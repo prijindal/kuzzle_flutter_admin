@@ -4,30 +4,26 @@ import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlutterSharedPreferences {
-  static const String package_name = 'kuzzleflutteradmin';
-  static FlutterSharedPreferences _instance;
-
-  static FlutterSharedPreferences getInstance() {
-    _instance ??= FlutterSharedPreferences();
-    return _instance;
-  }
-
-  SharedPreferences _sharedPreferences;
-
   FlutterSharedPreferences() {
     this._init();
   }
 
-  bool get _isMobile {
-    return Platform.isAndroid || Platform.isIOS;
-  }
+  static const String package_name = 'kuzzleflutteradmin';
+  static FlutterSharedPreferences _instance;
+
+  static FlutterSharedPreferences getInstance() =>
+      _instance ??= FlutterSharedPreferences();
+
+  SharedPreferences _sharedPreferences;
+
+  bool get _isMobile => Platform.isAndroid || Platform.isIOS;
 
   String _prefsPath(String key) {
     if (Platform.isWindows) {
       if (Platform.environment.containsKey('HOMEDRIVE') &&
           Platform.environment.containsKey('HOMEPATH')) {
-        var homeDrive = Platform.environment['HOMEDRIVE'];
-        var homePath = Platform.environment['HOMEPATH'];
+        final homeDrive = Platform.environment['HOMEDRIVE'];
+        final homePath = Platform.environment['HOMEPATH'];
         return '$homeDrive$homePath\\.config\\${FlutterSharedPreferences.package_name}\\$key';
       }
     } else if (Platform.isLinux || Platform.isMacOS) {
@@ -38,16 +34,14 @@ class FlutterSharedPreferences {
 
   Future<void> _init() async {
     if (_isMobile) {
-      if (_sharedPreferences == null) {
-        _sharedPreferences = await SharedPreferences.getInstance();
-      }
+      _sharedPreferences ??= await SharedPreferences.getInstance();
     }
   }
 
   Future<Map<String, dynamic>> getJson(String key) async {
     try {
-      var jsonStr = await getString(key);
-      Map<String, dynamic> json = jsonDecode(jsonStr) as Map<String, dynamic>;
+      final jsonStr = await getString(key);
+      final json = jsonDecode(jsonStr) as Map<String, dynamic>;
       return json;
     } catch (e) {
       return null;
@@ -57,7 +51,7 @@ class FlutterSharedPreferences {
   Future<void> setJson(String key, Map<String, dynamic> value) async {
     await this._init();
     try {
-      String jsonStr = jsonEncode(value);
+      final jsonStr = jsonEncode(value);
       await setString(key, jsonStr);
     } catch (e) {
       print(e);
@@ -68,14 +62,14 @@ class FlutterSharedPreferences {
     await this._init();
     if (_isMobile) {
       try {
-        String str = _sharedPreferences.getString(key);
+        final str = _sharedPreferences.getString(key);
         return str;
       } catch (e) {
         return null;
       }
     } else {
-      String filePath = _prefsPath(key);
-      var file = File(filePath);
+      final filePath = _prefsPath(key);
+      final file = File(filePath);
       if (file.existsSync()) {
         return file.readAsStringSync();
       } else {
@@ -90,8 +84,8 @@ class FlutterSharedPreferences {
       if (_isMobile) {
         return await _sharedPreferences.setString(key, value);
       } else {
-        String filePath = _prefsPath(key);
-        var file = File(filePath);
+        final filePath = _prefsPath(key);
+        final file = File(filePath);
         file.createSync(recursive: true);
         return await file.writeAsString(value);
       }
@@ -104,8 +98,8 @@ class FlutterSharedPreferences {
     if (_isMobile) {
       return await _sharedPreferences.remove(key);
     } else {
-      String filePath = _prefsPath(key);
-      var file = File(filePath);
+      final filePath = _prefsPath(key);
+      final file = File(filePath);
       return await file.delete(recursive: true);
     }
   }
@@ -114,8 +108,8 @@ class FlutterSharedPreferences {
     if (_isMobile) {
       return await _sharedPreferences.clear();
     } else {
-      String filePath = _prefsPath('');
-      var file = File(filePath);
+      final filePath = _prefsPath('');
+      final file = File(filePath);
       return await file.delete(recursive: true);
     }
   }

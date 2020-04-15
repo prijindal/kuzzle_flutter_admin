@@ -6,82 +6,82 @@ import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/abstractevent.dart';
 class GetKuzzleProfilesAction extends KuzzleSecurityAction {}
 
 class GetSuccessKuzzleProfilesAction extends KuzzleSecurityAction {
-  final List<KuzzleSecurityProfile> profiles;
   GetSuccessKuzzleProfilesAction(this.profiles);
+  final List<KuzzleSecurityProfile> profiles;
 }
 
 class GetErroredKuzzleProfilesAction extends KuzzleSecurityAction {
-  final String errorMessage;
   GetErroredKuzzleProfilesAction(this.errorMessage);
+  final String errorMessage;
 }
 
 /* Get one */
 class GetKuzzleProfileAction extends KuzzleSecurityAction {
-  final String uid;
   GetKuzzleProfileAction(this.uid);
+  final String uid;
 }
 
 class GetSuccessKuzzleProfileAction extends KuzzleSecurityAction {
+  GetSuccessKuzzleProfileAction(this.uid, this.profile);
   final String uid;
   final KuzzleSecurityProfile profile;
-  GetSuccessKuzzleProfileAction(this.uid, this.profile);
 }
 
 class GetErroredKuzzleProfileAction extends KuzzleSecurityAction {
+  GetErroredKuzzleProfileAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  GetErroredKuzzleProfileAction(this.uid, this.errorMessage);
 }
 
 /* Add */
 class AddKuzzleProfileAction extends KuzzleSecurityAction {
-  final KuzzleSecurityProfile profile;
   AddKuzzleProfileAction(this.profile);
+  final KuzzleSecurityProfile profile;
 }
 
 class AddSuccessKuzzleProfileAction extends KuzzleSecurityAction {
-  final KuzzleSecurityProfile profile;
   AddSuccessKuzzleProfileAction(this.profile);
+  final KuzzleSecurityProfile profile;
 }
 
 class AddErroredKuzzleProfileAction extends KuzzleSecurityAction {
+  AddErroredKuzzleProfileAction(this.profile, this.errorMessage);
   final KuzzleSecurityProfile profile;
   final String errorMessage;
-  AddErroredKuzzleProfileAction(this.profile, this.errorMessage);
 }
 
 /* Edit */
 class SaveKuzzleProfileAction extends KuzzleSecurityAction {
+  SaveKuzzleProfileAction(this.uid, this.profile);
   final String uid;
   final KuzzleSecurityProfile profile;
-  SaveKuzzleProfileAction(this.uid, this.profile);
 }
 
 class SaveSuccessKuzzleProfileAction extends KuzzleSecurityAction {
+  SaveSuccessKuzzleProfileAction(this.uid, this.profile);
   final String uid;
   final KuzzleSecurityProfile profile;
-  SaveSuccessKuzzleProfileAction(this.uid, this.profile);
 }
 
 class SaveErroredKuzzleProfileAction extends KuzzleSecurityAction {
+  SaveErroredKuzzleProfileAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  SaveErroredKuzzleProfileAction(this.uid, this.errorMessage);
 }
 
 /* Delete */
 class DeleteKuzzleProfileAction extends KuzzleSecurityAction {
-  final String uid;
   DeleteKuzzleProfileAction(this.uid);
+  final String uid;
 }
 
 class DeleteSuccessKuzzleProfileAction extends KuzzleSecurityAction {
-  final String uid;
   DeleteSuccessKuzzleProfileAction(this.uid);
+  final String uid;
 }
 
 class DeleteErroredKuzzleProfileAction extends KuzzleSecurityAction {
+  DeleteErroredKuzzleProfileAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  DeleteErroredKuzzleProfileAction(this.uid, this.errorMessage);
 }

@@ -4,10 +4,8 @@ import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/userevents.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/profileevents.dart';
 
 KuzzleSecurityUser kuzzleSecurityUserReducer(
-    KuzzleSecurityUser partialState, action) {
-  if (partialState == null) {
-    partialState = KuzzleSecurityUser(uid: null);
-  }
+    KuzzleSecurityUser partialState, dynamic action) {
+  partialState ??= KuzzleSecurityUser(uid: null);
   if (action is GetKuzzleUserAction && action.uid == partialState.uid) {
     return partialState.copyWith(
       loadingState: KuzzleState.LOADING,
@@ -48,10 +46,8 @@ KuzzleSecurityUser kuzzleSecurityUserReducer(
 }
 
 KuzzleSecurityProfile kuzzleSecurityProfileReducer(
-    KuzzleSecurityProfile partialState, action) {
-  if (partialState == null) {
-    partialState = KuzzleSecurityProfile(uid: null);
-  }
+    KuzzleSecurityProfile partialState, dynamic action) {
+  partialState ??= KuzzleSecurityProfile(uid: null);
   if (action is GetKuzzleProfileAction && action.uid == partialState.uid) {
     return partialState.copyWith(
       loadingState: KuzzleState.LOADING,
@@ -90,10 +86,8 @@ KuzzleSecurityProfile kuzzleSecurityProfileReducer(
   return partialState;
 }
 
-KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
-  if (state == null) {
-    state = KuzzleSecurity();
-  }
+KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, dynamic action) {
+  state ??= KuzzleSecurity();
   if (action is GetKuzzleUsersAction) {
     return state.copyWith(
       users: state.users.copyWith(
@@ -120,7 +114,7 @@ KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
       action is SaveKuzzleUserAction ||
       action is SaveSuccessKuzzleUserAction ||
       action is SaveErroredKuzzleUserAction) {
-    List<KuzzleSecurityUser> users = <KuzzleSecurityUser>[];
+    var users = <KuzzleSecurityUser>[];
     users.addAll(state.users.users);
     users =
         users.map((user) => kuzzleSecurityUserReducer(user, action)).toList();
@@ -136,7 +130,7 @@ KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
       ),
     );
   } else if (action is AddSuccessKuzzleUserAction) {
-    List<KuzzleSecurityUser> users = <KuzzleSecurityUser>[];
+    final users = <KuzzleSecurityUser>[];
     users.addAll(state.users.users);
     users.add(action.user);
     return state.copyWith(
@@ -199,7 +193,7 @@ KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
       action is SaveKuzzleProfileAction ||
       action is SaveSuccessKuzzleProfileAction ||
       action is SaveErroredKuzzleProfileAction) {
-    List<KuzzleSecurityProfile> profiles = <KuzzleSecurityProfile>[];
+    var profiles = <KuzzleSecurityProfile>[];
     profiles.addAll(state.profiles.profiles);
     profiles = profiles
         .map((profile) => kuzzleSecurityProfileReducer(profile, action))
@@ -216,7 +210,7 @@ KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, action) {
       ),
     );
   } else if (action is AddSuccessKuzzleProfileAction) {
-    List<KuzzleSecurityProfile> profiles = <KuzzleSecurityProfile>[];
+    final profiles = <KuzzleSecurityProfile>[];
     profiles.addAll(state.profiles.profiles);
     profiles.add(action.profile);
     return state.copyWith(

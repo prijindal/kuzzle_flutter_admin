@@ -18,7 +18,7 @@ script:
   # - ./flutter/bin/flutter analyze
   - ./flutter/bin/flutter test --coverage
 after_success:
-  - coveralls-lcov coverage/lcov.info
+  - ./coverage.sh
 cache:
   directories:
     - $HOME/.pub-cache

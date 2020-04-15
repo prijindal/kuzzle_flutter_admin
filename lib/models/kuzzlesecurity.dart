@@ -10,6 +10,19 @@ part 'kuzzlesecurity.g.dart';
 @JsonSerializable()
 @immutable
 class KuzzleSecurityUser {
+  const KuzzleSecurityUser({
+    @required this.uid,
+    this.content = const <String, dynamic>{},
+    this.meta = const <String, dynamic>{},
+    this.loadingState = KuzzleState.INIT,
+    this.savingState = KuzzleState.INIT,
+    this.loadingError,
+    this.savingError,
+  }) : assert(uid != null);
+
+  factory KuzzleSecurityUser.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityUserFromJson(json);
+
   final String uid;
   final Map<String, dynamic> content;
   final Map<String, dynamic> meta;
@@ -30,16 +43,6 @@ class KuzzleSecurityUser {
   //   content['name'] = name;
   // }
 
-  KuzzleSecurityUser({
-    @required this.uid,
-    this.content = const <String, dynamic>{},
-    this.meta = const <String, dynamic>{},
-    this.loadingState = KuzzleState.INIT,
-    this.savingState = KuzzleState.INIT,
-    this.loadingError,
-    this.savingError,
-  }) : assert(uid != null);
-
   KuzzleSecurityUser copyWith({
     String uid,
     Map<String, dynamic> content,
@@ -48,20 +51,16 @@ class KuzzleSecurityUser {
     KuzzleState savingState,
     String loadingError,
     String savingError,
-  }) {
-    return KuzzleSecurityUser(
-      uid: uid ?? this.uid,
-      content: content ?? this.content,
-      meta: meta ?? this.meta,
-      loadingState: loadingState ?? this.loadingState,
-      savingState: savingState ?? this.savingState,
-      loadingError: loadingError ?? this.loadingError,
-      savingError: savingError ?? this.savingError,
-    );
-  }
-
-  factory KuzzleSecurityUser.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityUserFromJson(json);
+  }) =>
+      KuzzleSecurityUser(
+        uid: uid ?? this.uid,
+        content: content ?? this.content,
+        meta: meta ?? this.meta,
+        loadingState: loadingState ?? this.loadingState,
+        savingState: savingState ?? this.savingState,
+        loadingError: loadingError ?? this.loadingError,
+        savingError: savingError ?? this.savingError,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityUserToJson(this);
 }
@@ -69,15 +68,7 @@ class KuzzleSecurityUser {
 @JsonSerializable()
 @immutable
 class KuzzleSecurityUsers {
-  final List<KuzzleSecurityUser> users;
-  final KuzzleState loadingState;
-  final KuzzleState addingState;
-  final KuzzleState deletingState;
-  final String loadingError;
-  final String addingError;
-  final String deletingError;
-
-  KuzzleSecurityUsers({
+  const KuzzleSecurityUsers({
     this.users = const <KuzzleSecurityUser>[],
     this.loadingState = KuzzleState.INIT,
     this.addingState = KuzzleState.INIT,
@@ -86,6 +77,17 @@ class KuzzleSecurityUsers {
     this.addingError,
     this.deletingError,
   });
+
+  factory KuzzleSecurityUsers.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityUsersFromJson(json);
+
+  final List<KuzzleSecurityUser> users;
+  final KuzzleState loadingState;
+  final KuzzleState addingState;
+  final KuzzleState deletingState;
+  final String loadingError;
+  final String addingError;
+  final String deletingError;
 
   KuzzleSecurityUsers copyWith({
     List<KuzzleSecurityUser> users,
@@ -106,9 +108,6 @@ class KuzzleSecurityUsers {
       deletingError: deletingError ?? this.deletingError,
     );
   }
-
-  factory KuzzleSecurityUsers.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityUsersFromJson(json);
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityUsersToJson(this);
 }

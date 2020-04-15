@@ -57,14 +57,14 @@ class MyApp extends StatelessWidget {
                   converter: (store) => store.state.environments,
                   builder: (context, environments) =>
                       !environments.isInitialized
-                          ? LoadingPage()
+                          ? const LoadingPage()
                           : (environments.environments.isEmpty
                               ? AddEnvironmentPage()
                               : (environments.getDefaultEnvironment != null
                                   ? EnvironmentHomePage(
                                       environments.getDefaultEnvironment,
                                     )
-                                  : EnvironmentsPage())),
+                                  : const EnvironmentsPage())),
                 ),
             'addenvironment': (context) => AddEnvironmentPage(),
             'indexes': (context) => IndexesPage(),

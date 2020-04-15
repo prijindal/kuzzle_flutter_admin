@@ -5,28 +5,30 @@ abstract class EnvironmentAction {}
 class InitializeEnvironmentAction extends EnvironmentAction {}
 
 class InitializeSuccessEnvironmentAction extends EnvironmentAction {
+  InitializeSuccessEnvironmentAction(
+    this.environments,
+    this.defaultEnvironments,
+  );
   Map<String, Environment> environments;
   String defaultEnvironments;
-  InitializeSuccessEnvironmentAction(
-      this.environments, this.defaultEnvironments);
 }
 
 class AddEnvironmentAction extends EnvironmentAction {
-  Environment environment;
   AddEnvironmentAction(this.environment);
+  Environment environment;
 }
 
 class RemoveEnvironmentAction extends EnvironmentAction {
-  String environmentName;
   RemoveEnvironmentAction(this.environmentName);
+  String environmentName;
 }
 
 class SetDefaultEnvironmentAction extends EnvironmentAction {
-  String environmentName;
   SetDefaultEnvironmentAction(this.environmentName);
+  String environmentName;
 }
 
 class SetFirstEnvironmentAction extends EnvironmentAction {
-  Environment environment;
   SetFirstEnvironmentAction(this.environment);
+  Environment environment;
 }

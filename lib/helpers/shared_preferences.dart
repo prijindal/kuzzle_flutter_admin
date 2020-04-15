@@ -8,9 +8,7 @@ class FlutterSharedPreferences {
   static FlutterSharedPreferences _instance;
 
   static FlutterSharedPreferences getInstance() {
-    if (_instance == null) {
-      _instance = FlutterSharedPreferences();
-    }
+    _instance ??= FlutterSharedPreferences();
     return _instance;
   }
 

@@ -1,6 +1,8 @@
 # Auto-generated options enabling all lints.
 # Add these to your `analysis-options.yaml` file and tailor to fit!
 analyzer:
+  exclude:
+    - lib/models/**
   strong-mode:
     implicit-casts: false
 

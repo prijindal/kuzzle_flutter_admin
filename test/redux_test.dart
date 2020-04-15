@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:kuzzle/kuzzle.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
@@ -32,7 +33,12 @@ void main() async {
   FlutterKuzzle.instance.on("disconnect", () {
     exit(0);
   });
-  testSecurity();
+  test("Test Security Redux", () {
+    testSecurity();
+  });
+  test("Test Indexes Redux", () {
+    testIndexes();
+  });
 }
 
 void testSecurity() async {

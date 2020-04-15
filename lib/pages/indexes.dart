@@ -12,6 +12,7 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 enum IndexListItemActions { DELETE, EDIT, BROWSECOLLECTIONS, CREATECOLLECTION }
 
 class IndexesPage extends StatefulWidget {
+  @override
   _IndexesPageState createState() => _IndexesPageState();
 }
 
@@ -35,38 +36,36 @@ class _IndexesPageState extends State<IndexesPage> {
     Navigator.of(context).pushNamed('newindex');
   }
 
-  Widget _indexListView(KuzzleIndexes kuzzleindexes) {
-    return RefreshIndicator(
-      onRefresh: () async => _refreshData(),
-      child: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: kuzzleindexes.indexMap.keys
-            .map(
-              (index) => _IndexListTile(
-                index: index,
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
+  Widget _indexListView(KuzzleIndexes kuzzleindexes) => RefreshIndicator(
+        onRefresh: () async => _refreshData(),
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: kuzzleindexes.indexMap.keys
+              .map(
+                (index) => _IndexListTile(
+                  index: index,
+                ),
+              )
+              .toList(),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
         subtitle: 'Indexes',
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: _goToAddIndexPage,
         ),
         body: StoreConnector<AppState, KuzzleIndexes>(
           converter: (store) => store.state.kuzzleindexes,
           builder: (context, kuzzleindexes) =>
               kuzzleindexes.loadingState == KuzzleState.INIT
-                  ? Center(
+                  ? const Center(
                       child: Text('Initiating...'),
                     )
                   : (kuzzleindexes.loadingState == KuzzleState.LOADING
-                      ? Center(
+                      ? const Center(
                           child: Text('Loading...'),
                         )
                       : _indexListView(kuzzleindexes)),
@@ -75,15 +74,16 @@ class _IndexesPageState extends State<IndexesPage> {
 }
 
 class _IndexListTile extends StatefulWidget {
+  const _IndexListTile({@required this.index});
   final String index;
-  _IndexListTile({@required this.index});
 
+  @override
   _IndexListTileState createState() => _IndexListTileState();
 }
 
 class _IndexListTileState extends State<_IndexListTile> {
-  void _deleteIndexConfirm() async {
-    var confirm = await confirmDialog(context, 'Delete $widget.index',
+  Future<void> _deleteIndexConfirm() async {
+    final confirm = await confirmDialog(context, 'Delete $widget.index',
         'Are you sure you want to delete this index');
     if (confirm) {
       StoreProvider.of<AppState>(context)
@@ -126,7 +126,8 @@ class _IndexListTileState extends State<_IndexListTile> {
               _deleteIndexConfirm();
             }
           },
-          itemBuilder: (context) => <PopupMenuEntry<IndexListItemActions>>[
+          itemBuilder: (context) =>
+              const <PopupMenuEntry<IndexListItemActions>>[
             PopupMenuItem(
               value: IndexListItemActions.CREATECOLLECTION,
               child: Text('Create Collection'),

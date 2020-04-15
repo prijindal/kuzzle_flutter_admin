@@ -9,8 +9,8 @@ import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class CollectionsPageRouteArguments {
-  final String index;
   CollectionsPageRouteArguments({@required this.index});
+  final String index;
 }
 
 class CollectionsPageRoute extends StatelessWidget {
@@ -23,9 +23,10 @@ class CollectionsPageRoute extends StatelessWidget {
 }
 
 class CollectionsPage extends StatefulWidget {
+  const CollectionsPage({@required this.index});
   final String index;
-  CollectionsPage({@required this.index});
 
+  @override
   _CollectionsPageState createState() => _CollectionsPageState();
 }
 
@@ -61,8 +62,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
     }
   }
 
-  void _deleteCollection(String collection) async {
-    var confirm = await confirmDialog(context, 'Delete $collection',
+  Future<void> _deleteCollection(String collection) async {
+    final confirm = await confirmDialog(context, 'Delete $collection',
         'Are you sure you want to delete this collection');
     if (confirm) {
       StoreProvider.of<AppState>(context).dispatch(
@@ -85,7 +86,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
   Widget build(BuildContext context) => ResponsiveScaffold(
         subtitle: '${widget.index}/collections',
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: _goToAddCollectionPage,
         ),
         body: StoreConnector<AppState, List<String>>(
@@ -96,7 +97,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
             itemBuilder: (context, i) => ListTile(
               title: Text(collections[i]),
               trailing: IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: () => _deleteCollection(collections[i]),
               ),
             ),

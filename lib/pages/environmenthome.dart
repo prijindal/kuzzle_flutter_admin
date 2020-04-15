@@ -14,9 +14,10 @@ import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class EnvironmentHomePage extends StatefulWidget {
+  const EnvironmentHomePage(this.environment);
   final Environment environment;
-  EnvironmentHomePage(this.environment);
 
+  @override
   _EnvironmentHomePageState createState() => _EnvironmentHomePageState();
 }
 

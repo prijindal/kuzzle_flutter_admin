@@ -5,12 +5,13 @@ import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class LoginPage extends StatefulWidget {
+  @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void _loginUser() {
     StoreProvider.of<AppState>(context).dispatch(
@@ -27,30 +28,30 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: const Text('Login'),
         ),
         body: Form(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Username'),
+                  decoration: const InputDecoration(labelText: 'Username'),
                   controller: _usernameController,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Password'),
                   controller: _passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: StoreConnector<AppState, KuzzleState>(
                     converter: (store) => store.state.kuzzleauth.loginState,
                     builder: (context, loginState) => RaisedButton(
-                      child: Text('Login'),
+                      child: const Text('Login'),
                       onPressed:
                           loginState == KuzzleState.LOADING ? null : _loginUser,
                     ),

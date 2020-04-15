@@ -10,8 +10,8 @@ import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class NewCollectionPageRouteArguments {
-  final String index;
   NewCollectionPageRouteArguments({@required this.index});
+  final String index;
 }
 
 class NewCollectionPageRoute extends StatelessWidget {
@@ -24,9 +24,10 @@ class NewCollectionPageRoute extends StatelessWidget {
 }
 
 class NewCollectionPage extends StatefulWidget {
+  const NewCollectionPage({@required this.index});
   final String index;
-  NewCollectionPage({@required this.index});
 
+  @override
   _NewCollectionPageState createState() => _NewCollectionPageState();
 }
 
@@ -65,7 +66,7 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
     setState(() {
       _checkingAdded = true;
     });
-    new Timer.periodic(Duration(milliseconds: 10), (timer) {
+    Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if (_checkAdded() == true) {
         timer.cancel();
       }
@@ -97,9 +98,9 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
                 controller: _nameController,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: RaisedButton(
-                  child: Text('Create'),
+                  child: const Text('Create'),
                   onPressed: _kuzzleIndex.addingState == KuzzleState.LOADING
                       ? null
                       : _addNewCollection,

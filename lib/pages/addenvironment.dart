@@ -5,6 +5,7 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 import '../redux/environments/events.dart';
 
 class AddEnvironmentPage extends StatefulWidget {
+  @override
   _AddEnvironmentPageState createState() => _AddEnvironmentPageState();
 }
 
@@ -18,7 +19,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
 
   void _addNewEnvironment() {
     if (_formKey.currentState.validate()) {
-      var environment = Environment(
+      final environment = Environment(
         name: _nameController.text,
         host: _hostController.text,
         port: int.tryParse(_portController.text),
@@ -47,7 +48,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('New Environment'),
+          title: const Text('New Environment'),
         ),
         body: Form(
           key: _formKey,
@@ -61,7 +62,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
                 controller: _nameController,
                 keyboardType: TextInputType.text,
               ),
@@ -72,7 +73,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: 'Host'),
+                decoration: const InputDecoration(labelText: 'Host'),
                 controller: _hostController,
                 keyboardType: TextInputType.url,
               ),
@@ -81,7 +82,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   if (value.isEmpty) {
                     return 'Please enter a port';
                   }
-                  var parsed = int.tryParse(value);
+                  final parsed = int.tryParse(value);
                   if (parsed == null) {
                     return 'Port should be an int';
                   }
@@ -90,9 +91,9 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: 'Port'),
+                decoration: const InputDecoration(labelText: 'Port'),
                 controller: _portController,
-                keyboardType: TextInputType.numberWithOptions(
+                keyboardType: const TextInputType.numberWithOptions(
                   signed: false,
                   decimal: false,
                 ),
@@ -104,12 +105,12 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                     _sslValue = newvalue;
                   });
                 },
-                title: Text('Use SSL'),
+                title: const Text('Use SSL'),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: RaisedButton(
-                  child: Text('Create'),
+                  child: const Text('Create'),
                   onPressed: _addNewEnvironment,
                 ),
               ),

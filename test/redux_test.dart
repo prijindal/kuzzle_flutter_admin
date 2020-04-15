@@ -44,7 +44,7 @@ Future<void> testSecurity() async {
       thunkMiddleware,
       LoggingMiddleware.printer(),
     ],
-    initialState: KuzzleSecurity(),
+    initialState: const KuzzleSecurity(),
   );
   await FlutterKuzzle.instance.connect();
   store.dispatch(getKuzzleUsers);
@@ -113,7 +113,7 @@ Future<void> testIndexes() async {
       thunkMiddleware,
       LoggingMiddleware.printer(),
     ],
-    initialState: KuzzleIndexes(),
+    initialState: const KuzzleIndexes(),
   );
   await FlutterKuzzle.instance.connect();
   store.dispatch(getKuzzleIndexes);
@@ -134,7 +134,7 @@ Future<void> testIndexes() async {
               store.dispatch(
                 addKuzzleCollection(
                   index,
-                  KuzzleCollection(name: collectionName, type: 'stored'),
+                  const KuzzleCollection(name: collectionName, type: 'stored'),
                 ),
               );
               timer.cancel();

@@ -87,7 +87,7 @@ KuzzleSecurityProfile kuzzleSecurityProfileReducer(
 }
 
 KuzzleSecurity kuzzleSecurityReducer(KuzzleSecurity state, dynamic action) {
-  state ??= KuzzleSecurity();
+  state ??= const KuzzleSecurity();
   if (action is GetKuzzleUsersAction) {
     return state.copyWith(
       users: state.users.copyWith(

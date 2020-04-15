@@ -8,6 +8,17 @@ part 'kuzzleauth.g.dart';
 @JsonSerializable()
 @immutable
 class KuzzleAuth {
+  const KuzzleAuth({
+    this.token,
+    this.loginState = KuzzleState.INIT,
+    this.logoutState = KuzzleState.INIT,
+    this.loginError,
+    this.logoutError,
+  });
+
+  factory KuzzleAuth.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleAuthFromJson(json);
+
   final KuzzleState loginState;
   final KuzzleState logoutState;
   final String loginError;
@@ -21,32 +32,20 @@ class KuzzleAuth {
     return false;
   }
 
-  KuzzleAuth({
-    this.token,
-    this.loginState = KuzzleState.INIT,
-    this.logoutState = KuzzleState.INIT,
-    this.loginError,
-    this.logoutError,
-  });
-
   KuzzleAuth copyWith({
     KuzzleState loginState,
     KuzzleState logoutState,
     String token,
     String loginError,
     String logoutError,
-  }) {
-    return KuzzleAuth(
-      loginState: loginState ?? this.loginState,
-      logoutState: logoutState ?? this.logoutState,
-      loginError: loginError ?? this.loginError,
-      logoutError: logoutError ?? this.logoutError,
-      token: token ?? this.token,
-    );
-  }
-
-  factory KuzzleAuth.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleAuthFromJson(json);
+  }) =>
+      KuzzleAuth(
+        loginState: loginState ?? this.loginState,
+        logoutState: logoutState ?? this.logoutState,
+        loginError: loginError ?? this.loginError,
+        logoutError: logoutError ?? this.logoutError,
+        token: token ?? this.token,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleAuthToJson(this);
 }

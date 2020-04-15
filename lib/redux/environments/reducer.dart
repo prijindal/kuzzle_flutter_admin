@@ -4,7 +4,7 @@ import 'package:kuzzleflutteradmin/models/environments.dart';
 import 'events.dart';
 
 Environments environmentsReducer(Environments state, dynamic action) {
-  state ??= Environments(
+  state ??= const Environments(
     isInitialized: false,
   );
   if (action is InitializeEnvironmentAction) {

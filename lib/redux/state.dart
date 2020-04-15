@@ -9,17 +9,17 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppState {
-  AppState({
+  const AppState({
     Environments environments,
     KuzzleIndexes kuzzleindexes,
     KuzzlePing kuzzleping,
     KuzzleSecurity kuzzlesecurity,
     KuzzleAuth kuzzleauth,
-  })  : this.environments = environments ?? Environments(),
-        this.kuzzleindexes = kuzzleindexes ?? KuzzleIndexes(),
-        this.kuzzleping = kuzzleping ?? KuzzlePing(),
-        this.kuzzlesecurity = kuzzlesecurity ?? KuzzleSecurity(),
-        this.kuzzleauth = kuzzleauth ?? KuzzleAuth();
+  })  : this.environments = environments ?? const Environments(),
+        this.kuzzleindexes = kuzzleindexes ?? const KuzzleIndexes(),
+        this.kuzzleping = kuzzleping ?? const KuzzlePing(),
+        this.kuzzlesecurity = kuzzlesecurity ?? const KuzzleSecurity(),
+        this.kuzzleauth = kuzzleauth ?? const KuzzleAuth();
 
   final Environments environments;
   final KuzzleIndexes kuzzleindexes;

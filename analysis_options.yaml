@@ -2,7 +2,7 @@
 # Add these to your `analysis-options.yaml` file and tailor to fit!
 analyzer:
   exclude:
-    - lib/models/**
+    - lib/models/*.g.dart
   strong-mode:
     implicit-casts: false
 

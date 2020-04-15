@@ -7,26 +7,25 @@ part 'kuzzleping.g.dart';
 @JsonSerializable()
 @immutable
 class KuzzlePing {
-  final String errorMessage;
-  final KuzzleState loadingState;
-
-  KuzzlePing({
+  const KuzzlePing({
     this.errorMessage,
     this.loadingState = KuzzleState.INIT,
   });
 
+  factory KuzzlePing.fromJson(Map<String, dynamic> json) =>
+      _$KuzzlePingFromJson(json);
+
+  final String errorMessage;
+  final KuzzleState loadingState;
+
   KuzzlePing copyWith({
     String errorMessage,
     KuzzleState loadingState,
-  }) {
-    return KuzzlePing(
-      errorMessage: errorMessage ?? this.errorMessage,
-      loadingState: loadingState ?? this.loadingState,
-    );
-  }
-
-  factory KuzzlePing.fromJson(Map<String, dynamic> json) =>
-      _$KuzzlePingFromJson(json);
+  }) =>
+      KuzzlePing(
+        errorMessage: errorMessage ?? this.errorMessage,
+        loadingState: loadingState ?? this.loadingState,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzlePingToJson(this);
 }

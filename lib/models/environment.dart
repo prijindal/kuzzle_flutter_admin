@@ -4,8 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'environment.g.dart';
 
 @JsonSerializable()
+@immutable
 class Environment {
-  Environment({
+  const Environment({
     @required this.name,
     this.color,
     this.host,
@@ -13,21 +14,16 @@ class Environment {
     this.ssl,
     this.token,
   });
-  String name;
-  String color;
-  String host;
-  int port;
-  bool ssl;
-  String token;
 
-  /// A necessary factory constructor for creating a new User instance
-  /// from a map. Pass the map to the generated `_$EnvironmentFromJson()` constructor.
-  /// The constructor is named after the source class, in this case, User.
   factory Environment.fromJson(Map<String, dynamic> json) =>
       _$EnvironmentFromJson(json);
 
-  /// `toJson` is the convention for a class to declare support for serialization
-  /// to JSON. The implementation simply calls the private, generated
-  /// helper method `_$UserToJson`.
+  final String name;
+  final String color;
+  final String host;
+  final int port;
+  final bool ssl;
+  final String token;
+
   Map<String, dynamic> toJson() => _$EnvironmentToJson(this);
 }

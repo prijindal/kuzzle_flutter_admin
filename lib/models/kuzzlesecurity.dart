@@ -97,17 +97,16 @@ class KuzzleSecurityUsers {
     String loadingError,
     String addingError,
     String deletingError,
-  }) {
-    return KuzzleSecurityUsers(
-      users: users ?? this.users,
-      loadingState: loadingState ?? this.loadingState,
-      addingState: addingState ?? this.addingState,
-      deletingState: deletingState ?? this.deletingState,
-      loadingError: loadingError ?? this.loadingError,
-      addingError: addingError ?? this.addingError,
-      deletingError: deletingError ?? this.deletingError,
-    );
-  }
+  }) =>
+      KuzzleSecurityUsers(
+        users: users ?? this.users,
+        loadingState: loadingState ?? this.loadingState,
+        addingState: addingState ?? this.addingState,
+        deletingState: deletingState ?? this.deletingState,
+        loadingError: loadingError ?? this.loadingError,
+        addingError: addingError ?? this.addingError,
+        deletingError: deletingError ?? this.deletingError,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityUsersToJson(this);
 }
@@ -115,14 +114,7 @@ class KuzzleSecurityUsers {
 @immutable
 @JsonSerializable()
 class KuzzleSecurityProfile {
-  final String uid;
-  final List<dynamic> policies;
-  final KuzzleState loadingState;
-  final KuzzleState savingState;
-  final String loadingError;
-  final String savingError;
-
-  KuzzleSecurityProfile({
+  const KuzzleSecurityProfile({
     @required this.uid,
     this.policies = const <dynamic>[],
     this.loadingState = KuzzleState.INIT,
@@ -131,6 +123,16 @@ class KuzzleSecurityProfile {
     this.savingError,
   }) : assert(uid != null);
 
+  factory KuzzleSecurityProfile.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityProfileFromJson(json);
+
+  final String uid;
+  final List<dynamic> policies;
+  final KuzzleState loadingState;
+  final KuzzleState savingState;
+  final String loadingError;
+  final String savingError;
+
   KuzzleSecurityProfile copyWith({
     String uid,
     List<dynamic> policies,
@@ -138,19 +140,15 @@ class KuzzleSecurityProfile {
     KuzzleState savingState,
     String loadingError,
     String savingError,
-  }) {
-    return KuzzleSecurityProfile(
-      uid: uid ?? this.uid,
-      policies: policies ?? this.policies,
-      loadingState: loadingState ?? this.loadingState,
-      savingState: savingState ?? this.savingState,
-      loadingError: loadingError ?? this.loadingError,
-      savingError: savingError ?? this.savingError,
-    );
-  }
-
-  factory KuzzleSecurityProfile.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityProfileFromJson(json);
+  }) =>
+      KuzzleSecurityProfile(
+        uid: uid ?? this.uid,
+        policies: policies ?? this.policies,
+        loadingState: loadingState ?? this.loadingState,
+        savingState: savingState ?? this.savingState,
+        loadingError: loadingError ?? this.loadingError,
+        savingError: savingError ?? this.savingError,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityProfileToJson(this);
 }
@@ -158,15 +156,7 @@ class KuzzleSecurityProfile {
 @immutable
 @JsonSerializable()
 class KuzzleSecurityProfiles {
-  final List<KuzzleSecurityProfile> profiles;
-  final KuzzleState loadingState;
-  final KuzzleState addingState;
-  final KuzzleState deletingState;
-  final String loadingError;
-  final String addingError;
-  final String deletingError;
-
-  KuzzleSecurityProfiles({
+  const KuzzleSecurityProfiles({
     this.profiles = const <KuzzleSecurityProfile>[],
     this.loadingState = KuzzleState.INIT,
     this.addingState = KuzzleState.INIT,
@@ -176,6 +166,17 @@ class KuzzleSecurityProfiles {
     this.deletingError,
   });
 
+  factory KuzzleSecurityProfiles.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityProfilesFromJson(json);
+
+  final List<KuzzleSecurityProfile> profiles;
+  final KuzzleState loadingState;
+  final KuzzleState addingState;
+  final KuzzleState deletingState;
+  final String loadingError;
+  final String addingError;
+  final String deletingError;
+
   KuzzleSecurityProfiles copyWith({
     List<KuzzleSecurityProfile> profiles,
     KuzzleState loadingState,
@@ -184,20 +185,16 @@ class KuzzleSecurityProfiles {
     String loadingError,
     String addingError,
     String deletingError,
-  }) {
-    return KuzzleSecurityProfiles(
-      profiles: profiles ?? this.profiles,
-      loadingState: loadingState ?? this.loadingState,
-      addingState: addingState ?? this.addingState,
-      deletingState: deletingState ?? this.deletingState,
-      loadingError: loadingError ?? this.loadingError,
-      addingError: addingError ?? this.addingError,
-      deletingError: deletingError ?? this.deletingError,
-    );
-  }
-
-  factory KuzzleSecurityProfiles.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityProfilesFromJson(json);
+  }) =>
+      KuzzleSecurityProfiles(
+        profiles: profiles ?? this.profiles,
+        loadingState: loadingState ?? this.loadingState,
+        addingState: addingState ?? this.addingState,
+        deletingState: deletingState ?? this.deletingState,
+        loadingError: loadingError ?? this.loadingError,
+        addingError: addingError ?? this.addingError,
+        deletingError: deletingError ?? this.deletingError,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityProfilesToJson(this);
 }
@@ -205,26 +202,25 @@ class KuzzleSecurityProfiles {
 @immutable
 @JsonSerializable()
 class KuzzleSecurityRole {
-  final String uid;
-  final Map<String, dynamic> controllers;
-
-  KuzzleSecurityRole({
+  const KuzzleSecurityRole({
     @required this.uid,
     this.controllers = const <String, dynamic>{},
   }) : assert(uid != null);
 
+  factory KuzzleSecurityRole.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityRoleFromJson(json);
+
+  final String uid;
+  final Map<String, dynamic> controllers;
+
   KuzzleSecurityRole copyWith({
     String uid,
     Map<String, dynamic> controllers,
-  }) {
-    return KuzzleSecurityRole(
-      uid: uid ?? this.uid,
-      controllers: controllers ?? this.controllers,
-    );
-  }
-
-  factory KuzzleSecurityRole.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityRoleFromJson(json);
+  }) =>
+      KuzzleSecurityRole(
+        uid: uid ?? this.uid,
+        controllers: controllers ?? this.controllers,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityRoleToJson(this);
 }
@@ -232,15 +228,7 @@ class KuzzleSecurityRole {
 @immutable
 @JsonSerializable()
 class KuzzleSecurityRoles {
-  final List<KuzzleSecurityRole> roles;
-  final KuzzleState loadingState;
-  final KuzzleState addingState;
-  final KuzzleState deletingState;
-  final String loadingError;
-  final String addingError;
-  final String deletingError;
-
-  KuzzleSecurityRoles({
+  const KuzzleSecurityRoles({
     this.roles = const <KuzzleSecurityRole>[],
     this.loadingState = KuzzleState.INIT,
     this.addingState = KuzzleState.INIT,
@@ -250,6 +238,17 @@ class KuzzleSecurityRoles {
     this.deletingError,
   });
 
+  factory KuzzleSecurityRoles.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityRolesFromJson(json);
+
+  final List<KuzzleSecurityRole> roles;
+  final KuzzleState loadingState;
+  final KuzzleState addingState;
+  final KuzzleState deletingState;
+  final String loadingError;
+  final String addingError;
+  final String deletingError;
+
   KuzzleSecurityRoles copyWith({
     List<KuzzleSecurityRole> roles,
     KuzzleState loadingState,
@@ -258,20 +257,16 @@ class KuzzleSecurityRoles {
     String loadingError,
     String addingError,
     String deletingError,
-  }) {
-    return KuzzleSecurityRoles(
-      roles: roles ?? this.roles,
-      loadingState: loadingState ?? this.loadingState,
-      addingState: addingState ?? this.addingState,
-      deletingState: deletingState ?? this.deletingState,
-      loadingError: loadingError ?? this.loadingError,
-      addingError: addingError ?? this.addingError,
-      deletingError: deletingError ?? this.deletingError,
-    );
-  }
-
-  factory KuzzleSecurityRoles.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityRolesFromJson(json);
+  }) =>
+      KuzzleSecurityRoles(
+        roles: roles ?? this.roles,
+        loadingState: loadingState ?? this.loadingState,
+        addingState: addingState ?? this.addingState,
+        deletingState: deletingState ?? this.deletingState,
+        loadingError: loadingError ?? this.loadingError,
+        addingError: addingError ?? this.addingError,
+        deletingError: deletingError ?? this.deletingError,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityRolesToJson(this);
 }
@@ -279,32 +274,31 @@ class KuzzleSecurityRoles {
 @immutable
 @JsonSerializable()
 class KuzzleSecurity {
-  final KuzzleSecurityUsers users;
-  final KuzzleSecurityProfiles profiles;
-  final KuzzleSecurityRoles roles;
-
-  KuzzleSecurity({
+  const KuzzleSecurity({
     KuzzleSecurityUsers users,
     KuzzleSecurityProfiles profiles,
     KuzzleSecurityRoles roles,
-  })  : this.users = users ?? KuzzleSecurityUsers(),
-        this.profiles = profiles ?? KuzzleSecurityProfiles(),
-        this.roles = roles ?? KuzzleSecurityRoles();
+  })  : this.users = users ?? const KuzzleSecurityUsers(),
+        this.profiles = profiles ?? const KuzzleSecurityProfiles(),
+        this.roles = roles ?? const KuzzleSecurityRoles();
+
+  factory KuzzleSecurity.fromJson(Map<String, dynamic> json) =>
+      _$KuzzleSecurityFromJson(json);
+
+  final KuzzleSecurityUsers users;
+  final KuzzleSecurityProfiles profiles;
+  final KuzzleSecurityRoles roles;
 
   KuzzleSecurity copyWith({
     KuzzleSecurityUsers users,
     KuzzleSecurityProfiles profiles,
     KuzzleSecurityRoles roles,
-  }) {
-    return KuzzleSecurity(
-      users: users ?? this.users,
-      profiles: profiles ?? this.profiles,
-      roles: roles ?? this.roles,
-    );
-  }
-
-  factory KuzzleSecurity.fromJson(Map<String, dynamic> json) =>
-      _$KuzzleSecurityFromJson(json);
+  }) =>
+      KuzzleSecurity(
+        users: users ?? this.users,
+        profiles: profiles ?? this.profiles,
+        roles: roles ?? this.roles,
+      );
 
   Map<String, dynamic> toJson() => _$KuzzleSecurityToJson(this);
 

@@ -10,13 +10,13 @@ services:
 before_script:
   - ./docker_launch.sh
 install:
-  - git clone https://github.com/flutter/flutter.git -b master
+  - cd ../;git clone https://github.com/flutter/flutter.git -b master; cd kuzzle_flutter_admin
   - cd ../; git clone https://github.com/prijindal/kuzzle_dart.git --depth 1; cd kuzzle_flutter_admin
-  - ./flutter/bin/flutter doctor
+  - ../flutter/bin/flutter doctor
   - gem install coveralls-lcov
 script:
-  - ./flutter/bin/flutter analyze
-  - ./flutter/bin/flutter test --coverage
+  - ../flutter/bin/flutter analyze
+  - ../flutter/bin/flutter test --coverage
 after_success:
   - ./coverage.sh
 cache:

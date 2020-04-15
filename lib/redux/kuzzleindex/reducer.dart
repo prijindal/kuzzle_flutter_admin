@@ -4,9 +4,9 @@ import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'events.dart';
 
 KuzzleIndexes kuzzleReducer(KuzzleIndexes state, dynamic action) {
-  state ??= KuzzleIndexes();
+  state ??= const KuzzleIndexes();
   if (action is ResetKuzzleIndexAction) {
-    return KuzzleIndexes();
+    return const KuzzleIndexes();
   } else if (action is GetKuzzleIndexesAction) {
     return state.copyWith(
       loadingError: null,
@@ -15,7 +15,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, dynamic action) {
   } else if (action is GetSuccessKuzzleIndexesAction) {
     final indexMap = <String, KuzzleIndex>{};
     for (var index in action.indexes) {
-      indexMap[index] = KuzzleIndex();
+      indexMap[index] = const KuzzleIndex();
     }
     return state.copyWith(
       loadingError: null,
@@ -34,7 +34,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, dynamic action) {
   } else if (action is AddSuccessKuzzleIndexAction) {
     final indexMap = <String, KuzzleIndex>{};
     indexMap.addAll(state.indexMap);
-    indexMap[action.index] = KuzzleIndex();
+    indexMap[action.index] = const KuzzleIndex();
     return state.copyWith(
       addingState: KuzzleState.LOADED,
       indexMap: indexMap,

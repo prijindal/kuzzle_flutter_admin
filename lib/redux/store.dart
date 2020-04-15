@@ -25,7 +25,7 @@ Store<AppState> initStore() {
       saveMiddleware,
       LoggingMiddleware.printer(),
     ],
-    initialState: AppState(),
+    initialState: const AppState(),
   );
   return store;
 }

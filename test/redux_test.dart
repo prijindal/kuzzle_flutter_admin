@@ -30,70 +30,66 @@ void main() async {
       '192.168.146.136',
     ),
   );
-  FlutterKuzzle.instance.on("disconnect", () {
+  FlutterKuzzle.instance.on('disconnect', () {
     exit(0);
   });
-  test("Test Security Redux", () {
-    testSecurity();
-  });
-  test("Test Indexes Redux", () {
-    testIndexes();
-  });
+  test('Test Security Redux', testSecurity);
+  test('Test Indexes Redux', testIndexes);
 }
 
 void testSecurity() async {
-  final store = new Store<KuzzleSecurity>(
-    (state, action) => kuzzleSecurityReducer(state, action),
+  final store = Store<KuzzleSecurity>(
+    kuzzleSecurityReducer,
     middleware: [
       thunkMiddleware,
-      new LoggingMiddleware.printer(),
+      LoggingMiddleware.printer(),
     ],
     initialState: KuzzleSecurity(),
   );
   await FlutterKuzzle.instance.connect();
   store.dispatch(getKuzzleUsers);
-  Timer.periodic(Duration(milliseconds: 10), (timer) {
+  Timer.periodic(const Duration(milliseconds: 10), (timer) {
     if (store.state.users.loadingState == KuzzleState.LOADED) {
       timer.cancel();
-      if (store.state.users.users.length > 0) {
+      if (store.state.users.users.isNotEmpty) {
         store.dispatch(getKuzzleUser(store.state.users.users[0].uid));
-        Timer.periodic(Duration(milliseconds: 10), (timer) {
+        Timer.periodic(const Duration(milliseconds: 10), (timer) {
           if (store.state.users.users[0].loadingState == KuzzleState.LOADED) {
             timer.cancel();
-            Map<String, dynamic> credentials = {
-              "local": {
-                "username": "test",
-                "password": "test",
+            final credentials = {
+              'local': {
+                'username": "test',
+                'password": "test',
               },
             };
             store.dispatch(
               addKuzzleUser(
                 KuzzleSecurityUser(
                   uid: null,
-                  content: <String, dynamic>{
-                    "profileIds": ["admin"],
-                    "name": "test",
+                  content: const <String, dynamic>{
+                    'profileIds': ['admin'],
+                    'name': 'test',
                   },
                 ),
                 credentials,
               ),
             );
-            Timer.periodic(Duration(milliseconds: 10), (timer) {
+            Timer.periodic(const Duration(milliseconds: 10), (timer) {
               if (store.state.users.addingState == KuzzleState.LOADED) {
                 timer.cancel();
                 var user = store.state.users.users.last.copyWith(
-                  content: {
-                    "name": "Edited name",
+                  content: const <String, dynamic>{
+                    'name': 'Edited name',
                   },
                 );
                 store.dispatch(editKuzzleUser(user));
-                Timer.periodic(Duration(milliseconds: 10), (timer) {
+                Timer.periodic(const Duration(milliseconds: 10), (timer) {
                   if (store.state.users.users.last.savingState ==
                       KuzzleState.LOADED) {
                     timer.cancel();
                     store.dispatch(
                         deleteKuzzleUser(store.state.users.users.last.uid));
-                    Timer.periodic(Duration(milliseconds: 10), (timer) {
+                    Timer.periodic(const Duration(milliseconds: 10), (timer) {
                       if (store.state.users.deletingState ==
                           KuzzleState.LOADED) {
                         timer.cancel();
@@ -111,50 +107,50 @@ void testSecurity() async {
 }
 
 void testIndexes() async {
-  final store = new Store<KuzzleIndexes>(
-    (state, action) => kuzzleReducer(state, action),
+  final store = Store<KuzzleIndexes>(
+    kuzzleReducer,
     middleware: [
       thunkMiddleware,
-      new LoggingMiddleware.printer(),
+      LoggingMiddleware.printer(),
     ],
     initialState: KuzzleIndexes(),
   );
   await FlutterKuzzle.instance.connect();
   store.dispatch(getKuzzleIndexes);
-  Timer.periodic(Duration(milliseconds: 10), (timer) {
+  Timer.periodic(const Duration(milliseconds: 10), (timer) {
     if (store.state.loadingState == KuzzleState.LOADED) {
-      var index = "testindexname";
-      var collectionName = "comments";
+      const index = 'testindexname';
+      const collectionName = 'comments';
       store.dispatch(addKuzzleIndex(index));
       timer.cancel();
-      Timer.periodic(Duration(milliseconds: 10), (timer) {
+      Timer.periodic(const Duration(milliseconds: 10), (timer) {
         if (store.state.addingState == KuzzleState.LOADED) {
           // var index = store.state.getIndexes()[0];
           store.dispatch(getKuzzleCollections(index));
           timer.cancel();
-          Timer.periodic(Duration(milliseconds: 10), (timer) {
+          Timer.periodic(const Duration(milliseconds: 10), (timer) {
             if (store.state.indexMap[index].loadingState ==
                 KuzzleState.LOADED) {
               store.dispatch(
                 addKuzzleCollection(
                   index,
-                  KuzzleCollection(name: collectionName, type: "stored"),
+                  KuzzleCollection(name: collectionName, type: 'stored'),
                 ),
               );
               timer.cancel();
-              Timer.periodic(Duration(milliseconds: 10), (timer) {
+              Timer.periodic(const Duration(milliseconds: 10), (timer) {
                 if (store.state.indexMap[index].addingState ==
                     KuzzleState.LOADED) {
                   store.dispatch(
                     deleteKuzzleCollection(index, collectionName),
                   );
                   timer.cancel();
-                  Timer.periodic(Duration(milliseconds: 10), (timer) {
+                  Timer.periodic(const Duration(milliseconds: 10), (timer) {
                     if (store.state.indexMap[index].deletingState ==
                         KuzzleState.LOADED) {
                       store.dispatch(deleteKuzzleIndex(index));
                       timer.cancel();
-                      Timer.periodic(Duration(milliseconds: 10), (timer) {
+                      Timer.periodic(const Duration(milliseconds: 10), (timer) {
                         if (store.state.deletingState == KuzzleState.LOADED) {
                           FlutterKuzzle.instance.disconnect();
                           timer.cancel();

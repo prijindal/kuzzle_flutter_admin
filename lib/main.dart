@@ -8,11 +8,12 @@ import 'package:kuzzleflutteradmin/pages/newuser.dart';
 import 'package:kuzzleflutteradmin/pages/users.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 import 'package:kuzzleflutteradmin/redux/store.dart';
+import 'package:redux/redux.dart';
 import 'helpers/navigation.dart';
-import 'pages/loading.dart';
-import 'pages/environments.dart';
-import 'pages/environmenthome.dart';
 import 'pages/addenvironment.dart';
+import 'pages/environmenthome.dart';
+import 'pages/environments.dart';
+import 'pages/loading.dart';
 
 const int _kuzzleMaterialPrimaryValue = 0xFF002835;
 
@@ -39,40 +40,39 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final store = initStore();
+  final Store<AppState> store = initStore();
 
   @override
-  Widget build(BuildContext context) {
-    return StoreProvider<AppState>(
-      store: store,
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Kuzzle Admin',
-        theme: ThemeData(
-          primarySwatch: _kuzzleMaterialColor,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+  Widget build(BuildContext context) => StoreProvider<AppState>(
+        store: store,
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'Kuzzle Admin',
+          theme: ThemeData(
+            primarySwatch: _kuzzleMaterialColor,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          routes: {
+            '/': (context) => StoreConnector<AppState, Environments>(
+                  converter: (store) => store.state.environments,
+                  builder: (context, environments) =>
+                      !environments.isInitialized
+                          ? LoadingPage()
+                          : (environments.environments.isEmpty
+                              ? AddEnvironmentPage()
+                              : (environments.getDefaultEnvironment != null
+                                  ? EnvironmentHomePage(
+                                      environments.getDefaultEnvironment,
+                                    )
+                                  : EnvironmentsPage())),
+                ),
+            'addenvironment': (context) => AddEnvironmentPage(),
+            'indexes': (context) => IndexesPage(),
+            'newindex': (context) => NewIndexPage(),
+            'collections': (context) => CollectionsPageRoute(),
+            'users': (context) => UsersPage(),
+            'newuser': (context) => NewUserPage(),
+          },
         ),
-        routes: {
-          '/': (context) => StoreConnector<AppState, Environments>(
-                converter: (store) => store.state.environments,
-                builder: (context, environments) => !environments.isInitialized
-                    ? LoadingPage()
-                    : (environments.environments.length == 0
-                        ? AddEnvironmentPage()
-                        : (environments.getDefaultEnvironment != null
-                            ? EnvironmentHomePage(
-                                environments.getDefaultEnvironment,
-                              )
-                            : EnvironmentsPage())),
-              ),
-          'addenvironment': (context) => AddEnvironmentPage(),
-          'indexes': (context) => IndexesPage(),
-          'newindex': (context) => NewIndexPage(),
-          'collections': (context) => CollectionsPageRoute(),
-          'users': (context) => UsersPage(),
-          'newuser': (context) => NewUserPage(),
-        },
-      ),
-    );
-  }
+      );
 }

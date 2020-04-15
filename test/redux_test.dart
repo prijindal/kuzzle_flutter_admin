@@ -26,9 +26,7 @@ import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 
 void main() {
   FlutterKuzzle.instance = FlutterKuzzle(
-    WebSocketProtocol(
-      '192.168.146.136',
-    ),
+    WebSocketProtocol('localhost'),
   );
   FlutterKuzzle.instance.on('disconnect', () {
     exit(0);

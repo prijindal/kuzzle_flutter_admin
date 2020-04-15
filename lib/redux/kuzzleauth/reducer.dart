@@ -2,10 +2,8 @@ import 'package:kuzzleflutteradmin/models/kuzzleauth.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleauth/events.dart';
 
-KuzzleAuth authReducer(KuzzleAuth state, action) {
-  if (state == null) {
-    state = KuzzleAuth();
-  }
+KuzzleAuth authReducer(KuzzleAuth state, dynamic action) {
+  state ??= KuzzleAuth();
   if (action is LoginKuzzleAuthAction) {
     return state.copyWith(
       loginState: KuzzleState.LOADING,

@@ -7,8 +7,8 @@ import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/useraction.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class UserPage extends StatefulWidget {
+  const UserPage(this.user);
   final KuzzleSecurityUser user;
-  UserPage(this.user);
   @override
   _UserPageState createState() => _UserPageState();
 }
@@ -44,13 +44,13 @@ class _UserPageState extends State<UserPage> {
           body: Column(
             children: [
               ListTile(
-                title: Text('UID'),
+                title: const Text('UID'),
                 subtitle: Text(user.uid),
               ),
               ListTile(
-                title: Text('Profiles'),
+                title: const Text('Profiles'),
                 subtitle: Row(
-                  children: user.profileIds.map((e) => Text(e + ',')).toList(),
+                  children: user.profileIds.map((e) => Text('$e,')).toList(),
                 ),
               ),
             ],

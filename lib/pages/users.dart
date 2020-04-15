@@ -49,15 +49,14 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) => ResponsiveScaffold(
         subtitle: 'User Management',
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: _goToAddUserPage,
         ),
         body: StoreConnector<AppState, KuzzleSecurityUsers>(
           converter: (store) => store.state.kuzzlesecurity.users,
           builder: (context, users) =>
-              (users.loadingState != KuzzleState.LOADED &&
-                      users.users.length == 0)
-                  ? Center(
+              (users.loadingState != KuzzleState.LOADED && users.users.isEmpty)
+                  ? const Center(
                       child: Text('Loading...'),
                     )
                   : ListView(
@@ -68,7 +67,7 @@ class _UsersPageState extends State<UsersPage> {
                               onTap: () => _goToUserPage(user),
                               subtitle: Row(
                                 children: user.profileIds
-                                    .map((e) => Text(e + ','))
+                                    .map((e) => Text('$e,'))
                                     .toList(),
                               ),
                             ),

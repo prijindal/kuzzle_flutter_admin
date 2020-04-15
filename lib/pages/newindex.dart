@@ -8,6 +8,7 @@ import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class NewIndexPage extends StatefulWidget {
+  @override
   _NewIndexPageState createState() => _NewIndexPageState();
 }
 
@@ -43,7 +44,7 @@ class _NewIndexPageState extends State<NewIndexPage> {
     setState(() {
       _checkingAdded = true;
     });
-    new Timer.periodic(Duration(milliseconds: 10), (timer) {
+    Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if (_checkAdded() == true) {
         timer.cancel();
       }
@@ -60,9 +61,9 @@ class _NewIndexPageState extends State<NewIndexPage> {
                 controller: _nameController,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: RaisedButton(
-                  child: Text('Create'),
+                  child: const Text('Create'),
                   onPressed:
                       _addingState == KuzzleState.LOADING ? null : _addNewIndex,
                 ),

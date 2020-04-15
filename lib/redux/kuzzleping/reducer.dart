@@ -3,10 +3,8 @@ import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 
 import 'events.dart';
 
-KuzzlePing kuzzlePingReducer(KuzzlePing state, action) {
-  if (state == null) {
-    state = KuzzlePing();
-  }
+KuzzlePing kuzzlePingReducer(KuzzlePing state, dynamic action) {
+  state ??= KuzzlePing();
   if (action is InitKuzzlePingAction) {
     return state.copyWith(
       loadingState: KuzzleState.LOADING,

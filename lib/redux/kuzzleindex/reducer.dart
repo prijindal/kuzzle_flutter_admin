@@ -3,10 +3,8 @@ import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 
 import 'events.dart';
 
-KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
-  if (state == null) {
-    state = KuzzleIndexes();
-  }
+KuzzleIndexes kuzzleReducer(KuzzleIndexes state, dynamic action) {
+  state ??= KuzzleIndexes();
   if (action is ResetKuzzleIndexAction) {
     return KuzzleIndexes();
   } else if (action is GetKuzzleIndexesAction) {
@@ -15,7 +13,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       loadingState: KuzzleState.LOADING,
     );
   } else if (action is GetSuccessKuzzleIndexesAction) {
-    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
+    final indexMap = <String, KuzzleIndex>{};
     for (var index in action.indexes) {
       indexMap[index] = KuzzleIndex();
     }
@@ -34,7 +32,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       addingState: KuzzleState.LOADING,
     );
   } else if (action is AddSuccessKuzzleIndexAction) {
-    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
+    final indexMap = <String, KuzzleIndex>{};
     indexMap.addAll(state.indexMap);
     indexMap[action.index] = KuzzleIndex();
     return state.copyWith(
@@ -51,7 +49,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       deletingState: KuzzleState.LOADING,
     );
   } else if (action is DeleteSuccessKuzzleIndexAction) {
-    Map<String, KuzzleIndex> indexMap = <String, KuzzleIndex>{};
+    final indexMap = <String, KuzzleIndex>{};
     indexMap.addAll(state.indexMap);
     indexMap.remove(action.index);
     return state.copyWith(
@@ -120,7 +118,7 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, action) {
       ),
     );
   } else if (action is AddSuccessKuzzleCollectionAction) {
-    List<KuzzleCollection> collections = <KuzzleCollection>[];
+    final collections = <KuzzleCollection>[];
     collections.addAll(state.indexMap[action.index].collections);
     collections.add(action.collection);
     return state.copyWith(

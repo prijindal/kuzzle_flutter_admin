@@ -33,8 +33,10 @@ void main() {
   FlutterKuzzle.instance.on('disconnect', () {
     exit(0);
   });
-  test('Test Security Redux', testSecurity);
-  test('Test Indexes Redux', testIndexes);
+  test('Test Security Redux', testSecurity,
+      timeout: const Timeout(Duration(minutes: 2)));
+  test('Test Indexes Redux', testIndexes,
+      timeout: const Timeout(Duration(minutes: 2)));
 }
 
 Future<void> testSecurity() async {

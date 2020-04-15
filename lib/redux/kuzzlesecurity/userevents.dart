@@ -6,82 +6,82 @@ import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/abstractevent.dart';
 class GetKuzzleUsersAction extends KuzzleSecurityAction {}
 
 class GetSuccessKuzzleUsersAction extends KuzzleSecurityAction {
-  final List<KuzzleSecurityUser> users;
   GetSuccessKuzzleUsersAction(this.users);
+  final List<KuzzleSecurityUser> users;
 }
 
 class GetErroredKuzzleUsersAction extends KuzzleSecurityAction {
-  final String errorMessage;
   GetErroredKuzzleUsersAction(this.errorMessage);
+  final String errorMessage;
 }
 
 /* Get one */
 class GetKuzzleUserAction extends KuzzleSecurityAction {
-  final String uid;
   GetKuzzleUserAction(this.uid);
+  final String uid;
 }
 
 class GetSuccessKuzzleUserAction extends KuzzleSecurityAction {
+  GetSuccessKuzzleUserAction(this.uid, this.user);
   final String uid;
   final KuzzleSecurityUser user;
-  GetSuccessKuzzleUserAction(this.uid, this.user);
 }
 
 class GetErroredKuzzleUserAction extends KuzzleSecurityAction {
+  GetErroredKuzzleUserAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  GetErroredKuzzleUserAction(this.uid, this.errorMessage);
 }
 
 /* Add */
 class AddKuzzleUserAction extends KuzzleSecurityAction {
-  final KuzzleSecurityUser user;
   AddKuzzleUserAction(this.user);
+  final KuzzleSecurityUser user;
 }
 
 class AddSuccessKuzzleUserAction extends KuzzleSecurityAction {
-  final KuzzleSecurityUser user;
   AddSuccessKuzzleUserAction(this.user);
+  final KuzzleSecurityUser user;
 }
 
 class AddErroredKuzzleUserAction extends KuzzleSecurityAction {
+  AddErroredKuzzleUserAction(this.user, this.errorMessage);
   final KuzzleSecurityUser user;
   final String errorMessage;
-  AddErroredKuzzleUserAction(this.user, this.errorMessage);
 }
 
 /* Edit */
 class SaveKuzzleUserAction extends KuzzleSecurityAction {
+  SaveKuzzleUserAction(this.uid, this.user);
   final String uid;
   final KuzzleSecurityUser user;
-  SaveKuzzleUserAction(this.uid, this.user);
 }
 
 class SaveSuccessKuzzleUserAction extends KuzzleSecurityAction {
+  SaveSuccessKuzzleUserAction(this.uid, this.user);
   final String uid;
   final KuzzleSecurityUser user;
-  SaveSuccessKuzzleUserAction(this.uid, this.user);
 }
 
 class SaveErroredKuzzleUserAction extends KuzzleSecurityAction {
+  SaveErroredKuzzleUserAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  SaveErroredKuzzleUserAction(this.uid, this.errorMessage);
 }
 
 /* Delete */
 class DeleteKuzzleUserAction extends KuzzleSecurityAction {
-  final String uid;
   DeleteKuzzleUserAction(this.uid);
+  final String uid;
 }
 
 class DeleteSuccessKuzzleUserAction extends KuzzleSecurityAction {
-  final String uid;
   DeleteSuccessKuzzleUserAction(this.uid);
+  final String uid;
 }
 
 class DeleteErroredKuzzleUserAction extends KuzzleSecurityAction {
+  DeleteErroredKuzzleUserAction(this.uid, this.errorMessage);
   final String uid;
   final String errorMessage;
-  DeleteErroredKuzzleUserAction(this.uid, this.errorMessage);
 }

@@ -9,11 +9,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppState {
-  final Environments environments;
-  final KuzzleIndexes kuzzleindexes;
-  final KuzzlePing kuzzleping;
-  final KuzzleSecurity kuzzlesecurity;
-  final KuzzleAuth kuzzleauth;
   AppState({
     Environments environments,
     KuzzleIndexes kuzzleindexes,
@@ -26,6 +21,12 @@ class AppState {
         this.kuzzlesecurity = kuzzlesecurity ?? KuzzleSecurity(),
         this.kuzzleauth = kuzzleauth ?? KuzzleAuth();
 
+  final Environments environments;
+  final KuzzleIndexes kuzzleindexes;
+  final KuzzlePing kuzzleping;
+  final KuzzleSecurity kuzzlesecurity;
+  final KuzzleAuth kuzzleauth;
+
   Map<String, dynamic> toJson() => {
         'environments': environments.toJson(),
         'kuzzleindexes': kuzzleindexes.toJson(),
@@ -36,7 +37,7 @@ class AppState {
 
   @override
   String toString() {
-    JsonEncoder encoder = new JsonEncoder();
+    const encoder = JsonEncoder();
     return encoder.convert(toJson());
   }
 }

@@ -24,7 +24,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 // import 'package:kuzzleflutteradmin/redux/index.dart';
 
-void main() async {
+void main() {
   FlutterKuzzle.instance = FlutterKuzzle(
     WebSocketProtocol(
       '192.168.146.136',
@@ -37,7 +37,7 @@ void main() async {
   test('Test Indexes Redux', testIndexes);
 }
 
-void testSecurity() async {
+Future<void> testSecurity() async {
   final store = Store<KuzzleSecurity>(
     kuzzleSecurityReducer,
     middleware: [
@@ -77,7 +77,7 @@ void testSecurity() async {
             Timer.periodic(const Duration(milliseconds: 10), (timer) {
               if (store.state.users.addingState == KuzzleState.LOADED) {
                 timer.cancel();
-                var user = store.state.users.users.last.copyWith(
+                final user = store.state.users.users.last.copyWith(
                   content: const <String, dynamic>{
                     'name': 'Edited name',
                   },
@@ -106,7 +106,7 @@ void testSecurity() async {
   });
 }
 
-void testIndexes() async {
+Future<void> testIndexes() async {
   final store = Store<KuzzleIndexes>(
     kuzzleReducer,
     middleware: [

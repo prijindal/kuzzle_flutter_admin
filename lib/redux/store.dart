@@ -2,8 +2,9 @@ import 'package:kuzzleflutteradmin/redux/environments/actions.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'state.dart';
+
 import 'reducer.dart';
+import 'state.dart';
 
 dynamic saveMiddleware(
     Store<AppState> store, dynamic action, NextDispatcher next) {
@@ -17,12 +18,12 @@ dynamic saveMiddleware(
 }
 
 Store<AppState> initStore() {
-  final store = new Store<AppState>(
+  final store = Store<AppState>(
     appReducer,
     middleware: [
       thunkMiddleware,
       saveMiddleware,
-      new LoggingMiddleware.printer(),
+      LoggingMiddleware.printer(),
     ],
     initialState: AppState(),
   );

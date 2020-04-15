@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlutterSharedPreferences {
-  static const String package_name = "kuzzleflutteradmin";
+  static const String package_name = 'kuzzleflutteradmin';
   static FlutterSharedPreferences _instance;
 
   static FlutterSharedPreferences getInstance() {
@@ -26,14 +26,14 @@ class FlutterSharedPreferences {
 
   String _prefsPath(String key) {
     if (Platform.isWindows) {
-      if (Platform.environment.containsKey("HOMEDRIVE") &&
-          Platform.environment.containsKey("HOMEPATH")) {
-        var homeDrive = Platform.environment["HOMEDRIVE"];
-        var homePath = Platform.environment["HOMEPATH"];
-        return "$homeDrive$homePath\\.config\\${FlutterSharedPreferences.package_name}\\$key";
+      if (Platform.environment.containsKey('HOMEDRIVE') &&
+          Platform.environment.containsKey('HOMEPATH')) {
+        var homeDrive = Platform.environment['HOMEDRIVE'];
+        var homePath = Platform.environment['HOMEPATH'];
+        return '$homeDrive$homePath\\.config\\${FlutterSharedPreferences.package_name}\\$key';
       }
     } else if (Platform.isLinux || Platform.isMacOS) {
-      return "%HOME";
+      return '%HOME';
     }
     return null;
   }
@@ -49,7 +49,7 @@ class FlutterSharedPreferences {
   Future<Map<String, dynamic>> getJson(String key) async {
     try {
       var jsonStr = await getString(key);
-      Map<String, dynamic> json = jsonDecode(jsonStr);
+      Map<String, dynamic> json = jsonDecode(jsonStr) as Map<String, dynamic>;
       return json;
     } catch (e) {
       return null;
@@ -116,7 +116,7 @@ class FlutterSharedPreferences {
     if (_isMobile) {
       return await _sharedPreferences.clear();
     } else {
-      String filePath = _prefsPath("");
+      String filePath = _prefsPath('');
       var file = File(filePath);
       return await file.delete(recursive: true);
     }

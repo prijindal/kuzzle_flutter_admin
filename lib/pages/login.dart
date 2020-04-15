@@ -15,10 +15,10 @@ class _LoginPageState extends State<LoginPage> {
   void _loginUser() {
     StoreProvider.of<AppState>(context).dispatch(
       loginUser(
-        "local",
+        'local',
         {
-          "username": _usernameController.text,
-          "password": _passwordController.text,
+          'username': _usernameController.text,
+          'password': _passwordController.text,
         },
       ),
     );
@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("Login"),
+          title: Text('Login'),
         ),
         body: Form(
           child: Padding(
@@ -36,11 +36,11 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Username"),
+                  decoration: InputDecoration(labelText: 'Username'),
                   controller: _usernameController,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Password"),
+                  decoration: InputDecoration(labelText: 'Password'),
                   controller: _passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: StoreConnector<AppState, KuzzleState>(
                     converter: (store) => store.state.kuzzleauth.loginState,
                     builder: (context, loginState) => RaisedButton(
-                      child: Text("Login"),
+                      child: Text('Login'),
                       onPressed:
                           loginState == KuzzleState.LOADING ? null : _loginUser,
                     ),

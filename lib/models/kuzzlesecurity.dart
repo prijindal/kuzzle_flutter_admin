@@ -18,15 +18,16 @@ class KuzzleSecurityUser {
   final String loadingError;
   final String savingError;
 
-  List<String> get profileIds =>
-      (content["profileIds"] as List<dynamic>).map<String>((e) => e).toList();
+  List<String> get profileIds => (content['profileIds'] as List<dynamic>)
+      .map<String>((e) => e as String)
+      .toList();
   // set profileIds(List<String> profileIds) {
-  //   content["profileIds"] = profileIds;
+  //   content['profileIds'] = profileIds;
   // }
 
-  String get name => content["name"];
+  String get name => content['name'] as String;
   // set name(String name) {
-  //   content["name"] = name;
+  //   content['name'] = name;
   // }
 
   KuzzleSecurityUser({

@@ -9,13 +9,13 @@ Future<bool> confirmDialog(
       content: Text(content),
       actions: [
         RaisedButton(
-          child: Text("No"),
+          child: Text('No'),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         RaisedButton(
-          child: Text("Yes"),
+          child: Text('Yes'),
           onPressed: () {
             Navigator.of(context).pop(true);
           },

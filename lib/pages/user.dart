@@ -44,13 +44,13 @@ class _UserPageState extends State<UserPage> {
           body: Column(
             children: [
               ListTile(
-                title: Text("UID"),
+                title: Text('UID'),
                 subtitle: Text(user.uid),
               ),
               ListTile(
-                title: Text("Profiles"),
+                title: Text('Profiles'),
                 subtitle: Row(
-                  children: user.profileIds.map((e) => Text(e + ",")).toList(),
+                  children: user.profileIds.map((e) => Text(e + ',')).toList(),
                 ),
               ),
             ],

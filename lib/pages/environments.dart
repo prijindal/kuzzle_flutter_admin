@@ -19,12 +19,12 @@ class _EnvironmentsPageState extends State<EnvironmentsPage> {
   }
 
   void _goToAddEnvironmentPage() {
-    Navigator.of(context).pushReplacementNamed("addenvironment");
+    Navigator.of(context).pushReplacementNamed('addenvironment');
   }
 
   void _deleteEnvironmentConfirm(String name) async {
-    var confirm = await confirmDialog(context, "Delete $name",
-        "Are you sure you want to delete this environment");
+    var confirm = await confirmDialog(context, 'Delete $name',
+        'Are you sure you want to delete this environment');
     if (confirm) {
       StoreProvider.of<AppState>(context)
           .dispatch(RemoveEnvironmentAction(name));

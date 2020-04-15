@@ -44,16 +44,16 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        title: Text("Select Profiles"),
+        title: Text('Select Profiles'),
         actions: [
           RaisedButton(
-            child: Text("Cancel"),
+            child: Text('Cancel'),
             onPressed: () {
               Navigator.of(context).pop(null);
             },
           ),
           RaisedButton(
-            child: Text("Save"),
+            child: Text('Save'),
             onPressed: () {
               Navigator.of(context).pop(_profileIds);
             },

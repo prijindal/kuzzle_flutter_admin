@@ -4,8 +4,8 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'events.dart';
 
-const ENVIRONMENTS_KEY = "environments";
-const DEFAULT_ENVIRONMENT_KEY = "default_environment";
+const ENVIRONMENTS_KEY = 'environments';
+const DEFAULT_ENVIRONMENT_KEY = 'default_environment';
 
 void initEnvironments(Store<dynamic> store) async {
   store.dispatch(InitializeEnvironmentAction());
@@ -16,7 +16,8 @@ void initEnvironments(Store<dynamic> store) async {
   var environments = <String, Environment>{};
   if (environmentsJson != null) {
     for (var key in environmentsJson.keys) {
-      var environmentJson = environmentsJson[key];
+      Map<String, dynamic> environmentJson =
+          environmentsJson[key] as Map<String, dynamic>;
       environments[key] = Environment.fromJson(environmentJson);
     }
   }

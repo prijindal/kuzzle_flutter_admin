@@ -12,7 +12,7 @@ void initKuzzlePing(Store<dynamic> store) async {
     var difference = now.difference(nowServer);
     if (difference.inMinutes > 10) {
       throw new ErrorDescription(
-          "Server is desyncronized with ${difference.inMinutes} minutes");
+          'Server is desyncronized with ${difference.inMinutes} minutes');
     }
     store.dispatch(InitSuccessKuzzlePingAction());
   } catch (e) {

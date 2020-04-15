@@ -12,7 +12,7 @@ void getKuzzleUsers(Store<dynamic> store) async {
       UserSearchResult userSearchResult =
           await FlutterKuzzle.instance.security.searchUsers();
       List<KuzzleSecurityUser> users = <KuzzleSecurityUser>[];
-      for (KuzzleUser hit in userSearchResult.hits) {
+      for (KuzzleUser hit in userSearchResult.hits as List<KuzzleUser>) {
         users.add(
           KuzzleSecurityUser(
             uid: hit.uid,
@@ -105,7 +105,7 @@ ThunkAction<dynamic> deleteKuzzleUser(String uid) {
       try {
         var kuzzleUser = await FlutterKuzzle.instance.security.deleteUser(uid);
         store.dispatch(
-          DeleteSuccessKuzzleUserAction(kuzzleUser["_id"]),
+          DeleteSuccessKuzzleUserAction(kuzzleUser['_id'] as String),
         );
       } catch (e) {
         store.dispatch(

@@ -34,19 +34,19 @@ class _NewUserPageState extends State<NewUserPage> {
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: "New User",
+        subtitle: 'New User',
         body: Form(
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: "KUID"),
+                decoration: InputDecoration(labelText: 'KUID'),
                 enabled: !_autoGenerateUid,
                 controller: _uidController,
               ),
               CheckboxListTile(
                 dense: true,
                 value: _autoGenerateUid,
-                title: Text("Auto Generate kuid"),
+                title: Text('Auto Generate kuid'),
                 onChanged: (newvalue) {
                   setState(() {
                     _autoGenerateUid = newvalue;
@@ -54,13 +54,13 @@ class _NewUserPageState extends State<NewUserPage> {
                 },
               ),
               ListTile(
-                title: Text("Profiles"),
+                title: Text('Profiles'),
                 onTap: _selectProfiles,
                 subtitle: _profileIds.isEmpty
-                    ? Text("No Profile Selected")
+                    ? Text('No Profile Selected')
                     : Row(
                         children:
-                            _profileIds.map((e) => Text(e + ",")).toList(),
+                            _profileIds.map((e) => Text(e + ',')).toList(),
                       ),
               )
             ],

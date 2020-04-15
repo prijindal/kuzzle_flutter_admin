@@ -62,8 +62,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
   }
 
   void _deleteCollection(String collection) async {
-    var confirm = await confirmDialog(context, "Delete $collection",
-        "Are you sure you want to delete this collection");
+    var confirm = await confirmDialog(context, 'Delete $collection',
+        'Are you sure you want to delete this collection');
     if (confirm) {
       StoreProvider.of<AppState>(context).dispatch(
         deleteKuzzleCollection(widget.index, collection),

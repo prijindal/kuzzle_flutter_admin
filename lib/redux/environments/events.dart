@@ -5,7 +5,7 @@ abstract class EnvironmentAction {}
 class InitializeEnvironmentAction extends EnvironmentAction {}
 
 class InitializeSuccessEnvironmentAction extends EnvironmentAction {
-  Map<String, dynamic> environments;
+  Map<String, Environment> environments;
   String defaultEnvironments;
   InitializeSuccessEnvironmentAction(
       this.environments, this.defaultEnvironments);

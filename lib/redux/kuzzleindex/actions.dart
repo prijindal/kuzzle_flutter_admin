@@ -40,7 +40,7 @@ ThunkAction<dynamic> addKuzzleIndex(String index) {
           store.dispatch(
             AddErroredKuzzleIndexAction(
               index,
-              "Failed",
+              'Failed',
             ),
           );
         }
@@ -72,7 +72,7 @@ ThunkAction<dynamic> deleteKuzzleIndex(String index) {
           store.dispatch(
             DeleteErroredKuzzleIndexAction(
               index,
-              "Failed",
+              'Failed',
             ),
           );
         }
@@ -96,11 +96,11 @@ ThunkAction<dynamic> getKuzzleCollections(String index) {
         var collectionMap = await FlutterKuzzle.instance.collection.list(index);
         print(collectionMap);
         List<KuzzleCollection> collections =
-            (collectionMap["collections"] as List<dynamic>)
+            (collectionMap['collections'] as List<dynamic>)
                 .map(
                   (e) => KuzzleCollection(
-                    name: e["name"],
-                    type: e["type"],
+                    name: e['name'] as String,
+                    type: e['type'] as String,
                   ),
                 )
                 .toList();
@@ -128,7 +128,7 @@ ThunkAction<dynamic> addKuzzleCollection(
       try {
         var collectionMap = await FlutterKuzzle.instance.collection
             .create(index, collection.name);
-        if (collectionMap["acknowledged"] == false) {
+        if (collectionMap['acknowledged'] == false) {
           throw new Error();
         }
         store.dispatch(AddSuccessKuzzleCollectionAction(

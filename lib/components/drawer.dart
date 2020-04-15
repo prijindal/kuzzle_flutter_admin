@@ -49,7 +49,7 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
             ),
             ListTile(
               dense: true,
-              title: Text("Data"),
+              title: Text('Data'),
             ),
             StoreConnector<AppState, List<String>>(
               converter: (store) => store.state.kuzzleindexes.getIndexes(),
@@ -61,7 +61,7 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
                   builder: (context) => IndexesPage(),
                 ),
                 items: indexes,
-                title: "Indexes",
+                title: 'Indexes',
                 icon: Icon(Icons.dns),
                 buildChild: (index) => _IndexExpansionTile(
                   index: index,
@@ -70,32 +70,32 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
             ),
             ListTile(
               dense: true,
-              title: Text("Security"),
+              title: Text('Security'),
             ),
             ListTile(
               leading: Icon(Icons.person),
-              title: Text("Users"),
+              title: Text('Users'),
               onTap: () {
-                Navigator.of(context).pushNamed("users");
+                Navigator.of(context).pushNamed('users');
               },
             ),
             ListTile(
               leading: Icon(Icons.people),
-              title: Text("Profiles"),
+              title: Text('Profiles'),
               onTap: () {
-                Navigator.of(context).pushNamed("profiles");
+                Navigator.of(context).pushNamed('profiles');
               },
             ),
             ListTile(
               leading: Icon(Icons.lock_open),
-              title: Text("Roles"),
+              title: Text('Roles'),
               onTap: () {
-                Navigator.of(context).pushNamed("roles");
+                Navigator.of(context).pushNamed('roles');
               },
             ),
             ListTile(
               dense: true,
-              title: Text("Settings"),
+              title: Text('Settings'),
             ),
             StoreConnector<AppState, Environments>(
               converter: (store) => store.state.environments,
@@ -108,7 +108,7 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
                   builder: (context) => EnvironmentsPage(),
                 ),
                 items: environments.environments.values.toList(),
-                title: "Environments",
+                title: 'Environments',
                 icon: Icon(Icons.kitchen),
                 buildChild: (environment) => ListTile(
                   dense: true,

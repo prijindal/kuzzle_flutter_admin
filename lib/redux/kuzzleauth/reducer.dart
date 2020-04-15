@@ -9,7 +9,7 @@ KuzzleAuth authReducer(KuzzleAuth state, action) {
   if (action is LoginKuzzleAuthAction) {
     return state.copyWith(
       loginState: KuzzleState.LOADING,
-      token: "",
+      token: '',
     );
   } else if (action is LoginSuccessKuzzleAuthAction) {
     return state.copyWith(
@@ -19,7 +19,7 @@ KuzzleAuth authReducer(KuzzleAuth state, action) {
   } else if (action is LoginErroredKuzzleAuthAction) {
     return state.copyWith(
       loginState: KuzzleState.ERRORED,
-      token: "",
+      token: '',
       loginError: action.errorMessage,
     );
   } else if (action is LogoutKuzzleAuthAction) {
@@ -29,7 +29,7 @@ KuzzleAuth authReducer(KuzzleAuth state, action) {
   } else if (action is LogoutSuccessKuzzleAuthAction) {
     return state.copyWith(
       logoutState: KuzzleState.LOADED,
-      token: "",
+      token: '',
     );
   } else if (action is LogoutErroredKuzzleAuthAction) {
     return state.copyWith(

@@ -32,7 +32,7 @@ class _IndexesPageState extends State<IndexesPage> {
   }
 
   void _goToAddIndexPage() {
-    Navigator.of(context).pushNamed("newindex");
+    Navigator.of(context).pushNamed('newindex');
   }
 
   Widget _indexListView(KuzzleIndexes kuzzleindexes) {
@@ -53,7 +53,7 @@ class _IndexesPageState extends State<IndexesPage> {
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: "Indexes",
+        subtitle: 'Indexes',
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _goToAddIndexPage,
@@ -83,8 +83,8 @@ class _IndexListTile extends StatefulWidget {
 
 class _IndexListTileState extends State<_IndexListTile> {
   void _deleteIndexConfirm() async {
-    var confirm = await confirmDialog(context, "Delete $widget.index",
-        "Are you sure you want to delete this index");
+    var confirm = await confirmDialog(context, 'Delete $widget.index',
+        'Are you sure you want to delete this index');
     if (confirm) {
       StoreProvider.of<AppState>(context)
           .dispatch(deleteKuzzleIndex(widget.index));
@@ -129,19 +129,19 @@ class _IndexListTileState extends State<_IndexListTile> {
           itemBuilder: (context) => <PopupMenuEntry<IndexListItemActions>>[
             PopupMenuItem(
               value: IndexListItemActions.CREATECOLLECTION,
-              child: Text("Create Collection"),
+              child: Text('Create Collection'),
             ),
             PopupMenuItem(
               value: IndexListItemActions.BROWSECOLLECTIONS,
-              child: Text("Browse Collections"),
+              child: Text('Browse Collections'),
             ),
             PopupMenuItem(
               value: IndexListItemActions.EDIT,
-              child: Text("Edit"),
+              child: Text('Edit'),
             ),
             PopupMenuItem(
               value: IndexListItemActions.DELETE,
-              child: Text("Delete"),
+              child: Text('Delete'),
             ),
           ],
         ),

@@ -13,7 +13,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _hostController = TextEditingController();
   final TextEditingController _portController =
-      TextEditingController(text: "7512");
+      TextEditingController(text: '7512');
   bool _sslValue = false;
 
   void _addNewEnvironment() {
@@ -47,7 +47,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("New Environment"),
+          title: Text('New Environment'),
         ),
         body: Form(
           key: _formKey,
@@ -61,7 +61,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: "Name"),
+                decoration: InputDecoration(labelText: 'Name'),
                 controller: _nameController,
                 keyboardType: TextInputType.text,
               ),
@@ -72,7 +72,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: "Host"),
+                decoration: InputDecoration(labelText: 'Host'),
                 controller: _hostController,
                 keyboardType: TextInputType.url,
               ),
@@ -90,7 +90,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: "Port"),
+                decoration: InputDecoration(labelText: 'Port'),
                 controller: _portController,
                 keyboardType: TextInputType.numberWithOptions(
                   signed: false,
@@ -104,12 +104,12 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
                     _sslValue = newvalue;
                   });
                 },
-                title: Text("Use SSL"),
+                title: Text('Use SSL'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
-                  child: Text("Create"),
+                  child: Text('Create'),
                   onPressed: _addNewEnvironment,
                 ),
               ),

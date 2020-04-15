@@ -37,7 +37,7 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   void _goToAddUserPage() {
-    Navigator.of(context).pushNamed("newuser");
+    Navigator.of(context).pushNamed('newuser');
   }
 
   void _goToUserPage(KuzzleSecurityUser user) {
@@ -47,7 +47,7 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: "User Management",
+        subtitle: 'User Management',
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _goToAddUserPage,
@@ -58,7 +58,7 @@ class _UsersPageState extends State<UsersPage> {
               (users.loadingState != KuzzleState.LOADED &&
                       users.users.length == 0)
                   ? Center(
-                      child: Text("Loading..."),
+                      child: Text('Loading...'),
                     )
                   : ListView(
                       children: users.users
@@ -68,7 +68,7 @@ class _UsersPageState extends State<UsersPage> {
                               onTap: () => _goToUserPage(user),
                               subtitle: Row(
                                 children: user.profileIds
-                                    .map((e) => Text(e + ","))
+                                    .map((e) => Text(e + ','))
                                     .toList(),
                               ),
                             ),

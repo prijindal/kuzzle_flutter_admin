@@ -28,7 +28,7 @@ class _NewIndexPageState extends State<NewIndexPage> {
       setState(() {
         _checkingAdded = false;
       });
-      Navigator.of(context).pushReplacementNamed("indexes");
+      Navigator.of(context).pushReplacementNamed('indexes');
       return true;
     }
     return false;
@@ -52,7 +52,7 @@ class _NewIndexPageState extends State<NewIndexPage> {
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: "Add new Index",
+        subtitle: 'Add new Index',
         body: Form(
           child: Column(
             children: [
@@ -62,7 +62,7 @@ class _NewIndexPageState extends State<NewIndexPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
-                  child: Text("Create"),
+                  child: Text('Create'),
                   onPressed:
                       _addingState == KuzzleState.LOADING ? null : _addNewIndex,
                 ),
@@ -71,8 +71,8 @@ class _NewIndexPageState extends State<NewIndexPage> {
                   _addingState == KuzzleState.LOADED)
                 Center(
                   child: Text(_addingState == KuzzleState.LOADING
-                      ? "Loading"
-                      : "Added Succesfully"),
+                      ? 'Loading'
+                      : 'Added Succesfully'),
                 )
             ],
           ),

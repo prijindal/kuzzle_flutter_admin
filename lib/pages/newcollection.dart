@@ -47,7 +47,7 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
         _checkingAdded = false;
       });
       Navigator.of(context).pushReplacementNamed(
-        "collections",
+        'collections',
         arguments: CollectionsPageRouteArguments(index: widget.index),
       );
       return true;
@@ -99,7 +99,7 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
-                  child: Text("Create"),
+                  child: Text('Create'),
                   onPressed: _kuzzleIndex.addingState == KuzzleState.LOADING
                       ? null
                       : _addNewCollection,
@@ -109,8 +109,8 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
                   _kuzzleIndex.addingState == KuzzleState.LOADED)
                 Center(
                   child: Text(_kuzzleIndex.addingState == KuzzleState.LOADING
-                      ? "Loading"
-                      : "Added Succesfully"),
+                      ? 'Loading'
+                      : 'Added Succesfully'),
                 )
             ],
           ),

@@ -24,7 +24,7 @@ class KuzzleAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _KuzzleAppBarState extends State<KuzzleAppBar> {
   void _actionSelected(AppBarActions action) {
     if (action == AppBarActions.ADDENVIRONMENT) {
-      Navigator.of(context).pushNamed("addenvironment");
+      Navigator.of(context).pushNamed('addenvironment');
     } else if (action == AppBarActions.EXIT) {
       FlutterKuzzle.instance.disconnect();
       exit(0);
@@ -39,11 +39,11 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
         itemBuilder: (context) => <PopupMenuEntry<AppBarActions>>[
           const PopupMenuItem<AppBarActions>(
             value: AppBarActions.ADDENVIRONMENT,
-            child: Text("Add New Environment"),
+            child: Text('Add New Environment'),
           ),
           const PopupMenuItem<AppBarActions>(
             value: AppBarActions.EXIT,
-            child: Text("Exit"),
+            child: Text('Exit'),
           ),
         ],
       ),

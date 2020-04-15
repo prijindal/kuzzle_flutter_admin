@@ -53,11 +53,11 @@ class _EnvironmentHomePageState extends State<EnvironmentHomePage> {
       return kuzzleping.errorMessage;
     }
     if (kuzzleping.loadingState == KuzzleState.INIT) {
-      return "Initiating";
+      return 'Initiating';
     } else if (kuzzleping.loadingState == KuzzleState.LOADING) {
       return 'Trying to connect';
     } else {
-      return "Some unknown error Occurred";
+      return 'Some unknown error Occurred';
     }
   }
 

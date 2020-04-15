@@ -26,7 +26,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Center(
-          child: Text("Loading..."),
+          child: Text('Loading...'),
         ),
       );
 }

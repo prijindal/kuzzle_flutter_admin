@@ -12,7 +12,8 @@ void getKuzzleProfiles(Store<dynamic> store) async {
       ProfileSearchResult profileSearchResult =
           await FlutterKuzzle.instance.security.searchProfiles();
       List<KuzzleSecurityProfile> profiles = <KuzzleSecurityProfile>[];
-      for (KuzzleProfile hit in profileSearchResult.hits) {
+      for (KuzzleProfile hit
+          in profileSearchResult.hits as List<KuzzleProfile>) {
         profiles.add(
           KuzzleSecurityProfile(
             uid: hit.uid,
@@ -69,7 +70,8 @@ ThunkAction<dynamic> addKuzzleProfile(KuzzleSecurityProfile profile) {
     if (initKuzzleIndex()) {
       try {
         KuzzleProfile kuzzleProfile = await FlutterKuzzle.instance.security
-            .createProfile(profile.uid, profile.policies);
+            .createProfile(
+                profile.uid, profile.policies as List<Map<String, dynamic>>);
         store.dispatch(
           AddSuccessKuzzleProfileAction(
             KuzzleSecurityProfile(
@@ -98,7 +100,7 @@ ThunkAction<dynamic> deleteKuzzleProfile(String uid) {
         var kuzzleProfile =
             await FlutterKuzzle.instance.security.deleteProfile(uid);
         store.dispatch(
-          DeleteSuccessKuzzleProfileAction(kuzzleProfile["_id"]),
+          DeleteSuccessKuzzleProfileAction(kuzzleProfile['_id'] as String),
         );
       } catch (e) {
         store.dispatch(

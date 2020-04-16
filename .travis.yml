@@ -5,20 +5,24 @@ addons:
   apt:
     packages:
       - lib32stdc++6
-services:
-  - docker
-before_script:
-  - ./docker_launch.sh
 install:
   - cd ../;git clone https://github.com/flutter/flutter.git -b master; cd kuzzle_flutter_admin
   - cd ../; git clone https://github.com/prijindal/kuzzle_dart.git --depth 1; cd kuzzle_flutter_admin
   - ../flutter/bin/flutter doctor
   - gem install coveralls-lcov
-script:
-  - ../flutter/bin/flutter analyze
-  - ../flutter/bin/flutter test --coverage
-after_success:
-  - ./coverage.sh
+jobs:
+  include:
+  - stage: lint
+    script: ../flutter/bin/flutter analyze
+  - stage: test
+    services:
+      - docker
+    before_script:
+      - ./docker_launch.sh
+    script:
+      - ../flutter/bin/flutter test --coverage
+    after_success:
+      - ./coverage.sh
 cache:
   directories:
     - $HOME/.pub-cache

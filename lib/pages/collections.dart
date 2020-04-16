@@ -7,6 +7,7 @@ import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/newcollection.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
+import 'package:redux/redux.dart';
 
 class CollectionsPageRouteArguments {
   CollectionsPageRouteArguments({@required this.index});
@@ -22,61 +23,34 @@ class CollectionsPageRoute extends StatelessWidget {
       );
 }
 
-class CollectionsPage extends StatefulWidget {
+class CollectionsPage extends StatelessWidget {
   const CollectionsPage({@required this.index});
   final String index;
 
-  @override
-  _CollectionsPageState createState() => _CollectionsPageState();
-}
-
-class _CollectionsPageState extends State<CollectionsPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  void _refreshData() {
-    if (_kuzzleIndex != null &&
-        (_kuzzleIndex.loadingState == KuzzleState.INIT ||
-            _kuzzleIndex.loadingState == KuzzleState.LOADED)) {
-      StoreProvider.of<AppState>(context).dispatch(
-        getKuzzleCollections(widget.index),
-      );
-    }
-  }
-
-  KuzzleIndex get _kuzzleIndex {
-    if (StoreProvider.of<AppState>(context)
-        .state
-        .kuzzleindexes
-        .indexMap
-        .containsKey(widget.index)) {
-      return StoreProvider.of<AppState>(context)
-          .state
-          .kuzzleindexes
-          .indexMap[widget.index];
+  KuzzleIndex _kuzzleIndex(Store<AppState> store) {
+    if (store.state.kuzzleindexes.indexMap.containsKey(index)) {
+      return store.state.kuzzleindexes.indexMap[index];
     } else {
       return null;
     }
   }
 
-  Future<void> _deleteCollection(String collection) async {
+  Future<void> _deleteCollection(
+      String collection, BuildContext context) async {
     final confirm = await confirmDialog(context, 'Delete $collection',
         'Are you sure you want to delete this collection');
     if (confirm) {
       StoreProvider.of<AppState>(context).dispatch(
-        deleteKuzzleCollection(widget.index, collection),
+        deleteKuzzleCollection(index, collection),
       );
     }
   }
 
-  void _goToAddCollectionPage() {
+  void _goToAddCollectionPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => NewCollectionPage(
-          index: widget.index,
+          index: index,
         ),
       ),
     );
@@ -84,21 +58,26 @@ class _CollectionsPageState extends State<CollectionsPage> {
 
   @override
   Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: '${widget.index}/collections',
+        subtitle: '$index/collections',
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: _goToAddCollectionPage,
+          onPressed: () => _goToAddCollectionPage(context),
         ),
         body: StoreConnector<AppState, List<String>>(
-          converter: (store) =>
-              store.state.kuzzleindexes.getCollections(widget.index),
+          onInit: (store) {
+            if (_kuzzleIndex(store) != null &&
+                _kuzzleIndex(store).loadingState != KuzzleState.LOADING) {
+              store.dispatch(getKuzzleCollections(index));
+            }
+          },
+          converter: (store) => store.state.kuzzleindexes.getCollections(index),
           builder: (context, collections) => ListView.builder(
             itemCount: collections.length,
             itemBuilder: (context, i) => ListTile(
               title: Text(collections[i]),
               trailing: IconButton(
                 icon: const Icon(Icons.delete),
-                onPressed: () => _deleteCollection(collections[i]),
+                onPressed: () => _deleteCollection(collections[i], context),
               ),
             ),
           ),

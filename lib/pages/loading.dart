@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
+import 'package:kuzzleflutteradmin/models/environments.dart';
 import 'package:kuzzleflutteradmin/redux/environments/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
@@ -12,22 +14,15 @@ class LoadingPage extends StatefulWidget {
 
 class _LoadingPageState extends State<LoadingPage> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  void _refreshData() {
-    if (StoreProvider.of<AppState>(context).state.environments.isInitialized ==
-        false) {
-      StoreProvider.of<AppState>(context).dispatch(initEnvironments);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) => const Scaffold(
-        body: Center(
-          child: Text('Loading...'),
+  Widget build(BuildContext context) => StoreConnector<AppState, Environments>(
+        onInit: (store) {
+          if (store.state.environments.isInitialized == false) {
+            store.dispatch(initEnvironments);
+          }
+        },
+        converter: (store) => store.state.environments,
+        builder: (context, environments) => const Scaffold(
+          body: LoadingAnimation(),
         ),
       );
 }

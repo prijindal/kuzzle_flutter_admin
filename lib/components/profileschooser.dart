@@ -24,24 +24,6 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
       _profileIds = widget.profileIds;
     });
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  void _refreshData() {
-    if (StoreProvider.of<AppState>(context)
-                .state
-                .kuzzlesecurity
-                .profiles
-                .loadingState ==
-            KuzzleState.INIT ||
-        StoreProvider.of<AppState>(context)
-                .state
-                .kuzzlesecurity
-                .profiles
-                .loadingState ==
-            KuzzleState.LOADED) {
-      StoreProvider.of<AppState>(context).dispatch(getKuzzleProfiles);
-    }
   }
 
   @override
@@ -62,6 +44,14 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
           ),
         ],
         content: StoreConnector<AppState, List<KuzzleSecurityProfile>>(
+          onInit: (store) {
+            if (store.state.kuzzlesecurity.profiles.loadingState ==
+                    KuzzleState.INIT ||
+                store.state.kuzzlesecurity.profiles.loadingState ==
+                    KuzzleState.LOADED) {
+              store.dispatch(getKuzzleProfiles);
+            }
+          },
           converter: (store) => store.state.kuzzlesecurity.profiles.profiles,
           builder: (context, profiles) => Container(
             height: 300, // Change as per your requirement

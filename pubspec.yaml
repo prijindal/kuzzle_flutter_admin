@@ -24,11 +24,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_redux: any
+  flutter_spinkit: any
   kuzzle:
     path: ../kuzzle_dart
   json_annotation: any
   redux: any
   redux_logging: any
+  redux_remote_devtools: any
   redux_thunk: any
   shared_preferences: any
 

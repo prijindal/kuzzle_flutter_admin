@@ -7,7 +7,7 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 
 enum AppBarActions { ADDENVIRONMENT, EXIT }
 
-class KuzzleAppBar extends StatefulWidget implements PreferredSizeWidget {
+class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const KuzzleAppBar({
     this.subtitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
@@ -18,12 +18,7 @@ class KuzzleAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  @override
-  _KuzzleAppBarState createState() => _KuzzleAppBarState();
-}
-
-class _KuzzleAppBarState extends State<KuzzleAppBar> {
-  void _actionSelected(AppBarActions action) {
+  void _actionSelected(AppBarActions action, BuildContext context) {
     if (action == AppBarActions.ADDENVIRONMENT) {
       Navigator.of(context).pushNamed('addenvironment');
     } else if (action == AppBarActions.EXIT) {
@@ -32,10 +27,10 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
     }
   }
 
-  List<Widget> _getActions() => [
+  List<Widget> _getActions(BuildContext context) => [
         PopupMenuButton<AppBarActions>(
           icon: const Icon(Icons.more_vert),
-          onSelected: _actionSelected,
+          onSelected: (action) => _actionSelected(action, context),
           itemBuilder: (context) => <PopupMenuEntry<AppBarActions>>[
             const PopupMenuItem<AppBarActions>(
               value: AppBarActions.ADDENVIRONMENT,
@@ -60,11 +55,11 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
               Text(
                 environment.name,
               ),
-              if (widget.subtitle != null)
+              if (subtitle != null)
                 Visibility(
                   visible: true,
                   child: Text(
-                    widget.subtitle,
+                    subtitle,
                     style: const TextStyle(
                       fontSize: 12,
                     ),
@@ -72,7 +67,7 @@ class _KuzzleAppBarState extends State<KuzzleAppBar> {
                 ),
             ],
           ),
-          actions: _getActions(),
+          actions: _getActions(context),
         ),
       );
 }

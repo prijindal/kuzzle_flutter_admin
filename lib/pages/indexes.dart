@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
@@ -17,37 +18,19 @@ class IndexesPage extends StatefulWidget {
 }
 
 class _IndexesPageState extends State<IndexesPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  void _refreshData() {
-    if (StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
-            KuzzleState.INIT ||
-        StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
-            KuzzleState.LOADED) {
-      StoreProvider.of<AppState>(context).dispatch(getKuzzleIndexes);
-    }
-  }
-
   void _goToAddIndexPage() {
     Navigator.of(context).pushNamed('newindex');
   }
 
-  Widget _indexListView(KuzzleIndexes kuzzleindexes) => RefreshIndicator(
-        onRefresh: () async => _refreshData(),
-        child: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: kuzzleindexes.indexMap.keys
-              .map(
-                (index) => _IndexListTile(
-                  index: index,
-                ),
-              )
-              .toList(),
-        ),
+  Widget _indexListView(KuzzleIndexes kuzzleindexes) => ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: kuzzleindexes.indexMap.keys
+            .map(
+              (index) => _IndexListTile(
+                index: index,
+              ),
+            )
+            .toList(),
       );
 
   @override
@@ -58,6 +41,12 @@ class _IndexesPageState extends State<IndexesPage> {
           onPressed: _goToAddIndexPage,
         ),
         body: StoreConnector<AppState, KuzzleIndexes>(
+          onInit: (store) {
+            if (store.state.kuzzleindexes.loadingState == KuzzleState.INIT ||
+                store.state.kuzzleindexes.loadingState == KuzzleState.LOADED) {
+              store.dispatch(getKuzzleIndexes);
+            }
+          },
           converter: (store) => store.state.kuzzleindexes,
           builder: (context, kuzzleindexes) =>
               kuzzleindexes.loadingState == KuzzleState.INIT
@@ -65,9 +54,7 @@ class _IndexesPageState extends State<IndexesPage> {
                       child: Text('Initiating...'),
                     )
                   : (kuzzleindexes.loadingState == KuzzleState.LOADING
-                      ? const Center(
-                          child: Text('Loading...'),
-                        )
+                      ? const LoadingAnimation()
                       : _indexListView(kuzzleindexes)),
         ),
       );

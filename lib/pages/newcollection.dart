@@ -1,12 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleindex/events.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class NewCollectionPageRouteArguments {
@@ -35,27 +35,6 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
   final TextEditingController _nameController = TextEditingController();
   bool _checkingAdded = false;
 
-  @override
-  void didChangeDependencies() {
-    _checkAdded();
-    super.didChangeDependencies();
-  }
-
-  bool _checkAdded() {
-    if (_kuzzleIndex.addingState == KuzzleState.LOADED &&
-        _checkingAdded == true) {
-      setState(() {
-        _checkingAdded = false;
-      });
-      Navigator.of(context).pushReplacementNamed(
-        'collections',
-        arguments: CollectionsPageRouteArguments(index: widget.index),
-      );
-      return true;
-    }
-    return false;
-  }
-
   void _addNewCollection() {
     StoreProvider.of<AppState>(context).dispatch(
       addKuzzleCollection(
@@ -63,57 +42,47 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
         KuzzleCollection(name: _nameController.text),
       ),
     );
-    setState(() {
-      _checkingAdded = true;
-    });
-    Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      if (_checkAdded() == true) {
-        timer.cancel();
-      }
-    });
-  }
-
-  KuzzleIndex get _kuzzleIndex {
-    if (StoreProvider.of<AppState>(context)
-        .state
-        .kuzzleindexes
-        .indexMap
-        .containsKey(widget.index)) {
-      return StoreProvider.of<AppState>(context)
-          .state
-          .kuzzleindexes
-          .indexMap[widget.index];
-    } else {
-      return null;
-    }
   }
 
   @override
-  Widget build(BuildContext context) => ResponsiveScaffold(
-        subtitle: '${widget.index}/Create a new collection',
-        body: Form(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: RaisedButton(
-                  child: const Text('Create'),
-                  onPressed: _kuzzleIndex.addingState == KuzzleState.LOADING
-                      ? null
-                      : _addNewCollection,
+  Widget build(BuildContext context) => StoreConnector<AppState, KuzzleIndex>(
+        onInit: (store) {
+          store.dispatch(InitAddKuzzleCollectionAction(widget.index));
+        },
+        onWillChange: (_, newValue) {
+          if (newValue.addingState == KuzzleState.LOADED &&
+              _checkingAdded == false) {
+            setState(() {
+              _checkingAdded = true;
+            });
+            Navigator.of(context).pushReplacementNamed(
+              'collections',
+              arguments: CollectionsPageRouteArguments(index: widget.index),
+            );
+          }
+        },
+        converter: (store) => store.state.kuzzleindexes.indexMap[widget.index],
+        builder: (context, kuzzleindex) => ResponsiveScaffold(
+          subtitle: '${widget.index}/Create a new collection',
+          body: Form(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _nameController,
                 ),
-              ),
-              if (_kuzzleIndex.addingState == KuzzleState.LOADING ||
-                  _kuzzleIndex.addingState == KuzzleState.LOADED)
-                Center(
-                  child: Text(_kuzzleIndex.addingState == KuzzleState.LOADING
-                      ? 'Loading'
-                      : 'Added Succesfully'),
-                )
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: RaisedButton(
+                    child: const Text('Create'),
+                    onPressed: kuzzleindex.addingState == KuzzleState.LOADING
+                        ? null
+                        : _addNewCollection,
+                  ),
+                ),
+                if (kuzzleindex.addingState == KuzzleState.LOADING)
+                  const LoadingAnimation()
+              ],
+            ),
           ),
         ),
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
@@ -13,29 +14,6 @@ class UsersPage extends StatefulWidget {
 }
 
 class _UsersPageState extends State<UsersPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  void _refreshData() {
-    if (StoreProvider.of<AppState>(context)
-                .state
-                .kuzzlesecurity
-                .users
-                .loadingState ==
-            KuzzleState.INIT ||
-        StoreProvider.of<AppState>(context)
-                .state
-                .kuzzlesecurity
-                .users
-                .loadingState ==
-            KuzzleState.LOADED) {
-      StoreProvider.of<AppState>(context).dispatch(getKuzzleUsers);
-    }
-  }
-
   void _goToAddUserPage() {
     Navigator.of(context).pushNamed('newuser');
   }
@@ -53,12 +31,18 @@ class _UsersPageState extends State<UsersPage> {
           onPressed: _goToAddUserPage,
         ),
         body: StoreConnector<AppState, KuzzleSecurityUsers>(
+          onInit: (store) {
+            if (store.state.kuzzlesecurity.users.loadingState ==
+                    KuzzleState.INIT ||
+                store.state.kuzzlesecurity.users.loadingState ==
+                    KuzzleState.LOADED) {
+              store.dispatch(getKuzzleUsers);
+            }
+          },
           converter: (store) => store.state.kuzzlesecurity.users,
           builder: (context, users) =>
               (users.loadingState != KuzzleState.LOADED && users.users.isEmpty)
-                  ? const Center(
-                      child: Text('Loading...'),
-                    )
+                  ? const LoadingAnimation()
                   : ListView(
                       children: users.users
                           .map<Widget>(

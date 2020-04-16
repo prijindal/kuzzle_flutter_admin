@@ -5,24 +5,15 @@ import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-class EnvironmentsPage extends StatefulWidget {
+class EnvironmentsPage extends StatelessWidget {
   const EnvironmentsPage({Key key}) : super(key: key);
 
-  @override
-  _EnvironmentsPageState createState() => _EnvironmentsPageState();
-}
-
-class _EnvironmentsPageState extends State<EnvironmentsPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _goToAddEnvironmentPage() {
+  void _goToAddEnvironmentPage(BuildContext context) {
     Navigator.of(context).pushReplacementNamed('addenvironment');
   }
 
-  Future<void> _deleteEnvironmentConfirm(String name) async {
+  Future<void> _deleteEnvironmentConfirm(
+      String name, BuildContext context) async {
     final confirm = await confirmDialog(context, 'Delete $name',
         'Are you sure you want to delete this environment');
     if (confirm) {
@@ -38,7 +29,7 @@ class _EnvironmentsPageState extends State<EnvironmentsPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: _goToAddEnvironmentPage,
+          onPressed: () => _goToAddEnvironmentPage(context),
         ),
         body: Scaffold(
           body: StoreConnector<AppState, Map<String, Environment>>(
@@ -51,7 +42,7 @@ class _EnvironmentsPageState extends State<EnvironmentsPage> {
                       trailing: IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () =>
-                            _deleteEnvironmentConfirm(environmentName),
+                            _deleteEnvironmentConfirm(environmentName, context),
                       ),
                     ),
                   )

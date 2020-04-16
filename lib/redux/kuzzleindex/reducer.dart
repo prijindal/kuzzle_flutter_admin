@@ -104,6 +104,19 @@ KuzzleIndexes kuzzleReducer(KuzzleIndexes state, dynamic action) {
         ),
       ),
     );
+  } else if (action is InitAddKuzzleCollectionAction) {
+    return state.copyWith(
+      indexMap: state.indexMap.map(
+        (key, value) => MapEntry<String, KuzzleIndex>(
+          key,
+          key != action.index
+              ? value
+              : value.copyWith(
+                  addingState: KuzzleState.INIT,
+                ),
+        ),
+      ),
+    );
   } else if (action is AddKuzzleCollectionAction) {
     return state.copyWith(
       indexMap: state.indexMap.map(

@@ -13,26 +13,10 @@ import 'package:kuzzleflutteradmin/pages/newcollection.dart';
 import 'package:kuzzleflutteradmin/pages/newindex.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
+import 'package:redux/redux.dart';
 
-class KuzzleDrawer extends StatefulWidget {
-  @override
-  _KuzzleDrawerState createState() => _KuzzleDrawerState();
-}
-
-class _KuzzleDrawerState extends State<KuzzleDrawer> {
+class KuzzleDrawer extends StatelessWidget {
   void _chooseEnvironmentConfirm(Environment environment) {}
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getData());
-    super.initState();
-  }
-
-  void _getData() {
-    if (StoreProvider.of<AppState>(context).state.kuzzleindexes.loadingState ==
-        KuzzleState.INIT) {
-      StoreProvider.of<AppState>(context).dispatch(getKuzzleIndexes);
-    }
-  }
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -53,6 +37,12 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
               title: Text('Data'),
             ),
             StoreConnector<AppState, List<String>>(
+              onInit: (store) {
+                if (store.state.kuzzleindexes.loadingState ==
+                    KuzzleState.INIT) {
+                  store.dispatch(getKuzzleIndexes);
+                }
+              },
               converter: (store) => store.state.kuzzleindexes.getIndexes(),
               builder: (context, indexes) => BaseExpansionTile<String>(
                 addRoute: MaterialPageRoute(
@@ -140,20 +130,15 @@ class _KuzzleDrawerState extends State<KuzzleDrawer> {
       );
 }
 
-class _IndexExpansionTile extends StatefulWidget {
+class _IndexExpansionTile extends StatelessWidget {
   const _IndexExpansionTile({@required this.index});
   final String index;
 
-  @override
-  _IndexExpansionTileState createState() => _IndexExpansionTileState();
-}
-
-class _IndexExpansionTileState extends State<_IndexExpansionTile> {
-  void _goToCollectionPage(KuzzleCollection collection) {
+  void _goToCollectionPage(KuzzleCollection collection, BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CollectionsPage(
-          index: widget.index,
+          index: index,
         ),
       ),
     );
@@ -161,16 +146,11 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
 
   KuzzleCollection get _selectedCollection => null;
 
-  void _onValueChange(bool newvalue) {
+  void _onValueChange(bool newvalue, Store<AppState> store) {
     if (newvalue == true &&
-        StoreProvider.of<AppState>(context)
-                .state
-                .kuzzleindexes
-                .indexMap[widget.index]
-                .loadingState ==
+        store.state.kuzzleindexes.indexMap[index].loadingState ==
             KuzzleState.INIT) {
-      StoreProvider.of<AppState>(context)
-          .dispatch(getKuzzleCollections(widget.index));
+      store.dispatch(getKuzzleCollections(index));
     }
   }
 
@@ -178,19 +158,20 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
   Widget build(BuildContext context) =>
       StoreConnector<AppState, List<KuzzleCollection>>(
         converter: (store) =>
-            store.state.kuzzleindexes.indexMap[widget.index].collections,
+            store.state.kuzzleindexes.indexMap[index].collections,
         builder: (context, collections) => BaseExpansionTile<KuzzleCollection>(
           icon: const Icon(Icons.dns),
-          title: widget.index,
-          onValueChange: _onValueChange,
+          title: index,
+          onValueChange: (newvalue) =>
+              _onValueChange(newvalue, StoreProvider.of(context)),
           addRoute: MaterialPageRoute(
             builder: (context) => NewCollectionPage(
-              index: widget.index,
+              index: index,
             ),
           ),
           manageRoute: MaterialPageRoute(
             builder: (context) => CollectionsPage(
-              index: widget.index,
+              index: index,
             ),
           ),
           items: collections,
@@ -213,7 +194,7 @@ class _IndexExpansionTileState extends State<_IndexExpansionTile> {
                 ),
               ],
             ),
-            onTap: () => _goToCollectionPage(collection),
+            onTap: () => _goToCollectionPage(collection, context),
           ),
         ),
       );

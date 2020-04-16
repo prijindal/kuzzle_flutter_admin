@@ -15,28 +15,16 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshData());
-  }
-
-  KuzzleSecurityUser get _user => StoreProvider.of<AppState>(context)
-      .state
-      .kuzzlesecurity
-      .users
-      .users
-      .firstWhere((element) => element.uid == widget.user.uid);
-
-  void _refreshData() {
-    if (_user.loadingState != KuzzleState.LOADING) {
-      StoreProvider.of<AppState>(context)
-          .dispatch(getKuzzleUser(widget.user.uid));
-    }
-  }
-
-  @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, KuzzleSecurityUser>(
+        onInit: (store) {
+          if (store.state.kuzzlesecurity.users.users
+                  .firstWhere((element) => element.uid == widget.user.uid)
+                  .loadingState !=
+              KuzzleState.LOADING) {
+            store.dispatch(getKuzzleUser(widget.user.uid));
+          }
+        },
         converter: (store) => store.state.kuzzlesecurity.users.users
             .firstWhere((element) => element.uid == widget.user.uid),
         builder: (context, user) => ResponsiveScaffold(

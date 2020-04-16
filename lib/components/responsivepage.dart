@@ -3,7 +3,7 @@ import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/components/drawer.dart';
 import '../helpers/responsive.dart';
 
-class ResponsiveScaffold extends StatefulWidget {
+class ResponsiveScaffold extends StatelessWidget {
   const ResponsiveScaffold({
     this.subtitle,
     this.body,
@@ -14,21 +14,14 @@ class ResponsiveScaffold extends StatefulWidget {
   final Widget floatingActionButton;
 
   @override
-  _ResponsiveScaffoldState createState() => _ResponsiveScaffoldState();
-}
-
-class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
-  ResponsiveBreakpoints get _breakpoint => getCurrentBreakpoint(context);
-
-  @override
   Widget build(BuildContext context) {
-    if (_breakpoint == ResponsiveBreakpoints.potrait) {
+    if (getCurrentBreakpoint(context) == ResponsiveBreakpoints.potrait) {
       return Scaffold(
         appBar: KuzzleAppBar(
-          subtitle: widget.subtitle,
+          subtitle: subtitle,
         ),
-        body: widget.body,
-        floatingActionButton: widget.floatingActionButton,
+        body: body,
+        floatingActionButton: floatingActionButton,
         drawer: KuzzleDrawer(),
       );
     } else {
@@ -46,11 +39,11 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
           Expanded(
             child: Scaffold(
               appBar: KuzzleAppBar(
-                subtitle: widget.subtitle,
+                subtitle: subtitle,
                 preferredSize: const Size.fromHeight(64),
               ),
-              body: widget.body,
-              floatingActionButton: widget.floatingActionButton,
+              body: body,
+              floatingActionButton: floatingActionButton,
             ),
           ),
         ],

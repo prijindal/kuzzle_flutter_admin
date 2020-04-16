@@ -16,6 +16,10 @@ class GetErroredKuzzleIndexesAction extends KuzzleIndexAction {
   final String errorMessage;
 }
 
+class InitAddKuzzleIndexAction extends KuzzleIndexAction {
+  InitAddKuzzleIndexAction();
+}
+
 class AddKuzzleIndexAction extends KuzzleIndexAction {
   AddKuzzleIndexAction(this.index);
   final String index;
@@ -64,6 +68,11 @@ class GetErroredKuzzleCollectionsAction extends KuzzleIndexAction {
   GetErroredKuzzleCollectionsAction(this.index, this.errorMessage);
   final String index;
   final String errorMessage;
+}
+
+class InitAddKuzzleCollectionAction extends KuzzleIndexAction {
+  InitAddKuzzleCollectionAction(this.index);
+  final String index;
 }
 
 class AddKuzzleCollectionAction extends KuzzleIndexAction {

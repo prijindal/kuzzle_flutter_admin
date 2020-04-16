@@ -12,12 +12,12 @@ Future<void> getKuzzleUsers(Store<dynamic> store) async {
       final userSearchResult =
           await FlutterKuzzle.instance.security.searchUsers();
       final users = <KuzzleSecurityUser>[];
-      for (final hit in userSearchResult.hits as List<KuzzleUser>) {
+      for (var hit in userSearchResult.hits) {
         users.add(
           KuzzleSecurityUser(
-            uid: hit.uid,
-            content: hit.content,
-            meta: hit.meta,
+            uid: (hit as KuzzleUser).uid,
+            content: (hit as KuzzleUser).content,
+            meta: (hit as KuzzleUser).meta,
           ),
         );
       }

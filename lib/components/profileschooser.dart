@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/profileaction.dart';
@@ -56,7 +57,7 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
           builder: (context, profiles) => Container(
             height: 300, // Change as per your requirement
             width: 300, // Change as per your requirement
-            child: Column(
+            child: AnimatedColumn(
               mainAxisSize: MainAxisSize.min,
               children: profiles
                   .map(

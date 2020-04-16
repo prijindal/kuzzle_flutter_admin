@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzle/kuzzle.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
@@ -51,7 +52,7 @@ class EnvironmentHomePage extends StatelessWidget {
                 KuzzleState.LOADED
             ? Scaffold(
                 appBar: const KuzzleAppBar(),
-                body: Column(
+                body: AnimatedColumn(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [

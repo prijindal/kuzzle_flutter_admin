@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+            child: AnimatedColumn(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(

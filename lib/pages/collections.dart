@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
@@ -71,7 +72,7 @@ class CollectionsPage extends StatelessWidget {
             }
           },
           converter: (store) => store.state.kuzzleindexes.getCollections(index),
-          builder: (context, collections) => ListView.builder(
+          builder: (context, collections) => AnimatedListView(
             itemCount: collections.length,
             itemBuilder: (context, i) => ListTile(
               title: Text(collections[i]),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
@@ -22,15 +24,11 @@ class _IndexesPageState extends State<IndexesPage> {
     Navigator.of(context).pushNamed('newindex');
   }
 
-  Widget _indexListView(KuzzleIndexes kuzzleindexes) => ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        children: kuzzleindexes.indexMap.keys
-            .map(
-              (index) => _IndexListTile(
-                index: index,
-              ),
-            )
-            .toList(),
+  Widget _indexListView(KuzzleIndexes kuzzleindexes) => AnimatedListView(
+        itemCount: kuzzleindexes.indexMap.length,
+        itemBuilder: (context, i) => _IndexListTile(
+          index: kuzzleindexes.indexMap.keys.elementAt(i),
+        ),
       );
 
   @override

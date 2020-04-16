@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
@@ -29,7 +30,7 @@ class _UserPageState extends State<UserPage> {
             .firstWhere((element) => element.uid == widget.user.uid),
         builder: (context, user) => ResponsiveScaffold(
           subtitle: 'User Management: ${user.name}',
-          body: Column(
+          body: AnimatedColumn(
             children: [
               ListTile(
                 title: const Text('UID'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
@@ -43,20 +44,17 @@ class _UsersPageState extends State<UsersPage> {
           builder: (context, users) =>
               (users.loadingState != KuzzleState.LOADED && users.users.isEmpty)
                   ? const LoadingAnimation()
-                  : ListView(
-                      children: users.users
-                          .map<Widget>(
-                            (user) => ListTile(
-                              title: Text(user.uid),
-                              onTap: () => _goToUserPage(user),
-                              subtitle: Row(
-                                children: user.profileIds
-                                    .map((e) => Text('$e,'))
-                                    .toList(),
-                              ),
-                            ),
-                          )
-                          .toList(),
+                  : AnimatedListView(
+                      itemCount: users.users.length,
+                      itemBuilder: (context, i) => ListTile(
+                        title: Text(users.users[i].uid),
+                        onTap: () => _goToUserPage(users.users[i]),
+                        subtitle: Row(
+                          children: users.users[i].profileIds
+                              .map((e) => Text('$e,'))
+                              .toList(),
+                        ),
+                      ),
                     ),
         ),
       );

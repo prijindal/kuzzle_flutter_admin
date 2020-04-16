@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
@@ -34,19 +35,16 @@ class EnvironmentsPage extends StatelessWidget {
         body: Scaffold(
           body: StoreConnector<AppState, Map<String, Environment>>(
             converter: (store) => store.state.environments.environments,
-            builder: (context, environments) => ListView(
-              children: environments.keys
-                  .map(
-                    (environmentName) => ListTile(
-                      title: Text(environmentName),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () =>
-                            _deleteEnvironmentConfirm(environmentName, context),
-                      ),
-                    ),
-                  )
-                  .toList(),
+            builder: (context, environments) => AnimatedListView(
+              itemCount: environments.length,
+              itemBuilder: (context, i) => ListTile(
+                title: Text(environments.keys.elementAt(i)),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () => _deleteEnvironmentConfirm(
+                      environments.keys.elementAt(i), context),
+                ),
+              ),
             ),
           ),
         ),

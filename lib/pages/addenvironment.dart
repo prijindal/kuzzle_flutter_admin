@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 import '../redux/environments/events.dart';
@@ -52,7 +53,7 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
         ),
         body: Form(
           key: _formKey,
-          child: Column(
+          child: AnimatedColumn(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(

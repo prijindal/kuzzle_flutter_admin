@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
@@ -65,7 +66,7 @@ class _NewCollectionPageState extends State<NewCollectionPage> {
         builder: (context, kuzzleindex) => ResponsiveScaffold(
           subtitle: '${widget.index}/Create a new collection',
           body: Form(
-            child: Column(
+            child: AnimatedColumn(
               children: [
                 TextFormField(
                   controller: _nameController,

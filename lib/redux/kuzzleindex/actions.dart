@@ -90,7 +90,6 @@ ThunkAction<dynamic> getKuzzleCollections(String index) => (store) async {
         try {
           final collectionMap =
               await FlutterKuzzle.instance.collection.list(index);
-          print(collectionMap);
           final collections = (collectionMap['collections'] as List<dynamic>)
               .map(
                 (e) => KuzzleCollection(

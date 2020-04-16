@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/profileschooser.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 
@@ -30,7 +31,7 @@ class _NewUserPageState extends State<NewUserPage> {
   Widget build(BuildContext context) => ResponsiveScaffold(
         subtitle: 'New User',
         body: Form(
-          child: Column(
+          child: AnimatedColumn(
             children: [
               TextFormField(
                 decoration: const InputDecoration(labelText: 'KUID'),

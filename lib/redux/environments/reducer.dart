@@ -24,6 +24,14 @@ Environments environmentsReducer(Environments state, dynamic action) {
     return state.copyWith(
       environments: environments,
     );
+  } else if (action is EditEnvironmentAction) {
+    final environments = <String, Environment>{};
+    environments.addAll(state.environments);
+    environments[action.environment.name] =
+        environments[action.environment.name].copy(action.environment);
+    return state.copyWith(
+      environments: environments,
+    );
   } else if (action is RemoveEnvironmentAction) {
     final environments = <String, Environment>{};
     environments.addAll(state.environments);

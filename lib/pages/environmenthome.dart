@@ -10,8 +10,10 @@ import 'package:kuzzleflutteradmin/models/kuzzleauth.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
+import 'package:kuzzleflutteradmin/pages/loading.dart';
 import 'package:kuzzleflutteradmin/pages/login.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
@@ -65,10 +67,24 @@ class EnvironmentHomePage extends StatelessWidget {
                   ],
                 ),
               )
-            : StoreConnector<AppState, KuzzleAuth>(
-                converter: (store) => store.state.kuzzleauth,
-                builder: (context, kuzzleauth) =>
-                    !kuzzleauth.isAuthenticated ? LoginPage() : IndexesPage(),
+            : StoreConnector<AppState, String>(
+                onInitialBuild: (jwt) {
+                  if (jwt.isNotEmpty) {
+                    StoreProvider.of<AppState>(context)
+                        .dispatch(checkAuth(jwt));
+                  }
+                },
+                converter: (store) => store
+                    .state.environments.environments[environment.name].token,
+                builder: (store, jwt) => StoreConnector<AppState, KuzzleAuth>(
+                  converter: (store) => store.state.kuzzleauth,
+                  builder: (context, kuzzleauth) => !kuzzleauth.isAuthenticated
+                      ? ((kuzzleauth.loginState == KuzzleState.LOADING &&
+                              jwt.isNotEmpty)
+                          ? const LoadingPage()
+                          : LoginPage())
+                      : IndexesPage(),
+                ),
               ),
       );
 }

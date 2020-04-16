@@ -18,6 +18,12 @@ class AddEnvironmentAction extends EnvironmentAction {
   Environment environment;
 }
 
+class EditEnvironmentAction extends EnvironmentAction {
+  EditEnvironmentAction(this.environmentName, this.environment);
+  String environmentName;
+  Environment environment;
+}
+
 class RemoveEnvironmentAction extends EnvironmentAction {
   RemoveEnvironmentAction(this.environmentName);
   String environmentName;

@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _remember = false;
 
   void _loginUser() {
     StoreProvider.of<AppState>(context).dispatch(
@@ -22,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
           'username': _usernameController.text,
           'password': _passwordController.text,
         },
+        remember: _remember,
+        environment: StoreProvider.of<AppState>(context)
+            .state
+            .environments
+            .getDefaultEnvironment,
       ),
     );
   }
@@ -46,6 +52,15 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
+                ),
+                CheckboxListTile(
+                  title: const Text('Remember on this device'),
+                  value: _remember,
+                  onChanged: (newvalue) {
+                    setState(() {
+                      _remember = newvalue;
+                    });
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),

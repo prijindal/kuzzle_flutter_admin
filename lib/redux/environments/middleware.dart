@@ -10,7 +10,8 @@ dynamic saveMiddleware(
   if (action is AddEnvironmentAction ||
       action is RemoveEnvironmentAction ||
       action is SetDefaultEnvironmentAction ||
-      action is SetFirstEnvironmentAction) {
+      action is SetFirstEnvironmentAction ||
+      action is EditEnvironmentAction) {
     syncEnvironments(
       store.state.environments.environments,
       store.state.environments.defaultEnvironment,

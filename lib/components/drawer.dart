@@ -105,11 +105,8 @@ class KuzzleDrawer extends StatelessWidget {
                   icon: const Icon(Icons.kitchen),
                   buildChild: (environment) => ListTile(
                     dense: true,
-                    enabled: environment.name !=
-                        StoreProvider.of<AppState>(context)
-                            .state
-                            .environments
-                            .defaultEnvironment,
+                    enabled:
+                        environment.name != environments.defaultEnvironment,
                     leading: const Icon(
                       Icons.list,
                     ),

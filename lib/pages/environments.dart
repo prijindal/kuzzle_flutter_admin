@@ -38,6 +38,11 @@ class EnvironmentsPage extends StatelessWidget {
             builder: (context, environments) => AnimatedListView(
               itemCount: environments.length,
               itemBuilder: (context, i) => ListTile(
+                onTap: () {
+                  StoreProvider.of<AppState>(context).dispatch(
+                      SetDefaultEnvironmentAction(
+                          environments.keys.elementAt(i)));
+                },
                 title: Text(environments.keys.elementAt(i)),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),

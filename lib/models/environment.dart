@@ -26,4 +26,13 @@ class Environment {
   final String token;
 
   Map<String, dynamic> toJson() => _$EnvironmentToJson(this);
+
+  Environment copy(Environment newEnvironment) => Environment(
+        name: newEnvironment.name ?? this.name,
+        color: newEnvironment.color ?? this.color,
+        host: newEnvironment.host ?? this.host,
+        port: newEnvironment.port ?? this.port,
+        ssl: newEnvironment.ssl ?? this.ssl,
+        token: newEnvironment.token ?? this.token,
+      );
 }

@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
+import 'package:kuzzleflutteradmin/models/environments.dart';
+import 'package:kuzzleflutteradmin/redux/environments/events.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-enum AppBarActions { ADDENVIRONMENT, EXIT }
+enum AppBarActions { ADDENVIRONMENT, EXIT, LOGOUT }
 
 class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const KuzzleAppBar({
@@ -18,12 +21,26 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
+  Environments _environment(BuildContext context) =>
+      StoreProvider.of<AppState>(context).state.environments;
+
   void _actionSelected(AppBarActions action, BuildContext context) {
     if (action == AppBarActions.ADDENVIRONMENT) {
       Navigator.of(context).pushNamed('addenvironment');
     } else if (action == AppBarActions.EXIT) {
       FlutterKuzzle.instance.disconnect();
       exit(0);
+    } else if (action == AppBarActions.LOGOUT) {
+      StoreProvider.of<AppState>(context).dispatch(
+        EditEnvironmentAction(
+          _environment(context).defaultEnvironment,
+          Environment(
+            name: _environment(context).defaultEnvironment,
+            token: '',
+          ),
+        ),
+      );
+      StoreProvider.of<AppState>(context).dispatch(logoutUser());
     }
   }
 
@@ -39,6 +56,10 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
             const PopupMenuItem<AppBarActions>(
               value: AppBarActions.EXIT,
               child: Text('Exit'),
+            ),
+            const PopupMenuItem<AppBarActions>(
+              value: AppBarActions.LOGOUT,
+              child: Text('Logout'),
             ),
           ],
         ),

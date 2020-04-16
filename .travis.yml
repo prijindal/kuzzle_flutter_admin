@@ -9,7 +9,6 @@ install:
   - cd ../;git clone https://github.com/flutter/flutter.git -b master; cd kuzzle_flutter_admin
   - cd ../; git clone https://github.com/prijindal/kuzzle_dart.git --depth 1; cd kuzzle_flutter_admin
   - ../flutter/bin/flutter doctor
-  - gem install coveralls-lcov
 jobs:
   include:
   - stage: lint

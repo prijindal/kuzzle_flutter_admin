@@ -72,21 +72,21 @@ class KuzzleDrawer extends StatelessWidget {
                 leading: const Icon(Icons.person),
                 title: const Text('Users'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('users');
+                  Navigator.of(context).pushReplacementNamed('users');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.people),
                 title: const Text('Profiles'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('profiles');
+                  Navigator.of(context).pushReplacementNamed('profiles');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.lock_open),
                 title: const Text('Roles'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('roles');
+                  Navigator.of(context).pushReplacementNamed('roles');
                 },
               ),
               const ListTile(

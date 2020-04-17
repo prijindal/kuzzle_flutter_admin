@@ -5,7 +5,6 @@ import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/pages/environmenthome.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class EnvironmentsPage extends StatelessWidget {

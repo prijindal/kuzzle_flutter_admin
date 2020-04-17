@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 
 class BaseExpansionTile<T extends Object> extends StatefulWidget {
   const BaseExpansionTile({

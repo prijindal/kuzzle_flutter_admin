@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/profileaction.dart';
@@ -44,7 +45,7 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
             },
           ),
         ],
-        content: StoreConnector<AppState, List<KuzzleSecurityProfile>>(
+        content: StoreConnector<AppState, KuzzleSecurityProfiles>(
           onInit: (store) {
             if (store.state.kuzzlesecurity.profiles.loadingState ==
                     KuzzleState.INIT ||
@@ -53,32 +54,35 @@ class _ProfileChooserDialogState extends State<ProfileChooserDialog> {
               store.dispatch(getKuzzleProfiles);
             }
           },
-          converter: (store) => store.state.kuzzlesecurity.profiles.profiles,
+          converter: (store) => store.state.kuzzlesecurity.profiles,
           builder: (context, profiles) => Container(
             height: 300, // Change as per your requirement
             width: 300, // Change as per your requirement
-            child: AnimatedColumn(
-              mainAxisSize: MainAxisSize.min,
-              children: profiles
-                  .map(
-                    (profile) => CheckboxListTile(
-                      value: _profileIds.contains(profile.uid),
-                      title: Text(profile.uid),
-                      onChanged: (newvalue) {
-                        if (newvalue == true) {
-                          setState(() {
-                            _profileIds.add(profile.uid);
-                          });
-                        } else {
-                          setState(() {
-                            _profileIds.remove(profile.uid);
-                          });
-                        }
-                      },
-                    ),
-                  )
-                  .toList(),
-            ),
+            child: profiles.loadingState == KuzzleState.LOADING &&
+                    profiles.profiles.isEmpty
+                ? const LoadingAnimation()
+                : AnimatedColumn(
+                    mainAxisSize: MainAxisSize.min,
+                    children: profiles.profiles
+                        .map(
+                          (profile) => CheckboxListTile(
+                            value: _profileIds.contains(profile.uid),
+                            title: Text(profile.uid),
+                            onChanged: (newvalue) {
+                              if (newvalue == true) {
+                                setState(() {
+                                  _profileIds.add(profile.uid);
+                                });
+                              } else {
+                                setState(() {
+                                  _profileIds.remove(profile.uid);
+                                });
+                              }
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
           ),
         ),
       );

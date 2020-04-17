@@ -118,16 +118,21 @@ class _BaseExpansionTileState<T extends Object>
             textColor: _headerColor.value,
             child: ListTile(
               dense: true,
-              onTap: _handleTap,
+              onTap: () {
+                Navigator.of(context).pushReplacement(widget.manageRoute);
+              },
               leading: widget.icon,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(widget.title),
-                  RotationTransition(
-                    turns: _iconTurns,
-                    child: const Icon(Icons.expand_more),
+                  IconButton(
+                    onPressed: _handleTap,
+                    icon: RotationTransition(
+                      turns: _iconTurns,
+                      child: const Icon(Icons.expand_more),
+                    ),
                   ),
                 ],
               ),
@@ -178,7 +183,8 @@ class _BaseExpansionTileState<T extends Object>
                       dense: true,
                       title: Text('Manage ${widget.title}'),
                       onTap: () {
-                        Navigator.of(context).push(widget.manageRoute);
+                        Navigator.of(context)
+                            .pushReplacement(widget.manageRoute);
                       },
                     ),
                   ),

@@ -11,7 +11,7 @@ install:
   - ../flutter/bin/flutter doctor
 jobs:
   include:
-  - stage: lint
+  - stage: test
     script: ../flutter/bin/flutter analyze
   - stage: test
     services:

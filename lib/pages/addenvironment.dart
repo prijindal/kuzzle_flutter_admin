@@ -36,6 +36,21 @@ class _AddEnvironmentPageState extends State<AddEnvironmentPage> {
         );
       } else {
         StoreProvider.of<AppState>(context).dispatch(
+          EditEnvironmentAction(
+            StoreProvider.of<AppState>(context)
+                .state
+                .environments
+                .defaultEnvironment,
+            Environment(
+              name: StoreProvider.of<AppState>(context)
+                  .state
+                  .environments
+                  .defaultEnvironment,
+              token: '',
+            ),
+          ),
+        );
+        StoreProvider.of<AppState>(context).dispatch(
           AddEnvironmentAction(environment),
         );
         StoreProvider.of<AppState>(context).dispatch(

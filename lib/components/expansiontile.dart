@@ -110,7 +110,7 @@ class _BaseExpansionTileState<T extends Object>
           bottom: BorderSide(color: borderSideColor),
         ),
       ),
-      child: AnimatedColumn(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTileTheme.merge(
@@ -171,7 +171,7 @@ class _BaseExpansionTileState<T extends Object>
           ? null
           : Container(
               margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-              child: AnimatedColumn(
+              child: Column(
                 children: widget.items.map<Widget>(widget.buildChild).toList()
                   ..add(
                     ListTile(

@@ -6,14 +6,17 @@ class AnimatedListView extends StatelessWidget {
   const AnimatedListView({
     @required this.itemCount,
     @required this.itemBuilder,
+    this.shrinkWrap = false,
   });
 
+  final bool shrinkWrap;
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
 
   @override
   Widget build(BuildContext context) => AnimationLimiter(
         child: ListView.builder(
+          shrinkWrap: shrinkWrap,
           physics: const AlwaysScrollableScrollPhysics(),
           itemCount: itemCount,
           itemBuilder: (context, i) => AnimationConfiguration.staggeredList(

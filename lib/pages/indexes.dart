@@ -50,7 +50,8 @@ class _IndexesPageState extends State<IndexesPage> {
                   ? const Center(
                       child: Text('Initiating...'),
                     )
-                  : (kuzzleindexes.loadingState == KuzzleState.LOADING
+                  : (kuzzleindexes.loadingState == KuzzleState.LOADING &&
+                          kuzzleindexes.indexMap.isEmpty
                       ? const LoadingAnimation()
                       : _indexListView(kuzzleindexes)),
         ),

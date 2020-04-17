@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
+import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
@@ -34,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Login'),
+        appBar: const KuzzleAppBar(
+          subtitle: "Login",
         ),
         body: Form(
           child: Padding(

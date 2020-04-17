@@ -20,6 +20,6 @@ Store<AppState> initStore() {
     initialState: const AppState(),
   );
   remoteDevtools.store = store;
-  remoteDevtools.connect();
+  // remoteDevtools.connect().catchError(print);
   return store;
 }

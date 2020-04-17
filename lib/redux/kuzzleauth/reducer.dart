@@ -4,7 +4,13 @@ import 'package:kuzzleflutteradmin/redux/kuzzleauth/events.dart';
 
 KuzzleAuth authReducer(KuzzleAuth state, dynamic action) {
   state ??= const KuzzleAuth();
-  if (action is LoginKuzzleAuthAction) {
+  if (action is InitKuzzleAuthAction) {
+    return state.copyWith(
+      loginState: KuzzleState.INIT,
+      token: '',
+      logoutState: KuzzleState.INIT,
+    );
+  } else if (action is LoginKuzzleAuthAction) {
     return state.copyWith(
       loginState: KuzzleState.LOADING,
       token: '',

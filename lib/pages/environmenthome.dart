@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzle/kuzzle.dart';
-import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
@@ -10,12 +9,26 @@ import 'package:kuzzleflutteradmin/models/kuzzleauth.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
-import 'package:kuzzleflutteradmin/pages/loading.dart';
 import 'package:kuzzleflutteradmin/pages/login.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleauth/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleping/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
+
+class EnvironmentHomePageRouteArguments {
+  EnvironmentHomePageRouteArguments({@required this.environment});
+  final Environment environment;
+}
+
+class EnvironmentHomeRoutePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => EnvironmentHomePage(
+        (ModalRoute.of(context).settings.arguments
+                as EnvironmentHomePageRouteArguments)
+            .environment,
+      );
+}
 
 class EnvironmentHomePage extends StatelessWidget {
   const EnvironmentHomePage(this.environment);
@@ -37,6 +50,9 @@ class EnvironmentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, KuzzlePing>(
         onInit: (store) {
+          if (FlutterKuzzle.instance != null) {
+            FlutterKuzzle.instance.disconnect();
+          }
           FlutterKuzzle.instance = FlutterKuzzle(
             WebSocketProtocol(
               environment.host,
@@ -52,39 +68,66 @@ class EnvironmentHomePage extends StatelessWidget {
         converter: (store) => store.state.kuzzleping,
         builder: (context, kuzzleping) => kuzzleping.loadingState !=
                 KuzzleState.LOADED
-            ? Scaffold(
-                appBar: const KuzzleAppBar(),
-                body: AnimatedColumn(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Center(
-                      child: Text(_getMessage(kuzzleping)),
-                    ),
-                    if (kuzzleping.loadingState == KuzzleState.INIT ||
-                        kuzzleping.loadingState == KuzzleState.LOADING)
-                      const LoadingAnimation()
-                  ],
-                ),
+            ? HomeLoadingPage(
+                message: _getMessage(kuzzleping),
+                isLoading: kuzzleping.loadingState == KuzzleState.INIT ||
+                    kuzzleping.loadingState == KuzzleState.LOADING,
               )
-            : StoreConnector<AppState, String>(
-                onInitialBuild: (jwt) {
-                  if (jwt.isNotEmpty) {
+            : StoreConnector<AppState, Environment>(
+                onInit: (store) {
+                  store.dispatch(InitKuzzleAuthAction());
+                },
+                onInitialBuild: (environment) {
+                  if (environment.token != null &&
+                      environment.token.isNotEmpty) {
                     StoreProvider.of<AppState>(context)
-                        .dispatch(checkAuth(jwt));
+                        .dispatch(checkAuth(environment.token));
                   }
                 },
-                converter: (store) => store
-                    .state.environments.environments[environment.name].token,
-                builder: (store, jwt) => StoreConnector<AppState, KuzzleAuth>(
+                converter: (store) =>
+                    store.state.environments.environments[environment.name],
+                builder: (store, environment) =>
+                    StoreConnector<AppState, KuzzleAuth>(
                   converter: (store) => store.state.kuzzleauth,
                   builder: (context, kuzzleauth) => !kuzzleauth.isAuthenticated
                       ? ((kuzzleauth.loginState == KuzzleState.LOADING &&
-                              jwt.isNotEmpty)
-                          ? const LoadingPage()
+                              environment != null &&
+                              environment.token != null &&
+                              environment.token.isNotEmpty)
+                          ? const HomeLoadingPage(
+                              message: 'Checking Authentication',
+                              isLoading: true,
+                            )
                           : LoginPage())
                       : IndexesPage(),
                 ),
               ),
+      );
+}
+
+class HomeLoadingPage extends StatelessWidget {
+  const HomeLoadingPage({
+    @required this.message,
+    @required this.isLoading,
+  });
+
+  final String message;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const KuzzleAppBar(
+          key: Key('Home App Bar'),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Center(
+              child: Text(message),
+            ),
+            if (isLoading) const LoadingAnimation(),
+          ],
+        ),
       );
 }

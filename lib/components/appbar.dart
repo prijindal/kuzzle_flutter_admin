@@ -12,9 +12,10 @@ enum AppBarActions { ADDENVIRONMENT, EXIT, LOGOUT }
 
 class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const KuzzleAppBar({
+    Key key,
     this.subtitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
-  });
+  }) : super(key: key);
 
   final String subtitle;
 

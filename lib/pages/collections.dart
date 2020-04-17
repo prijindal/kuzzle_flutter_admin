@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
+import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
@@ -64,24 +65,29 @@ class CollectionsPage extends StatelessWidget {
           child: const Icon(Icons.add),
           onPressed: () => _goToAddCollectionPage(context),
         ),
-        body: StoreConnector<AppState, List<String>>(
+        body: StoreConnector<AppState, KuzzleIndex>(
           onInit: (store) {
             if (_kuzzleIndex(store) != null &&
                 _kuzzleIndex(store).loadingState != KuzzleState.LOADING) {
               store.dispatch(getKuzzleCollections(index));
             }
           },
-          converter: (store) => store.state.kuzzleindexes.getCollections(index),
-          builder: (context, collections) => AnimatedListView(
-            itemCount: collections.length,
-            itemBuilder: (context, i) => ListTile(
-              title: Text(collections[i]),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () => _deleteCollection(collections[i], context),
-              ),
-            ),
-          ),
+          converter: (store) => store.state.kuzzleindexes.indexMap[index],
+          builder: (context, kuzzleindex) =>
+              (kuzzleindex.loadingState == KuzzleState.LOADING &&
+                      kuzzleindex.collections.isEmpty)
+                  ? const LoadingAnimation()
+                  : AnimatedListView(
+                      itemCount: kuzzleindex.collections.length,
+                      itemBuilder: (context, i) => ListTile(
+                        title: Text(kuzzleindex.collections[i].name),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => _deleteCollection(
+                              kuzzleindex.collections[i].name, context),
+                        ),
+                      ),
+                    ),
         ),
       );
 }

@@ -1,5 +1,7 @@
 abstract class KuzzleAuthAction {}
 
+class InitKuzzleAuthAction extends KuzzleAuthAction {}
+
 class LoginKuzzleAuthAction extends KuzzleAuthAction {}
 
 class LoginSuccessKuzzleAuthAction extends KuzzleAuthAction {

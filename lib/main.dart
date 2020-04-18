@@ -35,12 +35,13 @@ const MaterialColor _kuzzleMaterialColor = MaterialColor(
 
 void main() {
   runApp(
-    MyApp(),
+    MyApp(initStore()),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final Store<AppState> store = initStore();
+  const MyApp(this.store);
+  final Store<AppState> store;
 
   @override
   Widget build(BuildContext context) => StoreProvider<AppState>(
@@ -59,20 +60,20 @@ class MyApp extends StatelessWidget {
                       !environments.isInitialized
                           ? const LoadingPage()
                           : (environments.environments.isEmpty
-                              ? AddEnvironmentPage()
+                              ? const AddEnvironmentPage()
                               : (environments.getDefaultEnvironment != null
                                   ? EnvironmentHomePage(
                                       environments.getDefaultEnvironment,
                                     )
                                   : const EnvironmentsPage())),
                 ),
-            'environment': (context) => EnvironmentHomeRoutePage(),
-            'addenvironment': (context) => AddEnvironmentPage(),
-            'indexes': (context) => IndexesPage(),
-            'newindex': (context) => NewIndexPage(),
-            'collections': (context) => CollectionsPageRoute(),
-            'users': (context) => UsersPage(),
-            'newuser': (context) => NewUserPage(),
+            'environment': (context) => const EnvironmentHomeRoutePage(),
+            'addenvironment': (context) => const AddEnvironmentPage(),
+            'indexes': (context) => const IndexesPage(),
+            'newindex': (context) => const NewIndexPage(),
+            'collections': (context) => const CollectionsPageRoute(),
+            'users': (context) => const UsersPage(),
+            'newuser': (context) => const NewUserPage(),
           },
         ),
       );

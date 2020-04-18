@@ -8,6 +8,7 @@ import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleauth.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleping.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
+import 'package:kuzzleflutteradmin/pages/createadmin.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
 import 'package:kuzzleflutteradmin/pages/login.dart';
 import 'package:kuzzleflutteradmin/redux/environments/events.dart';
@@ -22,6 +23,8 @@ class EnvironmentHomePageRouteArguments {
 }
 
 class EnvironmentHomeRoutePage extends StatelessWidget {
+  const EnvironmentHomeRoutePage();
+
   @override
   Widget build(BuildContext context) => EnvironmentHomePage(
         (ModalRoute.of(context).settings.arguments
@@ -98,10 +101,31 @@ class EnvironmentHomePage extends StatelessWidget {
                               message: 'Checking Authentication',
                               isLoading: true,
                             )
-                          : LoginPage())
-                      : IndexesPage(),
+                          : const LoginCheck())
+                      : const IndexesPage(),
                 ),
               ),
+      );
+}
+
+class LoginCheck extends StatelessWidget {
+  const LoginCheck();
+
+  @override
+  Widget build(BuildContext context) => StoreConnector<AppState, KuzzleAuth>(
+        onInit: (store) {
+          store.dispatch(checkAdminExists());
+        },
+        converter: (store) => store.state.kuzzleauth,
+        builder: (context, kuzzleauth) =>
+            kuzzleauth.adminCheckState == KuzzleState.LOADING
+                ? const HomeLoadingPage(
+                    isLoading: true,
+                    message: 'Checking Authentication',
+                  )
+                : kuzzleauth.adminCheckResult == false
+                    ? const CreateAdminPage()
+                    : const LoginPage(),
       );
 }
 

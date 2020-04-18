@@ -16,6 +16,7 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 import 'package:redux/redux.dart';
 
 class KuzzleDrawer extends StatelessWidget {
+  const KuzzleDrawer();
   void _chooseEnvironmentConfirm(Environment environment) {}
 
   @override
@@ -51,10 +52,10 @@ class KuzzleDrawer extends StatelessWidget {
                 converter: (store) => store.state.kuzzleindexes.getIndexes(),
                 builder: (context, indexes) => BaseExpansionTile<String>(
                   addRoute: MaterialPageRoute(
-                    builder: (context) => NewIndexPage(),
+                    builder: (context) => const NewIndexPage(),
                   ),
                   manageRoute: MaterialPageRoute(
-                    builder: (context) => IndexesPage(),
+                    builder: (context) => const IndexesPage(),
                   ),
                   items: indexes,
                   title: 'Indexes',
@@ -98,7 +99,7 @@ class KuzzleDrawer extends StatelessWidget {
                 builder: (context, environments) =>
                     BaseExpansionTile<Environment>(
                   addRoute: MaterialPageRoute(
-                    builder: (context) => AddEnvironmentPage(),
+                    builder: (context) => const AddEnvironmentPage(),
                   ),
                   manageRoute: MaterialPageRoute(
                     builder: (context) => const EnvironmentsPage(),

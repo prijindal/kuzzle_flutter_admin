@@ -16,6 +16,8 @@ class NewCollectionPageRouteArguments {
 }
 
 class NewCollectionPageRoute extends StatelessWidget {
+  const NewCollectionPageRoute();
+
   @override
   Widget build(BuildContext context) => NewCollectionPage(
         index: (ModalRoute.of(context).settings.arguments

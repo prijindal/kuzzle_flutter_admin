@@ -14,6 +14,18 @@ class LoginErroredKuzzleAuthAction extends KuzzleAuthAction {
   final String errorMessage;
 }
 
+class AdminCheckKuzzleAuthAction extends KuzzleAuthAction {}
+
+class AdminCheckSuccessKuzzleAuthAction extends KuzzleAuthAction {
+  AdminCheckSuccessKuzzleAuthAction(this.result);
+  final bool result;
+}
+
+class AdminCheckErroredKuzzleAuthAction extends KuzzleAuthAction {
+  AdminCheckErroredKuzzleAuthAction(this.errorMessage);
+  final String errorMessage;
+}
+
 class LogoutKuzzleAuthAction extends KuzzleAuthAction {}
 
 class LogoutSuccessKuzzleAuthAction extends KuzzleAuthAction {}

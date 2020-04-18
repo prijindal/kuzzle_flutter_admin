@@ -17,6 +17,8 @@ class CollectionsPageRouteArguments {
 }
 
 class CollectionsPageRoute extends StatelessWidget {
+  const CollectionsPageRoute();
+
   @override
   Widget build(BuildContext context) => CollectionsPage(
         index: (ModalRoute.of(context).settings.arguments
@@ -78,6 +80,7 @@ class CollectionsPage extends StatelessWidget {
                       kuzzleindex.collections.isEmpty)
                   ? const LoadingAnimation()
                   : AnimatedListView(
+                      shrinkWrap: true,
                       itemCount: kuzzleindex.collections.length,
                       itemBuilder: (context, i) => ListTile(
                         title: Text(kuzzleindex.collections[i].name),

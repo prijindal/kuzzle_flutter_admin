@@ -1,6 +1,7 @@
 import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlesecurity.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'userevents.dart';
@@ -59,6 +60,31 @@ ThunkAction<dynamic> getKuzzleUser(String uid) => (store) async {
             ),
           );
         }
+      }
+    };
+
+ThunkAction<dynamic> createFirstAdmin(Map<String, dynamic> credentials) =>
+    (store) async {
+      try {
+        final kuzzleUser = await FlutterKuzzle.instance.security
+            .createFirstAdmin(null, credentials, content: {});
+        store.dispatch(
+          AddSuccessKuzzleUserAction(
+            KuzzleSecurityUser(
+              uid: kuzzleUser.uid,
+              content: kuzzleUser.content,
+              meta: kuzzleUser.meta,
+            ),
+          ),
+        );
+        store.dispatch(checkAdminExists());
+      } catch (e) {
+        store.dispatch(
+          AddErroredKuzzleUserAction(
+            null,
+            e.toString(),
+          ),
+        );
       }
     };
 

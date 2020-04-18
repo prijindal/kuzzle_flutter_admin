@@ -26,6 +26,20 @@ KuzzleAuth authReducer(KuzzleAuth state, dynamic action) {
       token: '',
       loginError: action.errorMessage,
     );
+  } else if (action is AdminCheckKuzzleAuthAction) {
+    return state.copyWith(
+      adminCheckState: KuzzleState.LOADING,
+    );
+  } else if (action is AdminCheckSuccessKuzzleAuthAction) {
+    return state.copyWith(
+      adminCheckState: KuzzleState.LOADED,
+      adminCheckResult: action.result,
+    );
+  } else if (action is AdminCheckErroredKuzzleAuthAction) {
+    return state.copyWith(
+      adminCheckState: KuzzleState.ERRORED,
+      adminCheckError: action.errorMessage,
+    );
   } else if (action is LogoutKuzzleAuthAction) {
     return state.copyWith(
       logoutState: KuzzleState.LOADING,

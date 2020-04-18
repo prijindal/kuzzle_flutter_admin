@@ -3,33 +3,31 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/appbar.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
-import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
+import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/useraction.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage();
+class CreateAdminPage extends StatefulWidget {
+  const CreateAdminPage();
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _CreateAdminPageState createState() => _CreateAdminPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CreateAdminPageState extends State<CreateAdminPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _remember = false;
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
-  void _loginUser() {
+  void _createAdminAccount() {
     StoreProvider.of<AppState>(context).dispatch(
-      loginUser(
-        'local',
+      createFirstAdmin(
         {
-          'username': _usernameController.text,
-          'password': _passwordController.text,
+          'local': {
+            'username': _usernameController.text,
+            'password': _passwordController.text,
+          },
         },
-        remember: _remember,
-        environment: StoreProvider.of<AppState>(context)
-            .state
-            .environments
-            .getDefaultEnvironment,
       ),
     );
   }
@@ -55,23 +53,22 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                 ),
-                CheckboxListTile(
-                  title: const Text('Remember on this device'),
-                  value: _remember,
-                  onChanged: (newvalue) {
-                    setState(() {
-                      _remember = newvalue;
-                    });
-                  },
+                TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: 'Confirm Password'),
+                  controller: _confirmPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: StoreConnector<AppState, KuzzleState>(
                     converter: (store) => store.state.kuzzleauth.loginState,
                     builder: (context, loginState) => RaisedButton(
-                      child: const Text('Login'),
-                      onPressed:
-                          loginState == KuzzleState.LOADING ? null : _loginUser,
+                      child: const Text('Create Admin Account'),
+                      onPressed: loginState == KuzzleState.LOADING
+                          ? null
+                          : _createAdminAccount,
                     ),
                   ),
                 ),

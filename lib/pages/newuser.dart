@@ -4,6 +4,8 @@ import 'package:kuzzleflutteradmin/components/profileschooser.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 
 class NewUserPage extends StatefulWidget {
+  const NewUserPage();
+
   @override
   _NewUserPageState createState() => _NewUserPageState();
 }

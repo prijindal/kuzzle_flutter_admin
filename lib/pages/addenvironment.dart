@@ -6,6 +6,8 @@ import 'package:kuzzleflutteradmin/redux/state.dart';
 import '../redux/environments/events.dart';
 
 class AddEnvironmentPage extends StatefulWidget {
+  const AddEnvironmentPage();
+
   @override
   _AddEnvironmentPageState createState() => _AddEnvironmentPageState();
 }

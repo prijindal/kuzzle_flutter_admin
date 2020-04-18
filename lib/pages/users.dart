@@ -9,17 +9,14 @@ import 'package:kuzzleflutteradmin/pages/user.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzlesecurity/useraction.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-class UsersPage extends StatefulWidget {
-  @override
-  _UsersPageState createState() => _UsersPageState();
-}
+class UsersPage extends StatelessWidget {
+  const UsersPage();
 
-class _UsersPageState extends State<UsersPage> {
-  void _goToAddUserPage() {
+  void _goToAddUserPage(BuildContext context) {
     Navigator.of(context).pushNamed('newuser');
   }
 
-  void _goToUserPage(KuzzleSecurityUser user) {
+  void _goToUserPage(BuildContext context, KuzzleSecurityUser user) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => UserPage(user)));
   }
@@ -29,7 +26,7 @@ class _UsersPageState extends State<UsersPage> {
         subtitle: 'User Management',
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: _goToAddUserPage,
+          onPressed: () => _goToAddUserPage(context),
         ),
         body: StoreConnector<AppState, KuzzleSecurityUsers>(
           onInit: (store) {
@@ -48,7 +45,7 @@ class _UsersPageState extends State<UsersPage> {
                       itemCount: users.users.length,
                       itemBuilder: (context, i) => ListTile(
                         title: Text(users.users[i].uid),
-                        onTap: () => _goToUserPage(users.users[i]),
+                        onTap: () => _goToUserPage(context, users.users[i]),
                         subtitle: Row(
                           children: users.users[i].profileIds
                               .map((e) => Text('$e,'))

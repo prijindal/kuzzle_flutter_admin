@@ -10,6 +10,8 @@ import 'package:kuzzleflutteradmin/redux/kuzzleindex/events.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
 class NewIndexPage extends StatefulWidget {
+  const NewIndexPage();
+
   @override
   _NewIndexPageState createState() => _NewIndexPageState();
 }

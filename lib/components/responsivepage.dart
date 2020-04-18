@@ -8,10 +8,12 @@ class ResponsiveScaffold extends StatelessWidget {
     this.subtitle,
     this.body,
     this.floatingActionButton,
+    this.onSearch,
   });
   final String subtitle;
   final Widget body;
   final Widget floatingActionButton;
+  final VoidCallback onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +21,19 @@ class ResponsiveScaffold extends StatelessWidget {
       return Scaffold(
         appBar: KuzzleAppBar(
           subtitle: subtitle,
+          onSearch: onSearch,
         ),
         body: body,
         floatingActionButton: floatingActionButton,
-        drawer: KuzzleDrawer(),
+        drawer: const KuzzleDrawer(),
       );
     } else {
       return Flex(
         direction: Axis.horizontal,
         children: [
-          Material(
+          const Material(
             child: Card(
-              margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+              margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
               borderOnForeground: false,
               elevation: 2,
               child: KuzzleDrawer(),
@@ -41,6 +44,7 @@ class ResponsiveScaffold extends StatelessWidget {
               appBar: KuzzleAppBar(
                 subtitle: subtitle,
                 preferredSize: const Size.fromHeight(64),
+                onSearch: onSearch,
               ),
               body: body,
               floatingActionButton: floatingActionButton,

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:kuzzleflutteradmin/components/searchdelegate.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/models/environments.dart';
@@ -15,9 +16,11 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key key,
     this.subtitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
+    this.onSearch,
   }) : super(key: key);
 
   final String subtitle;
+  final VoidCallback onSearch;
 
   @override
   final Size preferredSize;
@@ -46,6 +49,11 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _getActions(BuildContext context) => [
+        if (onSearch != null)
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: onSearch,
+          ),
         PopupMenuButton<AppBarActions>(
           icon: const Icon(Icons.more_vert),
           onSelected: (action) => _actionSelected(action, context),
@@ -66,6 +74,10 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ];
 
+  bool get _isConnected =>
+      FlutterKuzzle.instance != null &&
+      FlutterKuzzle.instance.protocol.isReady();
+
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, Environment>(
         converter: (store) => store.state.environments.getDefaultEnvironment,
@@ -74,8 +86,23 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                environment.name,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    environment.name,
+                  ),
+                  AnimatedContainer(
+                    margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+                    decoration: BoxDecoration(
+                      color: _isConnected ? Colors.green : Colors.red,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    duration: const Duration(milliseconds: 375),
+                    width: 10,
+                    height: 10,
+                  ),
+                ],
               ),
               if (subtitle != null)
                 Visibility(

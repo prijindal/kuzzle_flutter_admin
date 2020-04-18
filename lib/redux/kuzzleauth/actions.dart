@@ -63,3 +63,15 @@ ThunkAction<dynamic> logoutUser() => (store) async {
         }
       }
     };
+
+ThunkAction<dynamic> checkAdminExists() => (store) async {
+      store.dispatch(AdminCheckKuzzleAuthAction());
+      if (initKuzzleIndex()) {
+        try {
+          final result = await FlutterKuzzle.instance.server.adminExists();
+          store.dispatch(AdminCheckSuccessKuzzleAuthAction(result));
+        } catch (e) {
+          store.dispatch(AdminCheckErroredKuzzleAuthAction(e.toString()));
+        }
+      }
+    };

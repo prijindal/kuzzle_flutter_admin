@@ -43,18 +43,15 @@ class IndexesPage extends StatelessWidget {
             .where((element) =>
                 element.toLowerCase().contains(query.trim().toLowerCase()))
             .toList(),
-        getResults: (query) async {
-          var indexes = StoreProvider.of<AppState>(context)
-              .state
-              .kuzzleindexes
-              .indexMap
-              .keys
-              .toList()
-              .where((element) =>
-                  element.toLowerCase().contains(query.trim().toLowerCase()))
-              .toList();
-          return indexes;
-        },
+        getResults: (query) async => StoreProvider.of<AppState>(context)
+            .state
+            .kuzzleindexes
+            .indexMap
+            .keys
+            .toList()
+            .where((element) =>
+                element.toLowerCase().contains(query.trim().toLowerCase()))
+            .toList(),
       ),
     );
   }

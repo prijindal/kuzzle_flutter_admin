@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
@@ -15,30 +14,25 @@ class KuzzleSearchDelegate<T> extends SearchDelegate<T> {
   final Widget Function(T item) itemBuilder;
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
+  List<Widget> buildActions(BuildContext context) => [
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            query = '';
+          },
+        ),
+      ];
 
   @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
+  Widget buildLeading(BuildContext context) => IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          close(context, null);
+        },
+      );
 
   @override
   Widget buildResults(BuildContext context) {
-    print(query);
     final resultFuture = getResults(query);
     return FutureBuilder<List<T>>(
       future: resultFuture,
@@ -46,8 +40,8 @@ class KuzzleSearchDelegate<T> extends SearchDelegate<T> {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const LoadingAnimation(),
+              children: const [
+                LoadingAnimation(),
               ],
             )
           : AnimatedListView(
@@ -67,6 +61,9 @@ class KuzzleSearchDelegate<T> extends SearchDelegate<T> {
     return AnimatedListView(
       itemBuilder: (context, i) => ListTile(
         title: Text(suggestions[i]),
+        onTap: () {
+          query = suggestions[i];
+        },
       ),
       itemCount: suggestions.length,
     );

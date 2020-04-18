@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:kuzzleflutteradmin/components/searchdelegate.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
 import 'package:kuzzleflutteradmin/models/environment.dart';
 import 'package:kuzzleflutteradmin/models/environments.dart';
@@ -51,7 +50,7 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _getActions(BuildContext context) => [
         if (onSearch != null)
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: onSearch,
           ),
         PopupMenuButton<AppBarActions>(

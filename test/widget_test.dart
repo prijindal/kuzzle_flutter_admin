@@ -8,11 +8,12 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kuzzleflutteradmin/main.dart';
+import 'package:kuzzleflutteradmin/redux/store.dart';
 
 void main() {
   testWidgets('Initialize Environments', (tester) async {
     // Build our app and trigger a frame.
-    final myApp = MyApp();
+    final myApp = MyApp(initStore());
     await tester.pumpWidget(myApp);
 
     // expect(find.text('Loading...'), findsOneWidget);

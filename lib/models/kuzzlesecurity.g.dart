@@ -106,6 +106,12 @@ KuzzleSecurityProfile _$KuzzleSecurityProfileFromJson(
   return KuzzleSecurityProfile(
     uid: json['uid'] as String,
     policies: json['policies'] as List,
+    loadingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['loadingState']),
+    savingState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['savingState']),
+    loadingError: json['loadingError'] as String,
+    savingError: json['savingError'] as String,
   );
 }
 
@@ -114,6 +120,10 @@ Map<String, dynamic> _$KuzzleSecurityProfileToJson(
     <String, dynamic>{
       'uid': instance.uid,
       'policies': instance.policies,
+      'loadingState': _$KuzzleStateEnumMap[instance.loadingState],
+      'savingState': _$KuzzleStateEnumMap[instance.savingState],
+      'loadingError': instance.loadingError,
+      'savingError': instance.savingError,
     };
 
 KuzzleSecurityProfiles _$KuzzleSecurityProfilesFromJson(

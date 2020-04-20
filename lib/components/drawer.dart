@@ -6,6 +6,7 @@ import 'package:kuzzleflutteradmin/models/environments.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/addenvironment.dart';
+import 'package:kuzzleflutteradmin/pages/collection.dart';
 import 'package:kuzzleflutteradmin/pages/collections.dart';
 import 'package:kuzzleflutteradmin/pages/environments.dart';
 import 'package:kuzzleflutteradmin/pages/indexes.dart';
@@ -141,8 +142,9 @@ class _IndexExpansionTile extends StatelessWidget {
   void _goToCollectionPage(KuzzleCollection collection, BuildContext context) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => CollectionsPage(
+        builder: (context) => CollectionPage(
           index: index,
+          collection: collection,
         ),
       ),
     );

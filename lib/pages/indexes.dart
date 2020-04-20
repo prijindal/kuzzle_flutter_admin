@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
+import 'package:kuzzleflutteradmin/components/indextile.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/components/searchdelegate.dart';
-import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
-import 'package:kuzzleflutteradmin/pages/collections.dart';
-import 'package:kuzzleflutteradmin/pages/newcollection.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleindex/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
-
-enum IndexListItemActions { DELETE, EDIT, BROWSECOLLECTIONS, CREATECOLLECTION }
 
 class IndexesPage extends StatelessWidget {
   const IndexesPage();
@@ -23,7 +19,7 @@ class IndexesPage extends StatelessWidget {
 
   Widget _indexListView(KuzzleIndexes kuzzleindexes) => AnimatedListView(
         itemCount: kuzzleindexes.indexMap.length,
-        itemBuilder: (context, i) => _IndexListTile(
+        itemBuilder: (context, i) => IndexListTile(
           index: kuzzleindexes.indexMap.keys.elementAt(i),
         ),
       );
@@ -32,7 +28,7 @@ class IndexesPage extends StatelessWidget {
     showSearch<String>(
       context: context,
       delegate: KuzzleSearchDelegate<String>(
-        itemBuilder: (i) => _IndexListTile(
+        itemBuilder: (i) => IndexListTile(
           index: i,
         ),
         getSuggestions: (query) => StoreProvider.of<AppState>(context)
@@ -81,76 +77,6 @@ class IndexesPage extends StatelessWidget {
                           kuzzleindexes.indexMap.isEmpty
                       ? const LoadingAnimation()
                       : _indexListView(kuzzleindexes)),
-        ),
-      );
-}
-
-class _IndexListTile extends StatelessWidget {
-  const _IndexListTile({@required this.index});
-  final String index;
-
-  Future<void> _deleteIndexConfirm(BuildContext context) async {
-    final confirm = await confirmDialog(
-        context, 'Delete $index', 'Are you sure you want to delete this index');
-    if (confirm) {
-      StoreProvider.of<AppState>(context).dispatch(deleteKuzzleIndex(index));
-    }
-  }
-
-  void _goToAddCollectionPage(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => NewCollectionPage(
-          index: index,
-        ),
-      ),
-    );
-  }
-
-  void _goToCollectionsPage(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CollectionsPage(
-          index: index,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-        title: Text(index),
-        onTap: () => _goToCollectionsPage(context),
-        trailing: PopupMenuButton<IndexListItemActions>(
-          onSelected: (action) {
-            if (action == IndexListItemActions.BROWSECOLLECTIONS) {
-              _goToCollectionsPage(context);
-            } else if (action == IndexListItemActions.CREATECOLLECTION) {
-              _goToAddCollectionPage(context);
-            } else if (action == IndexListItemActions.EDIT) {
-            } else if (action == IndexListItemActions.DELETE) {
-              _deleteIndexConfirm(context);
-            }
-          },
-          itemBuilder: (context) =>
-              const <PopupMenuEntry<IndexListItemActions>>[
-            PopupMenuItem(
-              value: IndexListItemActions.CREATECOLLECTION,
-              child: Text('Create Collection'),
-            ),
-            PopupMenuItem(
-              value: IndexListItemActions.BROWSECOLLECTIONS,
-              child: Text('Browse Collections'),
-            ),
-            PopupMenuItem(
-              value: IndexListItemActions.EDIT,
-              child: Text('Edit'),
-            ),
-            PopupMenuItem(
-              value: IndexListItemActions.DELETE,
-              child: Text('Delete'),
-            ),
-          ],
         ),
       );
 }

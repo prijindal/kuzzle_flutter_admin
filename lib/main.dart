@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
                                   : const EnvironmentsPage())),
                 ),
             'environment': (context) => const EnvironmentHomeRoutePage(),
+            'environments': (context) => const EnvironmentsPage(),
             'addenvironment': (context) => const AddEnvironmentPage(),
             'indexes': (context) => const IndexesPage(),
             'newindex': (context) => const NewIndexPage(),

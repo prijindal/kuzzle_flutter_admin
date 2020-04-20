@@ -140,8 +140,8 @@ class HomeLoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const KuzzleAppBar(
-          key: Key('Home App Bar'),
+        appBar: KuzzleAppBar(
+          key: const Key('Home App Bar'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

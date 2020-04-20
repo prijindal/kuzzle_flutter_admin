@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const KuzzleAppBar(
+        appBar: KuzzleAppBar(
           subtitle: 'Login',
         ),
         body: Form(

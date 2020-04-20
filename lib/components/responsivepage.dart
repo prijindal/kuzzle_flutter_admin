@@ -9,11 +9,13 @@ class ResponsiveScaffold extends StatelessWidget {
     this.body,
     this.floatingActionButton,
     this.onSearch,
+    this.bottom,
   });
   final String subtitle;
   final Widget body;
   final Widget floatingActionButton;
   final VoidCallback onSearch;
+  final PreferredSizeWidget bottom;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class ResponsiveScaffold extends StatelessWidget {
         appBar: KuzzleAppBar(
           subtitle: subtitle,
           onSearch: onSearch,
+          bottom: bottom,
         ),
         body: body,
         floatingActionButton: floatingActionButton,
@@ -43,7 +46,7 @@ class ResponsiveScaffold extends StatelessWidget {
             child: Scaffold(
               appBar: KuzzleAppBar(
                 subtitle: subtitle,
-                preferredSize: const Size.fromHeight(64),
+                bottom: bottom,
                 onSearch: onSearch,
               ),
               body: body,

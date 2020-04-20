@@ -8,18 +8,21 @@ import 'package:kuzzleflutteradmin/redux/environments/events.dart';
 import 'package:kuzzleflutteradmin/redux/kuzzleauth/actions.dart';
 import 'package:kuzzleflutteradmin/redux/state.dart';
 
-enum AppBarActions { ADDENVIRONMENT, EXIT, LOGOUT }
+enum AppBarActions { ADDENVIRONMENT, BROWSEENVIRONMENTS, EXIT, LOGOUT }
 
 class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const KuzzleAppBar({
+  KuzzleAppBar({
     Key key,
     this.subtitle,
-    this.preferredSize = const Size.fromHeight(kToolbarHeight),
+    this.bottom,
     this.onSearch,
-  }) : super(key: key);
+  })  : preferredSize = Size.fromHeight(
+            kToolbarHeight + (bottom?.preferredSize?.height ?? 0.0)),
+        super(key: key);
 
   final String subtitle;
   final VoidCallback onSearch;
+  final PreferredSizeWidget bottom;
 
   @override
   final Size preferredSize;
@@ -30,6 +33,8 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
   void _actionSelected(AppBarActions action, BuildContext context) {
     if (action == AppBarActions.ADDENVIRONMENT) {
       Navigator.of(context).pushNamed('addenvironment');
+    } else if (action == AppBarActions.BROWSEENVIRONMENTS) {
+      Navigator.of(context).pushNamed('environments');
     } else if (action == AppBarActions.EXIT) {
       FlutterKuzzle.instance.disconnect();
       exit(0);
@@ -60,6 +65,10 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
             const PopupMenuItem<AppBarActions>(
               value: AppBarActions.ADDENVIRONMENT,
               child: Text('Add New Environment'),
+            ),
+            const PopupMenuItem<AppBarActions>(
+              value: AppBarActions.BROWSEENVIRONMENTS,
+              child: Text('Browse Environments'),
             ),
             const PopupMenuItem<AppBarActions>(
               value: AppBarActions.EXIT,
@@ -115,6 +124,7 @@ class KuzzleAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
             ],
           ),
+          bottom: bottom,
           actions: _getActions(context),
         ),
       );

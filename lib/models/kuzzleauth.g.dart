@@ -12,8 +12,12 @@ KuzzleAuth _$KuzzleAuthFromJson(Map<String, dynamic> json) {
     loginState: _$enumDecodeNullable(_$KuzzleStateEnumMap, json['loginState']),
     logoutState:
         _$enumDecodeNullable(_$KuzzleStateEnumMap, json['logoutState']),
+    adminCheckState:
+        _$enumDecodeNullable(_$KuzzleStateEnumMap, json['adminCheckState']),
     loginError: json['loginError'] as String,
     logoutError: json['logoutError'] as String,
+    adminCheckError: json['adminCheckError'] as String,
+    adminCheckResult: json['adminCheckResult'] as bool,
   );
 }
 
@@ -21,9 +25,12 @@ Map<String, dynamic> _$KuzzleAuthToJson(KuzzleAuth instance) =>
     <String, dynamic>{
       'loginState': _$KuzzleStateEnumMap[instance.loginState],
       'logoutState': _$KuzzleStateEnumMap[instance.logoutState],
+      'adminCheckState': _$KuzzleStateEnumMap[instance.adminCheckState],
       'loginError': instance.loginError,
       'logoutError': instance.logoutError,
+      'adminCheckError': instance.adminCheckError,
       'token': instance.token,
+      'adminCheckResult': instance.adminCheckResult,
     };
 
 T _$enumDecode<T>(

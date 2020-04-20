@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
+import 'package:kuzzleflutteradmin/components/collectiontile.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
-import 'package:kuzzleflutteradmin/helpers/confirmdialog.dart';
 import 'package:kuzzleflutteradmin/models/kuzzleindexes.dart';
 import 'package:kuzzleflutteradmin/models/kuzzlestate.dart';
 import 'package:kuzzleflutteradmin/pages/newcollection.dart';
@@ -39,17 +39,6 @@ class CollectionsPage extends StatelessWidget {
     }
   }
 
-  Future<void> _deleteCollection(
-      String collection, BuildContext context) async {
-    final confirm = await confirmDialog(context, 'Delete $collection',
-        'Are you sure you want to delete this collection');
-    if (confirm) {
-      StoreProvider.of<AppState>(context).dispatch(
-        deleteKuzzleCollection(index, collection),
-      );
-    }
-  }
-
   void _goToAddCollectionPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -82,13 +71,9 @@ class CollectionsPage extends StatelessWidget {
                   : AnimatedListView(
                       shrinkWrap: true,
                       itemCount: kuzzleindex.collections.length,
-                      itemBuilder: (context, i) => ListTile(
-                        title: Text(kuzzleindex.collections[i].name),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () => _deleteCollection(
-                              kuzzleindex.collections[i].name, context),
-                        ),
+                      itemBuilder: (context, i) => CollectionListTile(
+                        collection: kuzzleindex.collections[i],
+                        index: index,
                       ),
                     ),
         ),

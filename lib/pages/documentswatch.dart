@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kuzzle/kuzzle.dart';
 import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
 import 'package:kuzzleflutteradmin/components/documenttile.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
@@ -21,8 +20,8 @@ class WatchDocumentsTabPage extends StatefulWidget {
 }
 
 class _WatchDocumentsTabPageState extends State<WatchDocumentsTabPage> {
-  Map<String, dynamic> _filters = <String, dynamic>{};
-  List<KuzzleDocument> _results = [];
+  final Map<String, dynamic> _filters = <String, dynamic>{};
+  final List<KuzzleDocument> _results = [];
   String _roomId;
   bool _isLoading;
 

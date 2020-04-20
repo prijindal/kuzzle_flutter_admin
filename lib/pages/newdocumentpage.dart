@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:kuzzle/kuzzle.dart';
-import 'package:kuzzleflutteradmin/components/animatedlistview.dart';
-import 'package:kuzzleflutteradmin/components/documenttile.dart';
 import 'package:kuzzleflutteradmin/components/loading.dart';
 import 'package:kuzzleflutteradmin/components/responsivepage.dart';
 import 'package:kuzzleflutteradmin/helpers/kuzzle.dart';
